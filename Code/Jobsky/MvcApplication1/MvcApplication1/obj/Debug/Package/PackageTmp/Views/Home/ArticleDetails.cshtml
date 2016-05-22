@@ -1,0 +1,378 @@
+﻿@{
+    
+}
+
+@section Styles{
+<style type="text/css">
+    body
+    {   
+        background-color: #ebebeb; 
+    }
+    .article
+    {
+        @*background-color: #f0f0f0;*@
+    }
+    .content{
+        border: 1px solid #e6e6e6;
+        background: #fff;
+        margin: 30px 0 20px 0;
+        position: relative;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+    }
+    .title {
+        color: #4d90db;            
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;   
+    }
+    .title-info {
+        color: #8a939d;
+        border-top: 1px solid #eee;
+    }
+    .demand-title{
+         font-weight:bold;
+         background-color:#ccc;
+    }
+    .page-header{
+        color: #1C84E9;
+    }
+    .time, .place{
+        color:red;
+    }
+    .td_title
+        {
+            border: 1px solid #ccc;
+            border-width: 0 0 1px 1px;
+            height: 34px;
+            padding: 0 2px;
+            width: 100px;
+            text-align: center;
+            background-color: #EAEAEA;
+        }
+
+    /* 右侧附加导航（Affix） Styles */
+    .nav-right{
+        margin: 30px 0 20px 0;
+    }
+    ul.nav-list{
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+        background-color:#fff;
+    }
+    ul.nav-list li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-list li:first-child{
+        border-top: none;
+    }
+    ul.nav-list li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-list li.active a, ul.nav-list li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-list li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-list li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    /*当前位置（面包削）*/
+    .location{
+        margin: 0 -15px 0 -15px;
+    }
+</style>
+}
+
+@if (ViewBag.tb_Article.Rows.Count >= 1)
+ {
+     ViewBag.Title = ViewBag.tb_Article.Rows[0]["Title"];
+ }
+ 
+@if (ViewBag.tb_Article.Rows.Count < 1)
+{
+    ViewBag.Title = "找不到该文章";
+    <div class="container" style="min-height:500px">
+        <div class="row" style="margin-top:100px;">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">找不到该文章</h3>
+                    </div>
+                    <div class="panel-body title" style="color: #a94442;min-height:100px">
+                        您所查找的文章不存在或者已经被删除！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*公司的文章*@
+else if (Convert.ToInt32(ViewBag.tb_Article.Rows[0]["TypeID"]) == 1 || ((Convert.ToInt32(ViewBag.tb_Article.Rows[0]["TypeID"]) == 2 || Convert.ToInt32(ViewBag.tb_Article.Rows[0]["TypeID"]) == 3) && ViewBag.tb_Article.Rows[0]["EditorAccount"].ToString().Trim() != "jobsky")) //专场招聘
+{
+    <div class="container">
+        <div class="row article">
+            <div class="col-md-9 content">
+                <div class="location">            
+                    <ol class="breadcrumb">
+                        <span style="color:#eb6841;">当前位置:</span>
+                        <li><a href="@Url.Action("Index","Home")">首页</a></li>
+                        <li><a href="@Url.Action("ArticleList", "Home", new { id = Convert.ToInt32(ViewBag.TypeID) })">@ViewBag.TypeName</a></li>
+                        <li class="active">文章内容</li>
+                    </ol>
+                </div>
+                <div id="title" class="">
+                    <h1 class="text-center title">@ViewBag.tb_Article.Rows[0]["Title"]</h1>
+                    <div class="text-center title-info">
+                            信息来源:中南大学毕业生就业指导服务中心
+                            浏览次数:<span>@ViewBag.tb_Article.Rows[0]["ClickTimes"]</span>
+                    </div>
+                </div>
+                <div id="placeAndTime">
+                    <h4 class="page-header">时间地点</h4>
+                    <p class="text-center time">招聘时间：@Convert.ToDateTime(ViewBag.dt_PlaceListSecond.Rows[0]["PlaceTime"].ToString()).GetDateTimeFormats('f')[0].ToString()</p>
+                    <p class="text-center place">招聘地点：@ViewBag.dt_PlaceListSecond.Rows[0]["PlaceName"]</p>
+                </div>
+                <div id="demand">
+                    <h4 class="page-header">需求信息</h4>
+                    @foreach (System.Data.DataRow dt in ViewBag.tb_Demand.Rows)
+                    {
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-2 demand-title">职位名称</td>
+                                <td>@dt["PositionName"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">教育水平</td>
+                                <td>@dt["EducationalLevel"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">专业</td>
+                                <td>@dt["Major"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">需求数量</td>
+                                <td>@dt["DemandNum"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">职位描述</td>
+                                <td>@Html.Raw(dt["PositionDec"])</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    }
+                </div>
+                <div id="companyInfo">
+                    <h4 class="page-header">单位简介</h4>
+                    <table class="table table-bordered">
+                        <tr><td class="td_title">单位名称</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyName"]</td><td class="td_title">单位性质</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyNature"]</td></tr>
+                        <tr><td class="td_title">单位行业</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyBusiness"]</td><td class="td_title">是否五百强</td><td>@(Convert.ToInt32(ViewBag.tb_Employer.Rows[0]["IsTop500"]) == 1 ? "是":"否" )</td></tr>
+                    </table>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["Introduction"])
+                </div>
+                <div id="contact">
+                    <h4 class="page-header">联系方式</h4>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["ContactInfo"])
+                </div>                
+                <div id="file">
+                    <h4 class="page-header">附件</h4>
+                    @if (ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == null || ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == "")
+                    {
+                        <span>无</span>
+                    }
+                    else
+                    {
+                        <a href="~/UploadFiles/@ViewBag.tb_Article.Rows[0]["FileAddr"]" target="_blank">@ViewBag.tb_Article.Rows[0]["FileAddr"].ToString().Substring(18)</a>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-3 nav-right" id="myScrollspy">
+                <ul class="nav nav-list nav-stacked hidden-xs hidden-sm" data-spy="affix">
+                    <li class="active"><a href="#title"><i class="glyphicon glyphicon-chevron-left"></i> 标题</a></li>
+                    <li><a href="#placeAndTime"><i class="glyphicon glyphicon-chevron-left"></i> 时间地点</a></li>
+                    <li><a href="#demand"><i class="glyphicon glyphicon-chevron-left"></i> 需求信息</a></li>
+                    <li><a href="#companyInfo"><i class="glyphicon glyphicon-chevron-left"></i> 单位简介</a></li>
+                    <li><a href="#contact"><i class="glyphicon glyphicon-chevron-left"></i> 联系方式</a></li>                    
+                    <li><a href="#file"><i class="glyphicon glyphicon-chevron-left"></i> 附件</a></li>
+                    <li><a href="#top"> 返回顶部</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+@*josbky的文章（大型招聘文章）*@
+else if (Convert.ToInt32(ViewBag.tb_Article.Rows[0]["TypeID"]) == 2 || Convert.ToInt32(ViewBag.tb_Article.Rows[0]["TypeID"]) == 3)  //双选会  组团招聘
+{
+    <div class="container">
+        <div class="row article">
+            <div class="col-md-9 content">
+                <div class="location">            
+                    <ol class="breadcrumb">
+                        <span style="color:#eb6841;">当前位置:</span>
+                        <li><a href="@Url.Action("Index","Home")">首页</a></li>
+                        <li><a href="@Url.Action("ArticleList", "Home", new { id = Convert.ToInt32(ViewBag.TypeID) })">@ViewBag.TypeName</a></li>
+                        <li class="active">文章内容</li>
+                    </ol>
+                </div>
+                <div id="title" class="">
+                    <h1 class="text-center title">@ViewBag.tb_Article.Rows[0]["Title"]</h1>
+                    @*<hr class="soften" />*@
+                    <div class="text-center title-info">
+                            信息来源:中南大学毕业生就业指导服务中心
+                            浏览次数:<span>@ViewBag.tb_Article.Rows[0]["ClickTimes"]</span>
+                    </div>
+                </div>
+                <div id="placeAndTime">
+                    <h4 class="page-header">时间地点</h4>
+                    <p class="text-center time">招聘时间：@Convert.ToDateTime(ViewBag.dt_PlaceListSecond.Rows[0]["PlaceTime"].ToString()).GetDateTimeFormats('f')[0].ToString()</p>
+                    <p class="text-center place">招聘地点：@ViewBag.dt_PlaceListSecond.Rows[0]["PlaceName"]</p>
+                </div>
+                <div id="companyInfo">
+                    <h4 class="page-header">招聘说明</h4>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["Introduction"])
+                </div>
+                <div id="contact">
+                    <h4 class="page-header">就业网联系信息</h4>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["ContactInfo"])
+                </div>
+                <div id="demand">
+                    <h4 class="page-header">来聘单位列表</h4>
+                    <table class="table">
+                        <tbody>
+                            @for (int i = 0; i < ViewBag.dt_BigArticleList.Rows.Count; ++i)
+                            {                      
+                            <tr>
+                                <td><span class="badge" style="margin-right:40px;">@(i+1)</span><a href="@ViewBag.dt_BigArticleList.Rows[i]["ArticleID"]" target="_blank">@ViewBag.dt_BigArticleList.Rows[i]["Title"]</a></td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <div id="file">
+                    <h4 class="page-header">附件</h4>
+                    @if (ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == null || ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == "")
+                    {
+                        <span>无</span>
+                    }
+                    else
+                    {
+                        <a href="~/UploadFiles/@ViewBag.tb_Article.Rows[0]["FileAddr"]" target="_blank">@ViewBag.tb_Article.Rows[0]["FileAddr"].ToString().Substring(18)</a>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-3 nav-right" id="myScrollspy">
+                <ul class="nav nav-list nav-stacked hidden-xs hidden-sm" data-spy="affix">
+                    <li class="active"><a href="#title"><i class="glyphicon glyphicon-chevron-left"></i> 标题</a></li>
+                    <li><a href="#placeAndTime"><i class="glyphicon glyphicon-chevron-left"></i> 时间地点</a></li>
+                    <li><a href="#companyInfo"><i class="glyphicon glyphicon-chevron-left"></i> 招聘说明</a></li>
+                    <li><a href="#contact"><i class="glyphicon glyphicon-chevron-left"></i> 就业网联系信息</a></li>
+                    <li><a href="#demand"><i class="glyphicon glyphicon-chevron-left"></i> 来聘单位列表</a></li>
+                    <li><a href="#file"><i class="glyphicon glyphicon-chevron-left"></i> 附件</a></li>
+                    <li><a href="#top"> 返回顶部</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}
+@*在线招聘*@
+else
+{
+    <div class="container">
+        <div class="row article">
+            <div class="col-md-9 content">
+                <div class="location">            
+                    <ol class="breadcrumb">
+                        <span style="color:#eb6841;">当前位置:</span>
+                        <li><a href="@Url.Action("Index","Home")">首页</a></li>
+                        <li><a href="@Url.Action("ArticleList", "Home", new { id = Convert.ToInt32(ViewBag.TypeID) })">@ViewBag.TypeName</a></li>
+                        <li class="active">文章内容</li>
+                    </ol>
+                </div>
+                <div id="title" class="">
+                    <h1 class="text-center title">@ViewBag.tb_Article.Rows[0]["Title"]</h1>
+                    @*<hr class="soften" />*@
+                    <div class="text-center title-info">
+                            信息来源:中南大学毕业生就业指导服务中心
+                            浏览次数:<span>@ViewBag.tb_Article.Rows[0]["ClickTimes"]</span>
+                    </div>
+                </div>
+                <div id="demand">
+                    <h4 class="page-header">需求信息</h4>
+                    @foreach (System.Data.DataRow dt in ViewBag.tb_Demand.Rows)
+                    {
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-2 demand-title">职位名称</td>
+                                <td>@dt["PositionName"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">教育水平</td>
+                                <td>@dt["EducationalLevel"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">专业</td>
+                                <td>@dt["Major"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">需求数量</td>
+                                <td>@dt["DemandNum"]</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-2 demand-title">职位描述</td>
+                                <td>@Html.Raw(dt["PositionDec"])</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    }
+                </div>
+                <div id="companyInfo">
+                    <h4 class="page-header">单位简介</h4>
+                    <table class="table table-bordered">
+                        <tr><td class="td_title">单位名称</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyName"]</td><td class="td_title">单位性质</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyNature"]</td></tr>
+                        <tr><td class="td_title">单位行业</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyBusiness"]</td><td class="td_title">是否五百强</td><td>@(Convert.ToInt32(ViewBag.tb_Employer.Rows[0]["IsTop500"]) == 1 ? "是":"否" )</td></tr>
+                    </table>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["Introduction"])
+                </div>
+                <div id="contact">
+                    <h4 class="page-header">联系方式</h4>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["ContactInfo"])
+                </div>
+                
+                <div id="file">
+                    <h4 class="page-header">附件</h4>
+                    @if (ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == null || ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == "")
+                    {
+                        <span>无</span>
+                    }
+                    else
+                    {
+                        <a href="~/UploadFiles/@ViewBag.tb_Article.Rows[0]["FileAddr"]" target="_blank" style="color:red; text-decoration: underline;">@ViewBag.tb_Article.Rows[0]["FileAddr"].ToString().Substring(18)</a>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-3 nav-right" id="myScrollspy">
+                <ul class="nav nav-list nav-stacked hidden-xs hidden-sm" data-spy="affix">
+                    <li class="active"><a href="#title"><i class="glyphicon glyphicon-chevron-left"></i> 标题</a></li>
+                    <li><a href="#demand"><i class="glyphicon glyphicon-chevron-left"></i> 需求信息</a></li>
+                    <li><a href="#companyInfo"><i class="glyphicon glyphicon-chevron-left"></i> 单位简介</a></li>
+                    <li><a href="#contact"><i class="glyphicon glyphicon-chevron-left"></i> 联系方式</a></li>                    
+                    <li><a href="#file"><i class="glyphicon glyphicon-chevron-left"></i> 附件</a></li>
+                    <li><a href="#top"> 返回顶部</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}

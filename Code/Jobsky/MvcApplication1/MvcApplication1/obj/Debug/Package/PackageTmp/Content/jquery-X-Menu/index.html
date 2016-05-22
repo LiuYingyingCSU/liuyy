@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link type="text/css" rel="stylesheet" 	href="css/powerFloat.css" />
+	<link type="text/css" rel="stylesheet" 	href="css/xmenu.css" />
+	<title>jquery下拉弹出多选框特效代码插件X-Menu - 代码笔记 www.198zone.com</title>
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-powerFloat-min.js"></script>
+	<script type="text/javascript" src="js/jquery-xmenu.js"></script>
+
+	<style type="text/css">
+body { font-size:14px; color:#666; font-family:'Microsoft Yahei', Tahoma, Arial!important; font-family:Tahoma, Arial; background:#dbdfe3; }
+a { color:#039;text-decoration: none; }
+a:hover { color:#06C; }
+img { border:none 0; }
+body.showChange .change { background:#FF0; border-radius: 3px; }
+h1.title { text-align:center; color:#30475e; }
+h1.title strong { font-size:42px; position:relative; }
+h1.title strong:after { content:''; display:block; position:absolute; left:0; bottom:24px; width:90%; height:1px; box-shadow:0 20px 15px rgba(0, 0, 0, .8); }
+#header, #main, #footer { width:840px; margin:auto;}
+#header .summary { padding:20px; background:#30475e; color:#FFF; border-radius: 8px; zoom:1; }
+#header .summary:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+#header .summary a { color:#FFF; }
+#header .summary a:hover { color:#CCC; }
+#header .summary strong { display:inline-block; width:5em; }
+#header .summary dl { padding:0; margin:0; }
+#header .summary dd { margin-left:0; padding:3px 0; }
+#header .summary dt { display:none; }
+#header .summary dd.photo { float:right; }
+#header .summary img { border:1px #506f8e solid; }
+#main .card { padding:20px; margin-top:30px; background: #FFF; border:1px solid #d1d6db; border-radius: 8px; }
+#main .card:after { position:relative; z-index:-1; content: ""; padding:20px; display: block; height: 10px; border-radius: 10px; box-shadow:0 20px 20px rgba(2, 37, 69, .6); }
+#main .card h2 { text-align:center; color:#000; }
+#main .card ul dl { padding-left:1em; border-left:1px dashed #DDD; }
+#main .card ul dt { padding:8px 0; font-weight:bold; }
+#main .card ul dd { margin-left:0; }
+#main .card ul dd dl { margin-left:2em; }
+#footer { padding:20px 0; text-align:center; color:#999; }
+#footer .copyright a { color:#999; }
+
+/*///// code /////*/
+.runCode:after { content: "..."; }
+.button, 
+.runCode { display:inline-block; padding:1px 12px; text-decoration:none; color: #333 !important; cursor:pointer; border: solid 1px #999; border-radius: 5px; background: #DDD; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDDDDD');
+background: linear-gradient(top, #FFF, #DDD); background: -moz-linear-gradient(top, #FFF, #DDD); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#DDD)); text-shadow: 0px 1px 1px rgba(255, 255, 255, 1); box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 -1px 0 rgba(0, 0, 0, .09); -moz-transition:-moz-box-shadow linear .2s;
+-webkit-transition: -webkit-box-shadow linear .2s;
+transition: box-shadow linear .2s;
+white-space: nowrap; }
+.button:focus, .runCode:focus { outline:none 0; border-color:#426DC9; box-shadow:0 0 8px rgba(66, 109, 201, .9); }
+.button:hover, .runCode:hover { color:#000; border-color:#666; }
+.button:active, .runCode:active { border-color:#666; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DDDDDD', endColorstr='#FFFFFF');
+background: linear-gradient(top, #DDD, #FFF); background: -moz-linear-gradient(top, #DDD, #FFF); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DDD), to(#FFF)); box-shadow:inset 0 1px 5px rgba(66, 109, 201, .9), inset 0 1px 1em rgba(0, 0, 0, .3); }
+.button[disabled] { cursor:default; color:#666; background:#DDD; border: 1px solid #999; filter:alpha(opacity=50); opacity:.5; box-shadow:none; }
+pre { position:relative; padding:5px; font-size:14px; border:1px solid #EFEFEF; background:#F9F9F9; z-index:2; border-radius: 5px; }
+pre:before, pre:after { visibility:hidden; display:block; content:""; width:0; height:0; border:9px solid transparent; position:absolute; }
+pre:before { border-top-color:#EEF7F5; position:absolute; left:18px; bottom:-18px; z-index:2; }
+pre:after { border-top-color:#c7dcd3; left:18px; bottom:-19px; z-index:1; }
+pre.select { background:#EEF7F5 !important; border:1px solid #D7EAE2; border-right-color:#c7dcd3; border-bottom-color:#c7dcd3; }
+pre.select:before, pre.select:after { visibility:visible; }
+/*//// skin ////*/
+#skins { width:560px; padding:8px 0; }
+#skins .button { width:82px; text-align:center; }
+#skins ul, #skins li { padding:0; margin:0; list-style:none; }
+#skins li { display:inline; }
+#skins ul { text-align:center; }
+
+#showChange { position:fixed; bottom:0; right:0; z-index:87; }
+@media only screen and (max-width:980px) {
+ h1.title {
+font-size:24px;
+}
+ #header, #main, #footer {
+max-width:100%;
+}
+ img {
+max-width:100%
+}
+}
+@media print {
+#header .summary, a { color: #000 !important; }
+#header, #main, #footer { width:auto; }
+#main .card { padding:10px; margin-top:10px; box-shadow:none; border:none 0; border-top: 1px dashed #666; border-radius:0; }
+#main .card h2 { text-align:left; }
+#main .card:after { display:none; }
+h1.title strong:after, #index, #print, .runCode, .button, #skin-menu { display:none; }
+}
+</style>
+<!-- Dw 风格代码高亮 -->
+<style type="text/css">
+pre.sh_sourceCode { color: #000000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_keyword { color: #009; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_type { color: #0000ff; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_string { color: #00F; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_regexp { color: #060; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_specialchar { color: #C42DA8; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_comment { color: #999; font-weight: normal; font-style: italic; }
+pre.sh_sourceCode .sh_number { color: #F00; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_preproc { color: #00b800; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_symbol { color: #009; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_function { color: #000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_cbracket { color: #009; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_url { color: #ff0000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_date { color: #0000ff; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_time { color: #0000ff; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_file { color: #0000ff; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_ip { color: #ff0000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_name { color: #ff0000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_variable { color: #ec7f15; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_oldfile { color: #C42DA8; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_newfile { color: #ff0000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_difflines { color: #0000ff; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_selector { color: #ec7f15; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_property { color: #0000ff; font-weight: bold; font-style: normal; }
+pre.sh_sourceCode .sh_value { color: #ff0000; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_predef_var { color: #909; font-weight: normal; font-style: normal; }
+pre.sh_sourceCode .sh_predef_func { color: #099; font-weight: normal; font-style: normal; }
+</style>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		var sh_languages = {};function sh_isEmailAddress(a){return/^mailto:/.test(a)?!1:a.indexOf("@")!==-1}function sh_setHref(a,b,c){var d=c.substring(a[b-2].pos,a[b-1].pos);d.length>=2&&d.charAt(0)==="<"&&d.charAt(d.length-1)===">"&&(d=d.substr(1,d.length-2)),sh_isEmailAddress(d)&&(d="mailto:"+d),a[b-2].node.href=d}function sh_konquerorExec(a){var b=[""];return b.index=a.length,b.input=a,b}function sh_highlightString(a,b){if(/Konqueror/.test(navigator.userAgent)&&!b.konquered){for(var c=0;c<b.length;c++)for(var d=0;d<b[c].length;d++){var e=b[c][d][0];e.source==="$"&&(e.exec=sh_konquerorExec)}b.konquered=!0}var f=document.createElement("a"),g=document.createElement("span"),h=[],i=0,j=[],k=0,l=null,m=function(b,c){var d=b.length;if(d===0)return;if(!c){var e=j.length;if(e!==0){var m=j[e-1];m[3]||(c=m[1])}}if(l!==c){l&&(h[i++]={pos:k},l==="sh_url"&&sh_setHref(h,i,a));if(c){var n;c==="sh_url"?n=f.cloneNode(!1):n=g.cloneNode(!1),n.className=c,h[i++]={node:n,pos:k}}}k+=d,l=c},n=/\r\n|\r|\n/g;n.lastIndex=0;var o=a.length;while(k<o){var p=k,q,r,s=n.exec(a);s===null?(q=o,r=o):(q=s.index,r=n.lastIndex);var t=a.substring(p,q),u=[];for(;;){var v=k-p,w,x=j.length;x===0?w=0:w=j[x-1][2];var y=b[w],z=y.length,A=u[w];A||(A=u[w]=[]);var B=null,C=-1;for(var D=0;D<z;D++){var E;if(D<A.length&&(A[D]===null||v<=A[D].index))E=A[D];else{var F=y[D][0];F.lastIndex=v,E=F.exec(t),A[D]=E}if(E!==null&&(B===null||E.index<B.index)){B=E,C=D;if(E.index===v)break}}if(B===null){m(t.substring(v),null);break}B.index>v&&m(t.substring(v,B.index),null);var G=y[C],H=G[1],I;if(H instanceof Array)for(var J=0;J<H.length;J++)I=B[J+1],m(I,H[J]);else I=B[0],m(I,H);switch(G[2]){case-1:break;case-2:j.pop();break;case-3:j.length=0;break;default:j.push(G)}}l&&(h[i++]={pos:k},l==="sh_url"&&sh_setHref(h,i,a),l=null),k=r}return h}function sh_getClasses(a){var b=[],c=a.className;if(c&&c.length>0){var d=c.split(" ");for(var e=0;e<d.length;e++)d[e].length>0&&b.push(d[e])}return b}function sh_addClass(a,b){var c=sh_getClasses(a);for(var d=0;d<c.length;d++)if(b.toLowerCase()===c[d].toLowerCase())return;c.push(b),a.className=c.join(" ")}function sh_extractTagsFromNodeList(a,b){var c=a.length;for(var d=0;d<c;d++){var e=a.item(d);switch(e.nodeType){case 1:if(e.nodeName.toLowerCase()==="br"){var f;/MSIE/.test(navigator.userAgent)?f="\r":f="\n",b.text.push(f),b.pos++}else b.tags.push({node:e.cloneNode(!1),pos:b.pos}),sh_extractTagsFromNodeList(e.childNodes,b),b.tags.push({pos:b.pos});break;case 3:case 4:b.text.push(e.data),b.pos+=e.length}}}function sh_extractTags(a,b){var c={};return c.text=[],c.tags=b,c.pos=0,sh_extractTagsFromNodeList(a.childNodes,c),c.text.join("")}function sh_mergeTags(a,b){var c=a.length;if(c===0)return b;var d=b.length;if(d===0)return a;var e=[],f=0,g=0;while(f<c&&g<d){var h=a[f],i=b[g];h.pos<=i.pos?(e.push(h),f++):(e.push(i),b[g+1].pos<=h.pos?(g++,e.push(b[g]),g++):(e.push({pos:h.pos}),b[g]={node:i.node.cloneNode(!1),pos:h.pos}))}while(f<c)e.push(a[f]),f++;while(g<d)e.push(b[g]),g++;return e}function sh_insertTags(a,b){var c=document,d=document.createDocumentFragment(),e=0,f=a.length,g=0,h=b.length,i=d;while(g<h||e<f){var j,k;e<f?(j=a[e],k=j.pos):k=h;if(k<=g){if(j.node){var l=j.node;i.appendChild(l),i=l}else i=i.parentNode;e++}else i.appendChild(c.createTextNode(b.substring(g,k))),g=k}return d}function sh_highlightElement(a,b){sh_addClass(a,"sh_sourceCode");var c=[],d=sh_extractTags(a,c),e=sh_highlightString(d,b),f=sh_mergeTags(c,e),g=sh_insertTags(f,d);while(a.hasChildNodes())a.removeChild(a.firstChild);a.appendChild(g)}function sh_getXMLHttpRequest(){if(window.ActiveXObject)return new ActiveXObject("Msxml2.XMLHTTP");if(window.XMLHttpRequest)return new XMLHttpRequest;throw"No XMLHttpRequest implementation available"}function sh_load(language,element,prefix,suffix){if(language in sh_requests){sh_requests[language].push(element);return}sh_requests[language]=[element];var request=sh_getXMLHttpRequest(),url=prefix+"sh_"+language+suffix;request.open("GET",url,!0),request.onreadystatechange=function(){if(request.readyState===4)try{if(!!request.status&&request.status!==200)throw"HTTP error: status "+request.status;eval(request.responseText);var elements=sh_requests[language];for(var i=0;i<elements.length;i++)sh_highlightElement(elements[i],sh_languages[language])}finally{request=null}},request.send(null)}function sh_highlightDocument(a,b){var c=document.getElementsByTagName("pre");for(var d=0;d<c.length;d++){var e=c.item(d),f=sh_getClasses(e);for(var g=0;g<f.length;g++){var h=f[g].toLowerCase();if(h==="sh_sourcecode")continue;if(h.substr(0,3)==="sh_"){var i=h.substring(3);if(i in sh_languages)sh_highlightElement(e,sh_languages[i]);else if(typeof a=="string"&&typeof b=="string")sh_load(i,e,a,b);else throw'Found <pre> element with class="'+h+'", but no such language exists';break}}}}var sh_requests={};sh_languages.javascript=[[[/\/\/\//g,"sh_comment",1],[/\/\//g,"sh_comment",7],[/\/\*\*/g,"sh_comment",8],[/\/\*/g,"sh_comment",9],[/\b(?:abstract|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|final|finally|for|function|goto|if|implements|in|instanceof|interface|native|new|null|private|protected|prototype|public|return|static|super|switch|synchronized|throw|throws|this|transient|true|try|typeof|var|volatile|while|with)\b/g,"sh_keyword",-1],[/(\+\+|--|\)|\])(\s*)(\/=?(?![*\/]))/g,["sh_symbol","sh_normal","sh_symbol"],-1],[/(0x[A-Fa-f0-9]+|(?:[\d]*\.)?[\d]+(?:[eE][+-]?[\d]+)?)(\s*)(\/(?![*\/]))/g,["sh_number","sh_normal","sh_symbol"],-1],[/([A-Za-z$_][A-Za-z0-9$_]*\s*)(\/=?(?![*\/]))/g,["sh_normal","sh_symbol"],-1],[/\/(?:\\.|[^*\\\/])(?:\\.|[^\\\/])*\/[gim]*/g,"sh_regexp",-1],[/\b[+-]?(?:(?:0x[A-Fa-f0-9]+)|(?:(?:[\d]*\.)?[\d]+(?:[eE][+-]?[\d]+)?))u?(?:(?:int(?:8|16|32|64))|L)?\b/g,"sh_number",-1],[/"/g,"sh_string",10],[/'/g,"sh_string",11],[/~|!|%|\^|\*|\(|\)|-|\+|=|\[|\]|\\|:|;|,|\.|\/|\?|&|<|>|\|/g,"sh_symbol",-1],[/\{|\}/g,"sh_cbracket",-1],[/\b(?:Math|Infinity|NaN|undefined|arguments)\b/g,"sh_predef_var",-1],[/\b(?:Array|Boolean|Date|Error|EvalError|Function|Number|Object|RangeError|ReferenceError|RegExp|String|SyntaxError|TypeError|URIError|decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|isNaN|parseFloat|parseInt)\b/g,"sh_predef_func",-1],[/\b(?:applicationCache|closed|Components|content|controllers|crypto|defaultStatus|dialogArguments|directories|document|frameElement|frames|fullScreen|globalStorage|history|innerHeight|innerWidth|length|location|locationbar|menubar|name|navigator|opener|outerHeight|outerWidth|pageXOffset|pageYOffset|parent|personalbar|pkcs11|returnValue|screen|availTop|availLeft|availHeight|availWidth|colorDepth|height|left|pixelDepth|top|width|screenX|screenY|scrollbars|scrollMaxX|scrollMaxY|scrollX|scrollY|self|sessionStorage|sidebar|status|statusbar|toolbar|top|window)\b/g,"sh_predef_var",-1],[/\b(?:alert|addEventListener|atob|back|blur|btoa|captureEvents|clearInterval|clearTimeout|close|confirm|dump|escape|find|focus|forward|getAttention|getComputedStyle|getSelection|home|moveBy|moveTo|open|openDialog|postMessage|print|prompt|releaseEvents|removeEventListener|resizeBy|resizeTo|scroll|scrollBy|scrollByLines|scrollByPages|scrollTo|setInterval|setTimeout|showModalDialog|sizeToContent|stop|unescape|updateCommands|onabort|onbeforeunload|onblur|onchange|onclick|onclose|oncontextmenu|ondragdrop|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onpaint|onreset|onresize|onscroll|onselect|onsubmit|onunload)\b/g,"sh_predef_func",-1],[/(?:[A-Za-z]|_)[A-Za-z0-9_]*(?=[ \t]*\()/g,"sh_function",-1]],[[/$/g,null,-2],[/(?:<?)[A-Za-z0-9_\.\/\-_~]+@[A-Za-z0-9_\.\/\-_~]+(?:>?)|(?:<?)[A-Za-z0-9_]+:\/\/[A-Za-z0-9_\.\/\-_~]+(?:>?)/g,"sh_url",-1],[/<\?xml/g,"sh_preproc",2,1],[/<!DOCTYPE/g,"sh_preproc",4,1],[/<!--/g,"sh_comment",5],[/<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)(?:\/)?>/g,"sh_keyword",-1],[/<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)/g,"sh_keyword",6,1],[/&(?:[A-Za-z0-9]+);/g,"sh_preproc",-1],[/<(?:\/)?[A-Za-z][A-Za-z0-9]*(?:\/)?>/g,"sh_keyword",-1],[/<(?:\/)?[A-Za-z][A-Za-z0-9]*/g,"sh_keyword",6,1],[/@[A-Za-z]+/g,"sh_type",-1],[/(?:TODO|FIXME|BUG)(?:[:]?)/g,"sh_todo",-1]],[[/\?>/g,"sh_preproc",-2],[/([^=" \t>]+)([ \t]*)(=?)/g,["sh_type","sh_normal","sh_symbol"],-1],[/"/g,"sh_string",3]],[[/\\(?:\\|")/g,null,-1],[/"/g,"sh_string",-2]],[[/>/g,"sh_preproc",-2],[/([^=" \t>]+)([ \t]*)(=?)/g,["sh_type","sh_normal","sh_symbol"],-1],[/"/g,"sh_string",3]],[[/-->/g,"sh_comment",-2],[/<!--/g,"sh_comment",5]],[[/(?:\/)?>/g,"sh_keyword",-2],[/([^=" \t>]+)([ \t]*)(=?)/g,["sh_type","sh_normal","sh_symbol"],-1],[/"/g,"sh_string",3]],[[/$/g,null,-2]],[[/\*\//g,"sh_comment",-2],[/(?:<?)[A-Za-z0-9_\.\/\-_~]+@[A-Za-z0-9_\.\/\-_~]+(?:>?)|(?:<?)[A-Za-z0-9_]+:\/\/[A-Za-z0-9_\.\/\-_~]+(?:>?)/g,"sh_url",-1],[/<\?xml/g,"sh_preproc",2,1],[/<!DOCTYPE/g,"sh_preproc",4,1],[/<!--/g,"sh_comment",5],[/<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)(?:\/)?>/g,"sh_keyword",-1],[/<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)/g,"sh_keyword",6,1],[/&(?:[A-Za-z0-9]+);/g,"sh_preproc",-1],[/<(?:\/)?[A-Za-z][A-Za-z0-9]*(?:\/)?>/g,"sh_keyword",-1],[/<(?:\/)?[A-Za-z][A-Za-z0-9]*/g,"sh_keyword",6,1],[/@[A-Za-z]+/g,"sh_type",-1],[/(?:TODO|FIXME|BUG)(?:[:]?)/g,"sh_todo",-1]],[[/\*\//g,"sh_comment",-2],[/(?:<?)[A-Za-z0-9_\.\/\-_~]+@[A-Za-z0-9_\.\/\-_~]+(?:>?)|(?:<?)[A-Za-z0-9_]+:\/\/[A-Za-z0-9_\.\/\-_~]+(?:>?)/g,"sh_url",-1],[/(?:TODO|FIXME|BUG)(?:[:]?)/g,"sh_todo",-1]],[[/"/g,"sh_string",-2],[/\\./g,"sh_specialchar",-1]],[[/'/g,"sh_string",-2],[/\\./g,"sh_specialchar",-1]]];
+
+		sh_highlightDocument();	
+		
+		$("#selectpos").xMenu({
+			width :800,
+			eventType: "click", //事件类型 支持focus click hover
+			dropmenu:"#m1",//弹出层
+			hiddenID : "selectposhidden"//隐藏域ID		
+			
+		});
+		
+		
+		$("#selectdept").xMenu({
+			width :800, 
+			eventType: "click", //事件类型 支持focus click hover
+			dropmenu:"#m2",//弹出层
+			hiddenID : "selectdeptidden"//隐藏域ID		
+			
+		});
+				
+	});
+	</script>
+</head>
+<body>
+	<div id="main">
+	  <div id="lead" class="card">			
+
+<h3>查看效果</h3>	
+				<p>
+				 <div class="topnav">
+					<a id="selectpos" href="javascript:void(0);" class="as">
+						<span>选择职位</span>			
+					</a>				
+					
+				</div>	
+				<br>
+				<div class="topnav">
+					<a id="selectdept" href="javascript:void(0);" class="as">
+						<span>选择部门</span>
+					</a>					
+					
+				</div>				
+			</p>
+			<h3>隐藏域值</h3>	
+			<pre><input type="text" value="" id="selectposhidden" />
+			
+<input type="text" value="" id="selectdeptidden" />
+			</pre>
+		</div>
+	  <div id="options" class="card">
+		<h2>配置参数</h2>
+		<ul>
+			<li>
+				<h3 id="options-width">width</h3>
+				<dl>
+					<dt>概述</dt>
+						<dd> (默认值: "580") 弹出窗体宽度</dd>
+					<dt>类型</dt>
+					<dd>Number</dd>
+					
+				</dl>
+			</li>
+			<li>
+				<h3 id="options-eventType">eventType</h3>
+				<dl>
+					<dt>概述</dt>
+						<dd> (默认值: "click") 事件类型有 click focus </dd>
+					<dt>类型</dt>
+					<dd>String</dd>					
+				</dl>
+			</li>
+			<li>
+				<h3 id="options-dropmenu">dropmenu</h3>
+				<dl>
+					<dt>概述</dt>
+						<dd> 弹出容器对象 样式可以重写 </dd>
+					<dt>类型</dt>
+					<dd>Jquery对象</dd>					
+				</dl>
+			</li>
+			<li>
+				<h3 id="options-hiddenID">hiddenID</h3>
+				<dl>
+					<dt>概述</dt>
+						<dd> 所选项目的隐藏域 传值用</dd>
+					<dt>类型</dt>
+					<dd>String</dd>					
+				</dl>
+			</li>
+		</ul>
+	</div>
+	<div id="use" class="card">	
+			<h3>引入文件</h3>
+				<p>在页面 head 引入 x-Menu 样式与脚本文件:</p>
+				<pre class="sh_javascript">&lt;link type="text/css" rel="stylesheet" 	href="css/powerFloat.css" /&gt;
+&lt;link type="text/css" rel="stylesheet" 	href="css/xmenu.css" /&gt;
+&lt;script type="text/javascript" src="js/jquery-1.7.2.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="js/jquery-powerFloat-min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="js/jquery-xmenu.js"&gt;&lt;/script&gt;</pre>
+				<h3>调用方式</h3>
+				<ol>
+				   <li>
+					<pre class="sh_javascript" id="lead-demo-1">$("#selectpos").xMenu({	
+	width :600,	
+	eventType: "click", //事件类型 支持focus click hover
+	dropmenu:"#m1",//弹出层
+	hiddenID : "selectposhidden"//隐藏域ID	
+});
+					</pre>					
+				  </li>					
+				</ol>
+			<h3>页面结构</h3>
+<pre class="sh_javascript">
+&lt;div id="m2" class="xmenu" style="display: none;"&gt;
+	&lt;div class="select-info"&gt;	
+		&lt;label class="top-label"&gt;已选部门：&lt;/label&gt;
+		&lt;ul&gt;
+			
+		&lt/ul&gt;
+		&lta  name="menu-confirm" href="javascript:void(0);" class="a-btn"&gt;
+			&ltspan class="a-btn-text"&gt;确定&lt;/span&gt;
+		&lt/a&gt;
+	&ltdiv&gt;	
+	&ltdl&gt;
+		&lt;dt class="open"&gt;需求部门&lt;/dt&gt;
+			&lt;dd&gt;       
+				&lt;ul&gt;
+					&lt;li rel="1"  class=""&gt;开发部&lt;/li&gt;
+					&lt;li rel="2"&gt;人事部&lt;/li&gt;
+					&lt;li rel="3"&gt;市场部&lt;/li&gt;
+					&lt;li rel="4" class=""&gt;业务部&lt;/li&gt;
+					&lt;li rel="5"&gt;财务部&lt;/li&gt;							
+				&lt;/ul&gt;						
+			&lt;/dd&gt;
+		&lt;dt class="open"&gt;缺编部门&lt;/dt&gt;
+		&lt;dd&gt;
+			&lt;ul&gt;
+				&lt;li rel="15" class=""&gt;研发部&lt;/li&gt;
+				&lt;li rel="16"&gt;广告部&lt;/li&gt;
+				&lt;li rel="17"&gt;出纳部&lt;/li&gt;
+				&lt;li rel="18" class=""&gt;后勤部&lt;/li&gt;						
+			&lt;/ul&gt;    
+		&lt;/dd&gt;
+     &lt;/dl&gt;				 
+&lt;/div&gt;
+
+</pre>			
+	</div>
+		
+	</div>							
+
+	<!-- 弹出下拉框 -->
+		 <div id="m1" class="xmenu" style="display: none;">
+				<div class="select-info">	
+					<label class="top-label">已选职位：</label>
+					<ul>					
+					</ul>
+					<a  name="menu-confirm" href="javascript:void(0);" class="a-btn">
+						<span class="a-btn-text">确定</span>
+					</a> 
+				</div>			
+				<dl>
+					<dt class="open">需求职位</dt>
+						<dd>       
+							<ul>
+								<li rel="1" >计算机硬件</li>
+								<li rel="2" >计算机软件</li>
+								<li rel="3" >互联网开发及应用</li>
+								<li rel="4" >IT-管理</li>
+								<li rel="5" >IT-品管、技术支持及其它</li>
+								<li rel="6">通信技术</li>
+								<li rel="7" class="">电子/电器/半导体/仪器仪表</li>
+								<li rel="8">销售管理</li>
+								<li rel="9">销售人员</li>
+								<li rel="10" class="">销售行政及商务</li>
+								<li rel="11">客服及技术支持</li>
+								<li rel="12">财务/审计/税务</li>
+								<li rel="13" class="">证券/金融/投资</li>
+								<li rel="14">银行</li>
+								<li rel="51" class="">人力资源</li>
+								<li rel="52" class="">高级管理</li>
+								<li rel="53" class="">行政/后勤</li>
+								<li rel="54" class="">咨询/顾问</li>
+								<li rel="55" class="">律师/法务</li>
+								<li rel="56" class="">教师/培训</li>
+								<li rel="57" class="">科研人员</li>
+								<li rel="58" class="">餐饮/娱乐</li>
+								<li rel="59" class="">酒店/旅游</li>
+								<li rel="60" >美容/健身/体育</li>
+								<li rel="61" >百货/连锁/零售服务</li>
+								<li rel="62" >交通运输服务</li>
+								<li rel="63" >保安/家政/其他服务</li>
+								<li rel="64">公务员</li>
+								<li rel="65" class="">翻译</li>
+								<li rel="66" class="">在校学生</li>
+								<li rel="67" >储备干部/培训生/实习生</li>
+								<li rel="68" class="">兼职</li>
+								<li rel="69" class="">其他</li>
+								<li rel="70" >环保</li>
+							</ul>						
+						</dd>
+					<dt class="open">缺编职位</dt>
+					<dd>
+						<ul>
+							
+							<li rel="28">银行</li>
+							<li rel="29">保险</li>
+							<li rel="30" class="">生产/营运</li>
+							<li rel="31">质量/安全管理</li>
+							<li rel="32">工程/机械/能源</li>
+							<li rel="33" class="">汽车</li>
+							<li rel="34">技工</li>
+							<li rel="35">服装/纺织/皮革</li>
+							<li rel="36"  class="">采购</li>
+							<li rel="37">贸易</li>
+							<li rel="38">物流/仓储</li>
+							<li rel="39" class="">生物/制药/医疗器械</li>
+							<li rel="40" >化工</li>
+							<li rel="41" >医院/医疗/护理</li>
+							<li rel="42" class="">广告</li>
+							<li rel="43" >公关/媒介</li>
+							<li rel="44" >市场/营销</li>
+							<li rel="45" >影视/媒体</li>
+							<li rel="46" >写作/出版/印刷</li>
+							<li rel="47" >艺术/设计</li>
+							<li rel="48" >建筑工程</li>
+							<li rel="49" >房地产</li>
+							<li rel="50" class="">物业管理</li>
+							
+						</ul>    
+					</dd>
+				</dl>			
+			</div>
+	  		
+	 <div id="m2" class="xmenu" style="display: none;">
+			<div class="select-info">	
+				<label class="top-label">已选部门：</label>
+				<ul>
+					
+				</ul>
+				<a  name="menu-confirm" href="javascript:void(0);" class="a-btn">
+					<span class="a-btn-text">确定</span>
+				</a> 
+			</div>	
+			<dl>
+				<dt class="open">需求部门</dt>
+					<dd>       
+						<ul>
+							<li rel="1"  class="">开发部</li>
+							<li rel="2">人事部</li>
+							<li rel="3">市场部</li>
+							<li rel="4" class="">业务部</li>
+							<li rel="5">财务部</li>							
+						</ul>						
+					</dd>
+				<dt class="open">缺编部门</dt>
+				<dd>
+					<ul>
+						<li rel="15" class="">研发部</li>
+						<li rel="16">广告部</li>
+						<li rel="17">出纳部</li>
+						<li rel="18" class="">后勤部</li>						
+					</ul>    
+			  	</dd>
+            </dl>
+				 
+		</div>
+
+	<div id="footer">
+  
+  <p class="validators"> </p>
+</div>
+ 
+<!--以下无正文 转载或者使用请注释出自代码笔记 www.198zone.com-->
+ <div style="width:960px;margin:10px auto; clear:both; text-align:center;  ">
+<script src="/statics/js/ad/96090.js" type="text/javascript"></script>
+</div>
+<div style="width:960px;margin:20px auto 100px auto; clear:both; text-align:center; font-size:12px; line-height:25px;    ">
+<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<a href="http://www.198zone.com"  style="color:#333"><strong>代码笔记整理</strong></a> </strong>
+ 转载请自觉注明出处！注：此代码仅供学习交流，请勿用于商业用途。
+</div>
+<!--以上无正文 转载或者使用请注释出自代.码.笔.记 www.198zone.com-->
+</body>
+</html>

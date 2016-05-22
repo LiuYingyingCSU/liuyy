@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - 中南大学毕业生就业指导服务中心</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @RenderSection("Styles", required: false)
+    </head>
+    <body>
+        <header style="height:100px;background-color:White;">
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title"><a href="~/Home/Index"><img src="~/Images/Home/logo.png" alt="中南大学毕业生就业指导中心" /></a></p>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper" style="padding-top:20px;line-height:30px;">
+                <div class="float-left">
+                    <p>CopyRight &copy; 2001-@DateTime.Now.Year <br />中南大学毕业生就业指导服务中心</p>
+                    <p>地址：长沙市岳麓区中南大学校本部二办公楼二楼就业指导中心</p>
+                </div>
+                <div class="float-right" style="text-align:right;">
+                    <p>联系电话：0731-88836891<br />0731-88877434</p>
+                    <p><a style="color:White;" href="@Url.Action("About", "Home")#aboutMe" target="_blank">关于本站</a><a style="color:White;" href="@Url.Action("About", "Home")#websiteMap" target="_blank">网站地图</a><a style="color:White;" href="@Url.Action("About", "Home")#contact" target="_blank">联系我们</a></p>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

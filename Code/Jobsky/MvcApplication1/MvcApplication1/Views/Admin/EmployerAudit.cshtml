@@ -1,0 +1,294 @@
+﻿@model MvcApplication1.Models.Employer
+
+@{
+    ViewBag.Title = "审核雇主信息";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    
+}
+
+@section Styles{
+    <link href="~/Content/Employer/DetailsCss.css" rel="stylesheet" type="text/css" />
+}
+
+<div id="RegisterContent">
+    <h1>雇主注册信息</h1>
+    @using (Html.BeginForm("EmployerAudit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-8 col-md-offset-2" }))
+    {
+        @*账户信息*@
+        <div id="divAccount">
+            @*标题部分*@
+            <div class="divTitle" id="divAccountTitle">
+                <img src="~/Images/Employer/AccountInfo.jpg" />
+                <p>账户信息</p>
+            </div>
+            @*内容部分*@
+            <div id="divAccountContent" class="divContent">
+                <table>
+                    @*账号*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.EmployerAccount)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EmployerAccount)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @*联系人信息*@
+        <div id="divContact">
+            @*标题部分*@
+            <div class="divTitle" id="divContactTitle">
+                <img src="~/Images/Employer/ContactInfo.jpg" />
+                <p>联系人信息</p>
+            </div>
+            @*内容部分*@
+            <div id="divContactContent" class="divContent" style="width:800px;">
+                <table>
+                    @*联系人姓名*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.ContactPersonName)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.ContactPersonName)
+                        </td>
+                    </tr>
+                    @*联系人性别*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.ContactPersonSex)：
+                        </td>
+                        <td>
+                            @if (Model.ContactPersonSex == 1)
+                            {
+                                <span>男</span>
+                            }
+                            else
+                            {
+                                <span>女</span>
+                            }
+                        </td>
+                    </tr>
+                    @*固定电话*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.FixedTelephone)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.FixedTelephone)
+                        </td>
+                    </tr>
+                    @*移动电话*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.MobilePhone)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.MobilePhone)
+                        </td>
+                    </tr>
+                    @*邮箱*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.Email)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @*单位基本信息*@
+        <div id="divCompany">
+            @*标题部分*@
+            <div class="divTitle" id="divCompanyTitle">
+                <img src="~/Images/Employer/CompanyInfo.jpg" />
+                <p>单位基本信息</p>
+            </div>
+            @*内容部分*@
+            <div id="divCompanyContent" class="divContent" style="width:800px;">
+                <table>
+                    @*单位名称*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyName)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanyName)
+                        </td>
+                    </tr>
+                    @*总公司名称*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.ParentCompanyName)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.ParentCompanyName)
+                        </td>
+                    </tr>
+                    @*单位简介*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyIntroduction, new { @class = "txtAreaLabel" })：
+                            @*@Html.Label("：", new { @class = "txtAreaLabel" })*@
+                        </td>
+                        <td>
+                            <textarea class="inputTxt" readonly="readonly" name="CompanyIntroduction" style="width:380px;height:75px;">@Html.DisplayFor(model => model.CompanyIntroduction)</textarea>
+                        </td>
+                    </tr>
+                    @*办公电话*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyPhone)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanyPhone)
+                        </td>
+                    </tr>
+                    @*组织机构代码*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.OrganizationCode)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.OrganizationCode)
+                        </td>
+                    </tr>
+                    @*组织机构代码有效期*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.Label("组织机构代码有效期至")：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.ValidPeriod)
+                        </td>
+                    </tr>
+                    @*单位性质*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyNature)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanyNature)
+                        </td>
+                    </tr>
+                    @*单位行业*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyBusiness)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanyBusiness)
+                        </td>
+                    </tr>
+                    @*单位规模*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanySize)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanySize)
+                        </td>
+                    </tr>
+                    @*注册资本*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.RegisteredCapital)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.RegisteredCapital)（万元）
+                        </td>
+                    </tr>
+                    @*是否是五百强*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.IsTop500)：
+                        </td>
+                        <td>
+                            @if (Model.IsTop500 == 1)
+                            {
+                                <span>是</span>
+                            }
+                            else
+                            {
+                                <span>否</span>
+                            }
+                        </td>
+                    </tr>
+                    @*单位所在地*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.Label("单位所在地")：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanyAreaProvince)
+                            @Html.DisplayFor(model => model.CompanyAreaCity)
+                        </td>
+                    </tr>
+                    @*单位地址*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyAddress)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CompanyAddress)
+                        </td>
+                    </tr>
+                    @*城市类型*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CityClass)：
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.CityClass)
+                        </td>
+                    </tr>
+                    @*备注*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.Remark, new { @class = "txtAreaLabel" })：
+                            @*@Html.Label("：", new { @class = "txtAreaLabel" })*@
+                        </td>
+                        <td>
+                            <textarea class="inputTxt" readonly="readonly" name="Remark" style="width:380px;height:75px;">@Html.DisplayFor(model => model.Remark)</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @*证件照片*@
+        <div id="divCredentialDir">
+            @*标题部分*@
+            <div class="divTitle" id="divCredentialDirTitle">
+                <img src="~/Images/Employer/CompanyInfo.jpg" />
+                <p>营业执照或组织机构代码证</p>
+            </div>
+            @*内容部分*@
+            <div id="divCredentialDirContent" class="divContent" style="width:900px;">
+                <img src="~/Uploads/@Html.DisplayFor(model=>model.CredentialsDir)" />
+            </div>
+        </div>
+
+        <div id="divBtn">
+            <p>
+                <input type="submit" class="btn btn-primary" value="审核通过" />
+                <input type="button" class="btn btn-primary" onclick="btnReturn()" value="返回" />
+            </p>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function btnReturn() {
+            history.back(-1);
+        }
+    </script>
+}

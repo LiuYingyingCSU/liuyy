@@ -1,0 +1,192 @@
+﻿#body{
+    background-color:#e7f2f8;
+}
+h1{
+    text-align:center;
+    color:#3f6f95;
+}
+
+/*所有标题部分*/
+.divTitle{
+    width:960px;
+    height:60px;
+}
+.divTitle img{
+    width:60px;
+    height:60px;
+}
+.divTitle p{
+    margin-top:-40px;
+    margin-left:70px;
+}
+/*所有内容部分*/
+.divContent{
+    border:2px solid pink;
+    border-radius:4px;
+    background-color:white;
+    padding:30px 0 0 120px;
+}
+.divContent input{
+    border-radius:5px;
+    /*margin-left:20px;*/
+    border-color:gray;
+}
+.divContent select{
+    border-radius:5px;
+    /*margin-left:20px;*/
+}
+.divContent table td{
+    padding:10px 0;
+}
+.divContent table tr{
+    vertical-align:top;
+}
+.TbRight{
+    text-align:right;
+}
+
+/*所有输入框（input）*/
+.inputTxt{
+    border-radius:5px;
+    /*margin-left:20px;*/
+}
+/*所有文本框区域的Label(textarea)*/
+.txtAreaLabel{
+    /*float:left;*/
+}
+/*所有文本框区域(textarea)*/
+.txtArea{
+    width:380px;
+    height:75px;
+    border-color:gray;
+}
+
+/*账户信息部分*/
+#divAccount{
+    width:960px;
+    min-height:220px;
+}
+/*账户信息部分*/
+/*账户信息标题部分*/
+
+/*账户信息部分*/
+/*账户信息内容部分*/
+#divAccountContent{
+    width:840px;
+    min-height:115px;
+    padding:30px 0 0 120px; 
+}
+
+/*联系人部分*/
+#divContact{
+    margin:5px 0 0 0;
+    width:960px;
+    min-height:335px;
+}
+/*联系人部分*/
+/*联系人标题部分*/
+
+/*联系人部分*/
+/*联系人内容部分*/
+#divContactContent{
+    width:860px;
+    min-height:230px;    
+    padding:30px 0 0 100px; 
+}
+
+/*单位基本信息部分*/
+#divCompany{
+    margin:5px 0 0 0;
+    width:960px;
+    min-height:700px;
+}
+/*单位基本信息部分*/
+/*单位基本信息标题部分*/
+
+/*单位基本信息部分*/
+/*单位基本信息内容部分*/
+#divCompanyContent{
+    width:930px;
+    min-height:720px;    
+    padding:30px 0 0 30px; 
+}
+
+/*证件照片部分*/
+#divCredentialDir{
+    margin:5px 0 0 0;
+    width:960px;
+    min-height:400px;
+}
+/*证件照片部分*/
+/*证件照片标题部分*/
+
+/*证件照片部分*/
+/*证件照片内容部分*/
+#divCredentialDirContent{
+    width:840px;
+    min-height:250px;    
+    padding:40px 0 0 120px;
+}
+#divCredentialDirContentUpload{
+    background: url(../../Images/Employer/UploadBtn.jpg) no-repeat;
+    position:relative;
+    overflow:hidden;
+    width:70px;
+    height:50px;
+}
+#file{
+    height:50px;
+    position:absolute;
+    top:0;
+    right:0;
+    cursor:pointer;
+    opacity:0;
+    filter:alpha(opacity=0);
+}
+#divCredentialDirContentText{
+    margin-top:-28px;
+    margin-left:90px;
+    font-family:"黑体";
+    color:black;
+}
+#divCredentialDirContentText #fileName{
+    margin-top:12px;
+    margin-left:-85px;
+}
+#divCredentialDirContentText #lblMessage{
+    margin-top:2px;
+    margin-left:-85px;
+}
+#divCredentialDirContentImg{
+    height:220px;
+}
+#divCredentialDirContentImg img{
+    width:350px;
+    height:200px;
+}
+
+/*----------------日期控件的css---------------*/
+.date_selector{font:12px/1.5 Arial; color:#666; background:#fff;}
+.date_selector, .date_selector *{width: auto;height: auto;border: none;background: none;margin: 0;padding: 0;text-align: left;text-decoration: none;}
+.date_selector{background:#fbfbfb;border: 1px solid #ccc;padding: 10px;margin:0;margin-top:10px;position: absolute;z-index:100000;display:none;border-radius: 3px;box-shadow: 0 0 5px #aaa;box-shadow:0 2px 2px #ccc; width:220px;}
+.date_selector_ieframe{position: absolute;z-index: 99999;display: none;}
+.date_selector .nav{width: 17.5em;}
+.date_selector .nav p{clear: none;}
+.date_selector .month_nav, .date_selector .year_nav{margin: 0 0 3px 0;padding: 0;display: block;position: relative;text-align: center;}
+.date_selector .month_nav{float: left;width: 55%;}
+.date_selector .year_nav{float: right;width: 42%;margin-right: -8px;}
+.date_selector .month_name, .date_selector .year_name{font-weight: bold;line-height: 20px;}
+.date_selector .button{display: block;position: absolute;top: 0;width:18px;height:18px;line-height:16px;font-weight:bold;color:#5985c7;text-align: center;font-size:12px;overflow:hidden;border: 1px solid #ccc;border-radius:2px;}
+.date_selector .button:hover, .date_selector .button.hover{background:#5985c7;color: #fff;cursor: pointer;border-color:#3a930d;}
+.date_selector .prev{left: 0;}
+.date_selector .next{right: 0;}
+.date_selector table{border-spacing: 0;border-collapse: collapse;clear: both;margin: 0; width:220px;}
+.date_selector th, .date_selector td{width: 2.5em;height: 2em;padding: 0 !important;text-align: center !important;color: #666;font-weight: normal;}
+.date_selector th{font-size: 12px;}
+.date_selector td{border:1px solid #f1f1f1;line-height: 2em;text-align: center;white-space: nowrap;color:#5985c7;background: #fff;}
+.date_selector td.today{background: #eee;}
+.date_selector td.unselected_month{color: #ccc;}
+.date_selector td.selectable_day{cursor: pointer;}
+.date_selector td.selected{background:#2b579a;color: #fff;font-weight: bold;}
+.date_selector td.selectable_day:hover, .date_selector td.selectable_day.hover{background:#5985c7;color: #fff;}
+/*--------------------------------------*/

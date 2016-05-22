@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="中南大学毕业生就业指导服务中心,中南大学就业信息网,中南大学就业网,中南大学,就业信息网,中南就业,jobsky,jobsky.csu.edu.cn" />
+    <meta name="description" content="中南大学毕业生就业指导服务中心——中南大学就业信息网——中南大学就业网，第一时间发布中南大学校园招聘信息和实习信息,发布湖南省各高校校园招聘信息和湖南省就业实习信息，中南大学学生和湖南省毕业生找工作实习的首选网站。" />
+    <title>@ViewBag.Title - 中南大学毕业生就业指导服务中心</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @Styles.Render("~/Content/bootstrap/css/css")
+    <!--[if lt IE 9]>
+        @Scripts.Render("~/bundles/bootstrapIE9")
+    <![endif]-->
+    <link type="text/css" href="~/Content/Home/HomeLayout.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
+    <!--百度统计-->
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?b93064ec9fc6755131fe935f3e72fc40";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body  data-spy="scroll" data-target="#myScrollspy">
+    <!--下面是顶部导航栏的代码-->
+    <header class="" role="banner" id="top">
+	    <nav class="navbar breadcrumb breadcrumb-page first-nav" role="navigation">
+		    <div class="container">
+			    <div class="navbar-header">
+				    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+					    <span class="sr-only">Toggle navigation</span>
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+				    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index","Home")"><img src="~/Images/Home/logo.png" width="100%" height="75" style="margin-top:-15px;" alt="中南大学毕业生就业指导服务中心" /></a>
+			    </div>
+                <form action="~/Home/Search"  id="global_search_form" method="get" class="pull-right col-xs-6 col-sm-3" style="margin-top:15px;">
+					<div class="input-group no-margin">
+                        @{
+                            if(@ViewBag.key!=""){
+                                <input type="text" name="key" value=@ViewBag.key class="form-control no-padding-hr" style="border-radius: 0;" /> 
+                            }else{
+                                <input type="text" name="key" placeholder="Search..." class="form-control no-padding-hr" style="border-radius: 0;" />
+                            }
+                        }  
+                        <span id="global_search_btns" onclick="$('#global_search_form').submit();" class="input-group-addon" style="background-color: #e8e8e8; cursor: pointer;border-radius: 0;"><i class="glyphicon glyphicon-search jobsky-glyphicon-search"></i></span>
+                    </div>
+                    <div class="text-right jobsky-search-menu">
+                        <a href="http://jobsky.csu.edu.cn:8000" class="goto-old">返回旧版</a>
+                        <a href="~/Home/AdvancedSearch">高级检索</a>
+                    </div>
+				</form>
+		    </div>
+	    </nav>
+        
+        <nav class="navbar second-nav">
+            <div class="container">
+                <div class="navbar-header">
+			        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+			        </button>
+		        </div>
+                <ul class="nav navbar-nav">
+                    <li class="/*active*/">@Html.ActionLink("首页", "Index", null, new { target = "_self" })</li>
+                    <li class="dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						    招聘专区
+						    <span class="caret"></span>
+					    </a>
+					    <ul class="dropdown-menu" role="menu">
+						    <li>
+							    @Html.ActionLink("本部招聘", "ArticleList", new { id = "1" })
+						    </li>
+						    <li>
+							    @Html.ActionLink("铁道招聘", "ArticleList", new { id = "3" })
+						    </li>
+						    <li>
+							    @Html.ActionLink("湘雅招聘", "ArticleList", new { id = "2" })
+						    </li>
+                            <li>
+							    @Html.ActionLink("事业招考", "ArticleList", new { id = "5" })
+						    </li>
+                            <li>
+							    @Html.ActionLink("在线招聘", "ArticleList", new { id = "4" })
+						    </li>
+                            <li>
+							    @Html.ActionLink("基层项目", "ArticleList", new { id = "13" })
+						    </li>
+					    </ul>
+			        </li>
+                    <li class="dropdown">
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						    就业指导
+						    <span class="caret"></span>
+					    </a>
+					    <ul class="dropdown-menu" role="menu">
+						    <li>
+							    @Html.ActionLink("职业规划", "ArticleList", new { id = "9" })
+						    </li>
+						    <li>
+							    @Html.ActionLink("求职指南", "ArticleList", new { id = "10" })
+						    </li>
+						    <li>
+							    @Html.ActionLink("课程教学", "ArticleList", new { id = "11" })
+						    </li>
+                            <li>
+							    @Html.ActionLink("职业测评", "ArticleList", new { id = "12" })
+						    </li>
+					    </ul>
+			        </li>
+                    <li>@Html.ActionLink("通知公告", "ArticleList", new { id = "8" })</li>
+                    <li>@Html.ActionLink("新闻动态", "ArticleList", new { id = "7" })</li>
+                    <li>@Html.ActionLink("机构设置", "OldArticleDetails", "Home", new { id = 21741 }, new { target = "_self" })</li>
+                    <li>@Html.ActionLink("院系风采", "CollegeList", "Home", null, new { target = "_self" })</li>
+                    <li><a href="http://jobsky.csu.edu.cn:8000/home/jyzn/bks/chart/chart_1.html" target="_blank">常用下载</a></li>
+                </ul>
+                 
+            </div>
+        </nav>
+    
+    </header>
+
+    @RenderBody()
+
+    <hr class="soften">
+    <footer class="breadcrumb breadcrumb-page footer">
+        <div class="container">
+            <div class="pull-left">
+                <p>CopyRight &copy; 2001-@DateTime.Now.Year 中南大学毕业生就业指导服务中心</p>
+                <p>地址：湖南省长沙市岳麓区中南大学校本部二办公楼二层 | <a href="~/Home/About#contact" style="color:#c8cdd2;">联系我们</a></p>
+            </div>
+            <div class="pull-right">
+                <p><a href="http://csu.ncss.org.cn/login" target="_blank">全国一站式就业服务系统</a> | <a href="~/Home/ApplyLink">友情链接</a> | <a href="~/Home/About#aboutMe">网站介绍</a> | <a href="http://www.csu.edu.cn/" target="_blank">中南主页</a></p>
+                <p>技术支持：中南大学就业网技术团队</p>
+            </div>
+        </div>
+    </footer>
+    <div class="" style="position: fixed;right: 15px;bottom: 80px; z-index: 1030;">
+        <ul class="list-group">
+            <li class="list-group-item" style="padding: 5px 5px;"><a href="javascript:void(0);" id = "tencent-weixin" class="tencent-weixin"><img src="~/Images/Home/iconfont-weixin.png" alt="微信" onmouseover="this.src='http://jobsky.csu.edu.cn/Images/Home/iconfont-weixin-hover.png'" onmouseout="this.src='http://jobsky.csu.edu.cn/Images/Home/iconfont-weixin.png'" /></a></li>        
+            <li class="list-group-item" style="padding: 5px 5px;"><a href="javascript:void(0);" id = "sina-weibo" class = "sina-weibo"><img src="~/Images/Home/iconfont-sina.png" alt="新浪微博" onmouseover="this.src='http://jobsky.csu.edu.cn/Images/Home/iconfont-sina-hover.png'" onmouseout="this.src='http://jobsky.csu.edu.cn/Images/Home/iconfont-sina.png'" /></a></li>
+            <li class="list-group-item" style="padding: 5px 5px;"><a href="javascript:void(0);" id = "tencent-weibo" class = "tencent-weibo"><img src="~/Images/Home/iconfont-tencent.png" alt="腾讯微博" onmouseover="this.src='http://jobsky.csu.edu.cn/Images/Home/iconfont-tencent-hover.png'" onmouseout="this.src='http://jobsky.csu.edu.cn/Images/Home/iconfont-tencent.png'" /></a></li>
+        </ul>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $("#tencent-weixin").popover({
+            html: true,
+            content: $('<img src="http://jobsky.csu.edu.cn/Images/Home/jobsky-tencent-weixin.jpg" alt="微信" />'),
+            delay: 50,
+            trigger: 'manual',
+            animation: false,
+            placement: 'left'
+        }).on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(this).siblings(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide")
+                }
+            }, 100);
+        });
+
+        $("#sina-weibo").popover({
+            html: true,
+            content: $('<img src="http://jobsky.csu.edu.cn/Images/Home/jobsky-sina-weibo.jpg" alt="新浪微博" />'),
+            delay: 50,
+            trigger: 'manual',
+            animation: false,
+            placement: 'left'
+        }).on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(this).siblings(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide")
+                }
+            }, 100);
+        });
+        $("#tencent-weibo").popover({
+            html: true,
+            content: $('<img src="http://jobsky.csu.edu.cn/Images/Home/jobsky-tencent-weibo.jpg" alt="腾讯微博" />'),
+            delay: 50,
+            trigger: 'manual',
+            animation: false,
+            placement: 'left'
+        }).on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(this).siblings(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide")
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

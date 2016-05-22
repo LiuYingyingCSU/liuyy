@@ -1,0 +1,49 @@
+﻿@{
+}
+
+@section Styles{
+    <link href="~/Content/Home/ViewNews.css" rel="stylesheet" type="text/css" />
+}
+
+@if (ViewBag.tb_College.Rows.Count < 1)
+{
+    ViewBag.Title = "找不到该文章";
+    <div class="container" style="min-height:500px">
+        <div class="row" style="margin-top:100px;">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">找不到该文章</h3>
+                    </div>
+                    <div class="panel-body title" style="color: #a94442;min-height:100px">
+                        您所查找的文章不存在或者已经被删除！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else {
+    ViewBag.Title = ViewBag.tb_College.Rows[0]["Title"];
+
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+                <article style="padding-top:20px;">
+                    <header class="text-center">
+                        <h2 class="title">@ViewBag.tb_College.Rows[0]["Title"]</h2>
+                        <section class="title-info">
+                            <span>信息来源:中南大学毕业生就业指导服务中心</span>
+                        </section>
+                    </header>
+
+                    <section class="jobsky-content">
+                        @Html.Raw(ViewBag.tb_College.Rows[0]["Content"])
+                    </section>
+                </article>
+            </main> 
+        </div>        
+    </div>
+
+
+}

@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - 中南大学毕业生就业指导服务中心</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @Styles.Render("~/Content/bootstrap/css/css")
+    <!--[if lt IE 9]>
+        @Scripts.Render("~/bundles/bootstrapIE9")
+    <![endif]-->
+    @RenderSection("Styles", required: false)
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+            padding-bottom: 40px;
+            color: #5a5a5a;
+        }
+        /* 下面是左侧导航栏的代码 */
+        .sidebar {
+            position: fixed;
+            top: 51px;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-color: #ddd;
+            border-right: 1px solid #eee;
+        }
+
+        .nav-sidebar {
+            margin-right: -21px;
+            margin-bottom: 20px;
+            margin-left: -20px;
+        }
+
+        .nav-sidebar > li > a {
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+        .nav-sidebar > .active > a,
+        .nav-sidebar > .active > a:hover,
+        .nav-sidebar > .active > a:focus {
+            color: #fff;
+            background-color: #428bca;
+        }
+       .jobsky-dropdown-nav > li > a {/*样式*/
+            background-color: #f6f6f6;
+            border-top: 1px solid #efefef;
+            border-bottom: 1px solid #efefef;
+            font-size: 12px;
+            text-align:center;
+        }
+        .jobsky-dropdown-nav > li.active > a, .jobsky-dropdown-nav > li > a:hover {/*滑过样式*/
+            background-color: #66c3ec;
+        }
+        .jobsky-dropdown-nav > li > .menusecond-selected
+        {/*选中样式*/
+            background-color: #66c3ec;
+        }
+        .secondmenu a {
+            text-align: center;
+        }
+        
+        .main {
+            padding: 20px;
+        }
+
+        .main .page-header {
+            margin-top: 0;
+        }
+        
+</style>
+</head>
+<body>
+	<!--下面是顶部导航栏的代码-->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">中南大学就业网后台管理系统</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="#">首页</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-user"></span>账户
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="dropdown-header">个人信息</li>
+							<li>
+								<a href="#">修改信息</a>
+							</li>
+							<li>
+								<a href="#">查看信息</a>
+							</li>
+							<li class="divider"></li>
+							<li class="dropdown-header">系统功能</li>
+							<li>
+								@Html.ActionLink("注销", "Logout")
+							</li>
+						</ul>
+					</li>
+					<li>
+						@Html.ActionLink("帮助", "HelpMessage", new { id = 0 })
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!--自适应布局-->
+	<div class="container-fluid">
+		<div class="row">
+			<!--左侧导航栏-->
+
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li class="active">
+						<a href="#">首页</a>
+					</li>
+				</ul>
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a href="#news" class="nav-header collapsed" data-toggle="collapse">
+                            <i class="glyphicon glyphicon-book"></i>
+                            文章管理
+                            <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                        @{
+                            HttpCookie _cookie = Request.Cookies["Admin"];
+                            if (_cookie != null)
+                            {
+                                string _adminType = _cookie["AdminType"];
+                                if (_adminType == "1" || _adminType == "2")  //0为本部，1为湘雅，2为铁道
+                                {
+                                    //铁道湘雅就只显示部分
+                                    <ul id="news" class="nav nav-list collapse secondmenu jobsky-dropdown-nav" style="height: 0px;">
+                                        <li><a href="@Url.Action("NewsCreate", "Admin")"><i class="glyphicon glyphicon-edit"></i>添加文章</a></li>
+                                        <li><a href="@Url.Action("NewsList", "Admin")"><i class="glyphicon glyphicon-th-list"></i>文章列表</a></li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                     <ul id="news" class="nav nav-list collapse secondmenu jobsky-dropdown-nav" style="height: 0px;">
+                                        <li><a href="@Url.Action("NewsCreate", "Admin")"><i class="glyphicon glyphicon-edit"></i>添加文章</a></li>
+                                        <li><a href="@Url.Action("PictureNewsCreate", "Admin")"><i class="glyphicon glyphicon-edit"></i>添加图片新闻</a></li>
+                                        <li><a href="@Url.Action("NewsList", "Admin")"><i class="glyphicon glyphicon-th-list"></i>文章列表</a></li>
+                                        <li><a href="@Url.Action("PictureNewsUpRank", "Admin")"><i class="glyphicon glyphicon-th-list"></i>图片文章排序</a></li>
+                                    </ul>   
+                                }
+                            }
+                        }
+                    </li>
+				</ul>
+                @{
+                    if (_cookie != null)
+                    {
+                        string _adminType = _cookie["AdminType"];
+                        if (_adminType != "1" && _adminType != "2")  //0为本部，1为湘雅，2为铁道
+                        {
+                            //不是铁道和湘雅就可见用户管理模块
+                            <ul class="nav nav-sidebar">
+                                <li>
+                                    <a href="#newsUser" class="nav-header collapsed" data-toggle="collapse">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        用户管理
+                                        <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                                    </a>
+                                    <ul id="newsUser" class="nav nav-list collapse secondmenu jobsky-dropdown-nav" style="height: 0px;">
+                                        <li><a href="@Url.Action("AdminCreate", "Admin")"><i class="glyphicon glyphicon-edit"></i>添加用户</a></li>
+                                        <li><a href="@Url.Action("AdminList", "Admin")"><i class="glyphicon glyphicon-th-list"></i>用户列表</a></li>
+                                    </ul>
+					            </li>					
+				            </ul>     
+                        }
+                    }
+                }
+				
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a href="#Employer" class="nav-header collapsed" data-toggle="collapse">
+                            <i class="glyphicon glyphicon-user"></i>
+                            雇主管理
+                            <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                        <ul id="Employer" class="nav nav-list collapse secondmenu jobsky-dropdown-nav" style="height: 0px;">
+                            <li><a href="@Url.Action("QueryEmployerPwd", "Admin")"><i class="glyphicon glyphicon-edit"></i>查询雇主密码</a></li>
+                            <li><a href="@Url.Action("EmployerWaitList", "Admin")"><i class="glyphicon glyphicon-edit"></i>待审核雇主列表</a></li>
+                            <li><a href="@Url.Action("EmployerList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已审核雇主列表</a></li>
+                            <li><a href="@Url.Action("EmployerArticleWaitList", "Admin")"><i class="glyphicon glyphicon-edit"></i>待审核雇主文章列表</a></li>
+                            <li><a href="@Url.Action("EmployerArticleList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已审核雇主文章列表</a></li>
+                            <li><a href="@Url.Action("EmployerArticleDisagreeList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已回绝雇主文章列表</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li>
+                        @Html.ActionLink("帮助", "HelpMessage", new { id = 0 })
+                    </li>
+                </ul>
+			</div>
+			<!--右侧管理控制台-->
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="row">
+                    <section class="content-wrapper main-content clear-fix">
+                    @RenderBody()
+                    </section>
+				</div>
+			</div>
+		</div>
+	</div>    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

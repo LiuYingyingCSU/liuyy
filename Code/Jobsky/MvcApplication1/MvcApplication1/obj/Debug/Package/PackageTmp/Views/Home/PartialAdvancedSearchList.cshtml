@@ -1,0 +1,35 @@
+﻿@foreach (System.Data.DataRow dr in ViewBag.EmployerArticles.Rows)
+{
+    string str1 = dr["CompanyName"].ToString();
+    if (str1.Length >= 15)
+    {
+        str1 = str1.Substring(0, 15);
+        str1 += "...";
+    }
+    dr["CompanyName"] = str1;
+    
+    string str2 = dr["Title"].ToString();
+    if (str2.Length >= 15)
+    {
+        str2 = str2.Substring(0, 15);
+        str2 += "...";
+    }
+    dr["Title"] = str2;
+    <tr>
+        <td>
+            @dr["CompanyName"]
+        </td>
+        <td>
+            <a href='@Url.Action("ArticleDetails", "Home", new { id = Convert.ToInt32(dr["ArticleID"]) })'>@dr["Title"]</a>
+        </td>
+        <td>
+            @dr["CompanyNature"]
+        </td>
+        <td>
+            @dr["CompanyAreaProvince"]
+        </td>
+        <td>
+            @Convert.ToDateTime(dr["EditTime"]).ToShortDateString().ToString()
+        </td>
+    </tr>
+}

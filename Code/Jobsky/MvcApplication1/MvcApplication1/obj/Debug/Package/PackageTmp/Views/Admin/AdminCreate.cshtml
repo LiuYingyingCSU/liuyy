@@ -1,0 +1,81 @@
+﻿@model MvcApplication1.Models.AdminRegister
+
+@{
+    ViewBag.Title = "添加用户";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style type="text/css">
+    .RedFontWarning {
+        color: red;
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <h2>添加用户</h2>
+    <div class="row">
+        @using (Html.BeginForm("AdminCreate", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-8 col-md-offset-2" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">用户类型：</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.AdminType, ViewBag.AdminTypeDDL as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AdminType, null, new { @class = "RedFontWarning" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">账号：</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.AdminAccount, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AdminAccount, null, new { @class = "RedFontWarning" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">用户名称：</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.AdminName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AdminName, null, new { @class = "RedFontWarning" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">密码：</label>
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.AdminPwd, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AdminPwd, null, new { @class = "RedFontWarning" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">确认密码：</label>
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.ConfirmAdminPwd, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConfirmAdminPwd, null, new { @class = "RedFontWarning" })
+                </div>
+            </div>
+            <br />            
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="提交" />
+            </div>
+        }
+    </div>
+</body>
+</html>
+
+<link href="~/Content/bootstrap/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Content/bootstrap/bootstrap-datepicker-1.4.0-dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="~/Content/bootstrap/bootstrap-datepicker-1.4.0-dist/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
+
+}

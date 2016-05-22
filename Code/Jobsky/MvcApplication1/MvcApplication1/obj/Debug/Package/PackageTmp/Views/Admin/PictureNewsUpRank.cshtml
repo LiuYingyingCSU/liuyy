@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "图片排序";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h2>图片排序</h2>
+<div class="row">
+    
+        @Html.AntiForgeryToken()
+        @foreach (System.Data.DataRow dr in ViewBag.PictureNews.Rows)
+        {            
+            <form class="col-md-8 col-md-offset-2" method="post" accept-charset="UTF-8" action="@Url.Action("PictureNewsUpRank", "Admin", new { id = Int32.Parse(dr["NewsID"].ToString()), title = dr["Title"] })">
+                <div class="alert alert-info" style="height:70px;">
+                <div class="col-md-8">@dr["Title"]</div>
+                <input type="text" name="NewsID" value="@dr["NewsID"]" style="display:none" />
+                <div class="col-md-2"> <input type="submit" class="btn btn-primary" value="排前一位" /></div>
+                <div class="col-md-2"> 当前排序：@dr["Rank"]</div>
+            </div>
+            </form>
+        }
+        
+</div>

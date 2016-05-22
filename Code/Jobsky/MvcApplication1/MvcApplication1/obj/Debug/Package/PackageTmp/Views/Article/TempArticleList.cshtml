@@ -1,0 +1,217 @@
+﻿@{
+    Layout = "~/Views/Shared/ArticleLayout.cshtml";
+    ViewBag.Title = "待审核文章";
+}
+<style type="text/css">
+    #body{background-color:#e7f2f8;}
+    table{width:100%;text-align:center;border:1px solid #A7C5E2;border-collapse:collapse;background-color:#ffffff;}
+    th{color:rgb(219,80,121);text-align:center;}
+    tr{border-bottom:1px dashed #A7C5E2;}
+    th,td{padding:8px;}
+    td a{
+	    font-size: 1em;
+	    padding: 5px 5px;
+	    text-transform: uppercase;
+	    color: #ffffff;
+	    /*-webkit-transition: all 0.3s ease-in-out;
+	    -moz-transition: all 0.3s ease-in-out;
+	    -o-transition: all 0.3s ease-in-out;
+	    transition: all 0.3s ease-in-out;*/
+	    border-radius: 2px;
+	    -webkit-border-radius: 2px;
+	    -moz-border-radius: 2px;
+	    -o-border-radius: 2px;
+	    text-decoration:none;
+	    color:White;
+	    background-color:#A0D468;}
+	td a:hover
+	{
+	    background-color:#87B753;
+	}
+	h2{text-align:center;color:rgb(219,80,121);}
+	
+	/*分页样式*/
+	.pagination{
+	    display: inline-block;
+        padding-left: 0;
+        margin: 20px 0;
+        border-radius: 4px;  
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+	}
+	.pagination li{
+	    display: inline;  
+	}
+	.pagination li a
+	{
+	    margin-right: 5px;
+        border-radius: 2px;
+        background: #fff;
+        color: #333;
+        border-color: #ccc;
+        padding: 6px 15px;
+        position: relative;
+        float: left;
+        border: 1px solid #ddd;
+        text-decoration: none;
+	}
+	.pagination .active a,.pagination li a:hover,.pagination li a:focus
+	{
+	    color: #fff;
+        background: #fb9400;
+        border-color: #fb9400;
+	}
+	.pagination li a .arrow {
+        display: inline-block;
+        overflow: hidden;
+        border-left: 5px dashed transparent;
+        border-bottom: 5px dashed transparent;
+        border-right: 5px dashed transparent;
+        border-top: 5px solid #fff;
+        vertical-align: middle;
+    }
+	.pagination li a .arrow2 {
+        margin: 3px 8px 5px 0;
+        border-left: 5px dashed transparent;
+        border-bottom: 5px dashed transparent;
+        border-top: 5px dashed transparent;
+        border-right: 5px solid #ccc;
+    }
+    .pagination li a .arrow3 {
+        margin: 3px 0 5px 8px;
+        border-top: 5px dashed transparent;
+        border-bottom: 5px dashed transparent;
+        border-right: 5px dashed transparent;
+        border-left: 5px solid #ccc;
+    }
+    .pagination>.disabled>span, 
+    .pagination>.disabled>span:hover, 
+    .pagination>.disabled>span:focus, 
+    .pagination>.disabled>a, 
+    .pagination>.disabled>a:hover, 
+    .pagination>.disabled>a:focus
+    {
+        color: #999;
+        background-color: #fff;
+        border-color: #ddd;
+        cursor: not-allowed;
+    }
+</style>
+<h2>提交的文章</h2>
+
+<table>
+
+    <tr>
+         <th>
+             标题
+         </th>
+         <th>
+             提交时间
+         </th>
+         <th>
+             审核状态
+         </th>
+         <th>
+            操作
+         </th>
+         <th>
+            回绝意见
+         </th>
+    </tr>
+ @if(ViewBag.Articles.Rows.Count > 0){
+    foreach (System.Data.DataRow dr in ViewBag.Articles.Rows) {
+     <tr>
+         <td>
+             @dr["Title"]
+         </td>
+         <td>
+             @Convert.ToDateTime(dr["EditTime"]).ToShortDateString().ToString()
+        </td>
+        @if (Convert.ToInt32(dr["IsAudit"]) == 1) { 
+            <td>
+                待审核
+            </td>
+        }
+        else{
+            <td>
+                已回绝
+            </td>
+        }
+         <td>
+             @*@Html.ActionLink("查看", "Details", new { id = Convert.ToInt32(dr["TempArticleID"]) })*@
+             <a style="color:#fff;" href=@Url.Action("TempArticleDetails", new{ id = dr["TempArticleID"].ToString()}) target="_blank">预览</a>
+             &nbsp;
+             @Html.ActionLink("修改", "TempArticleEdit", new { id = Convert.ToInt32(dr["TempArticleID"]) }, new { style = "color:#fff;" })
+             &nbsp;
+             @Html.ActionLink("删除", "Delete", new { id = Convert.ToInt32(dr["TempArticleID"]) }, new { @class = "btnDel", style="color:#fff;" })
+        </td>
+        <td>
+        @*已回绝*@
+        @if (Convert.ToInt32(dr["IsAudit"]) == 0) {
+             @dr["AuditInfo"]
+            }
+        </td>
+    </tr>
+    }
+
+ }
+ else
+ {
+    <tr>
+         <td colspan="5" style="color:red;">
+             尚无文章
+         </td>
+    </tr>   
+ }  
+ </table>
+
+ <div style="padding-top:30px;">
+    <ul class="pagination" id="pagination1"></ul>
+ </div>
+ @section Scripts {
+    <script type="text/javascript" src="~/Scripts/Article/jqPaginator.js"></script>
+    <script type="text/javascript">
+        $.jqPaginator('#pagination1', {
+            totalPages: @ViewBag.totalpage,         //设置分页的总页数
+            visiblePages: 10,                       //设置最多显示的页码数
+            currentPage: @ViewBag.pageindex,        //设置当前的页码
+            first: '<li class="first"><a href="javascript:void(0);">首页</a></li>',
+            last: '<li class="last"><a href="javascript:void(0);">末页</a></li>',
+            prev: '<li class="prev"><a href="javascript:void(0);"><i class="arrow arrow2"><\/i>上一页</a></li>',
+            next: '<li class="next"><a href="javascript:void(0);">下一页<i class="arrow arrow3"></a></li>',
+            page: '<li class="page"><a href="@Href("~/Article/Index/"){{page}}">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+                if(type == 'change') {
+                    var url = '@Href("~/Article/Index/")' + num;
+                    window.location = url;
+                }
+            }
+        });
+    </script>
+}
+
+@Scripts.Render("~/bundles/jquery")
+ <script type="text/javascript">
+     var delflag = true;
+     $(function () {
+         $(".btnDel").click(function () {
+             if (delflag) {
+                 if (confirm("你确定要删除该文章吗？")) {
+                     var url = $(this).attr("href");
+                     $.post(url, null, function (data) {
+                         if (data) {
+                             alert("删除成功!");
+                             window.location.reload();
+                         }
+                         else {
+                             alert("删除失败！");
+                         }
+                     });
+                 }
+                 delflag = false;
+             }
+             delflag = true;
+             return false;
+         });
+     });
+</script>

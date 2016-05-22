@@ -1,0 +1,130 @@
+﻿@{
+    Layout = "~/Views/Shared/ArticleLayout.cshtml";
+    ViewBag.Title = "预览文章";
+}
+
+@section Styles{
+<style type="text/css">
+    .content{
+        border: 1px solid #e6e6e6;
+        background: #fff;
+        margin: 30px 0 20px 0;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+        padding:20px;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .title {
+        color: #4d90db;            
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;   
+        margin-bottom:20px;
+    }
+    .page-header {
+        padding-bottom: 9px;
+        margin: 40px 0 20px;
+        border-bottom: 1px solid #eee;
+        color: #1C84E9;
+    }
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+        max-width: 100%;
+        background-color: transparent;
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 1px solid #ddd;
+    }
+    .table-bordered>tbody>tr>td{
+        border: 1px solid #ddd;
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+    }
+    .demand-title {
+        font-weight: bold;
+        background-color: #ccc;
+        width:20%;
+    }
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .alert-warning {
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+    }
+</style>
+}
+
+@if (ViewBag.tb_Article.Rows.Count > 0)
+{
+    <div class="content">
+                <div id="title">
+                    <h1 class="text-center title">@ViewBag.tb_Article.Rows[0]["Title"]</h1>
+                    @*<hr class="soften" />*@
+                </div>
+                <div id="companyInfo">
+                    <h4 class="page-header">单位简介</h4>
+                    @*<table class="table table-bordered">
+                        <tr><td class="td_title">单位名称</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyName"]</td><td class="td_title">单位性质</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyNature"]</td></tr>
+                        <tr><td class="td_title">单位行业</td><td>@ViewBag.tb_Employer.Rows[0]["CompanyBusiness"]</td><td class="td_title">是否五百强</td><td>@(Convert.ToInt32(ViewBag.tb_Employer.Rows[0]["IsTop500"]) == 1 ? "是":"否" )</td></tr>
+                    </table>*@
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["Introduction"])
+                </div>
+                <div id="contact">
+                    <h4 class="page-header">联系方式</h4>
+                    @Html.Raw(ViewBag.tb_Article.Rows[0]["ContactInfo"])
+                </div>
+                <div id="demand">
+                    <h4 class="page-header">需求信息</h4>
+                    @foreach (System.Data.DataRow dt in ViewBag.tb_Demand.Rows)
+                    {
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="demand-title">职位名称</td>
+                                <td>@dt["PositionName"]</td>
+                            </tr>
+                            <tr>
+                                <td class="demand-title">教育水平</td>
+                                <td>@dt["EducationalLevel"]</td>
+                            </tr>
+                            <tr>
+                                <td class="demand-title">专业</td>
+                                <td>@dt["Major"]</td>
+                            </tr>
+                            <tr>
+                                <td class="demand-title">需求数量</td>
+                                <td>@dt["DemandNum"]</td>
+                            </tr>
+                            <tr>
+                                <td class="demand-title">职位描述</td>
+                                <td>@Html.Raw(dt["PositionDec"])</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    }
+                </div>
+                <div id="file">
+                    <h4 class="page-header">附件</h4>
+                    @if (ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == null || ViewBag.tb_Article.Rows[0]["FileAddr"].ToString() == "")
+                    {
+                        <span>无</span>
+                    }
+                    else
+                    {
+                        <a href="~/UploadFiles/@ViewBag.tb_Article.Rows[0]["FileAddr"]" target="_blank">@ViewBag.tb_Article.Rows[0]["FileAddr"].ToString().Substring(18)</a>
+                    }
+                </div>
+    </div>
+
+}
+else { 
+    <div class="alert alert-warning">您所要查看的文章超越了权限</div>
+}

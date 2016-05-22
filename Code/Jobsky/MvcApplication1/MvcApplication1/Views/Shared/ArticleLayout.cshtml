@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" charset="utf-8" />
+        <title>@ViewBag.Title - 中南大学毕业生就业指导服务中心</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @RenderSection("Styles", required: false)
+
+        <style type="text/css">
+	        html *{
+		        padding:0;
+		        margin:0;
+		        font-family: Arial, Verdana, Helvetica, sans-serif;
+	        }
+	        .menu .nav{margin-top:200px;}
+	        .menu .nav *{
+		        text-decoration:none;
+		        font-size:9pt;
+		
+	        }
+	        .menu .nav * a:hover{
+		        background-color:#82ce18;
+	        }
+	        .menu{
+		        list-style:none;
+		        height:40px;
+		        width:100%;
+		        background-color:rgb(28,101,154);
+		        margin-top:10px;
+	        }
+	        .menu .nav{
+		        list-style:none;
+		        height:40px;
+		        width:900px;
+		        margin:0 auto;
+		        background-color:rgb(28,101,154);		
+	        }
+	        .menu .nav li{
+		        float:left;
+		        @*border-left:1px solid #4a4a4a;
+		        border-right:1px solid #242424;
+		        border-top:1px solid #4a4a4a;
+		        border-bottom:1px solid #242424;*@
+                border-left:1px solid rgb(28,101,154);
+		        border-right:1px solid rgb(28,101,154);
+		        border-top:1px solid rgb(28,101,154);
+		        border-bottom:1px solid rgb(28,101,154);
+		        position:relative;
+	        }
+	        .menu .nav li a{
+		        color:#fff;
+		        height:38px;
+		        line-height:38px;
+		        font-weight:bold;
+		        padding:0 20px;
+		        blr:expression(this.onFocus=this.close());
+		        blr:expression(this.onFocus=this.blur());
+		        display:inline-block;
+	        }
+	        .menu .nav li a:focus{ 
+		        -moz-outline-style: none; 
+	        }
+	        .menu .nav li .sub-nav{
+		        position:absolute;
+		        top:39px;
+		        left:-1px;
+		        list-style:none;
+		        background-color:rgb(28,101,154);
+		        display:none;
+	        }
+	        .menu .nav li .sub-nav li{
+		        text-align:center;
+		        clear:left;
+		        width:140px;
+		        height:35px;
+		        line-height:35px;
+		        position:relative;
+	        }
+	        .menu .nav li .sub-nav li a{
+		        height:34px;
+		        line-height:34px;
+		        width:138px;
+		        padding:0;
+		        display:inline-block;
+	        }
+        </style>
+
+       
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title"><a href="@Url.Action("Index","Home")"><img src="~/Images/Home/logo.png" alt="中南大学毕业生就业指导中心" /></a></p>
+                </div>
+
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                </div>
+
+            </div>
+        </header>
+        <div id="body">
+
+            <div class="menu">
+                <ul class="nav">
+	            
+	                <li><a style="cursor:pointer; ">文章管理</a>
+		                <ul class="sub-nav">
+			                <li>@Html.ActionLink("添加文章", "Create", "Article")</li>
+			                <li>@Html.ActionLink("已审核文章列表", "Index", "Article")</li>
+                            <li>@Html.ActionLink("待审核文章列表", "TempArticleList", "Article")</li>
+		                </ul>
+	                </li>
+	                <li><a style="cursor:pointer; ">个人中心</a>
+		                <ul class="sub-nav">
+			                <li>@Html.ActionLink("注册信息", "Details", "Employer")</li>
+                            <li>@Html.ActionLink("修改信息", "Edit", "Employer")</li>
+		                </ul>
+	                </li>
+                </ul>
+            </div>
+
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper" style="padding-top:20px;line-height:30px;">
+                <div class="float-left">
+                    <p>CopyRight &copy; 2001-@DateTime.Now.Year <br />中南大学毕业生就业指导服务中心</p>
+                    <p>地址：长沙市岳麓区中南大学校本部二办公楼二楼就业指导中心</p>
+                </div>
+                <div class="float-right" style="text-align:right;">
+                    <p>联系电话：0731-88836891<br />0731-88877434</p>
+                    <p><a style="color:White;" href="@Url.Action("About", "Home")#aboutMe" target="_blank">关于本站</a><a style="color:White;" href="@Url.Action("About", "Home")#websiteMap" target="_blank">网站地图</a><a style="color:White;" href="@Url.Action("About", "Home")#contact" target="_blank">联系我们</a></p>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+     <script type="text/javascript">
+         $(function () {
+             $(".nav>li").hover(function () {
+                 $(this).children('ul').stop(true, true).show(300);
+             }, function () {
+                 $(this).children('ul').stop(true, true).hide(300);
+             })
+         })
+        </script>
+</html>

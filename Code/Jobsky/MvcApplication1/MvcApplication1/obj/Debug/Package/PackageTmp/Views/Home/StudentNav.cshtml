@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "学生导航";
+}
+
+@section Styles{
+<style type="text/css">
+    body
+    {     
+        background-color: #ebebeb;   
+    }
+    .content{
+        border: 1px solid #e6e6e6;
+        background: #fff;
+        margin: 30px 0 20px 0;
+        position: relative;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+    }
+    .content div{
+        min-height:300px;    
+    }
+    .content b{
+        margin-top:20px;
+        display: block;
+    }
+    .content p{
+        text-indent: 2em;
+    }
+    .page-header{
+        color: #1C84E9;
+    }
+    .content a
+    {
+        color:Red;
+        }
+    /* 左侧附加导航（Affix） Styles */
+    .nav-left{
+        margin: 30px 0 20px 0;
+    }
+    ul.nav-list{
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+        background-color:#fff;
+    }
+    ul.nav-list li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-list li:first-child{
+        border-top: none;
+    }
+    ul.nav-list li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-list li.active a, ul.nav-list li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-list li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-list li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    h2
+    { 
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;  
+    }
+</style>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 content">
+            <div id="AccountFile">
+                <h2 class="page-header">户口档案</h2>
+                <pre><b>关于出国留学毕业生户口档案转留学服务中心须知</b>
+一、根据教育部留学服务中心（以下简称留服）的规定，出国留学毕业生的户口和档案可以转到留服中心，也可以转回原籍，均有国家政策保障。同时，切记如果转到留服，户口和档案不能分离，办理手续时要提前咨询好能否同时转递户档。
+
+二、以下几类毕业生不能办理户档转留学服务中心手续
+    1、公派出国；
+    2、赴港澳台攻读学位；
+    3、出国（境）做博士后；
+    4、短期（一年）以内的出国；
+    5、出国（境）工作。
+
+三、由于办理转留服手续需要交费等环节，所以请同学们注意保管好自己的财物。
+    留服网站：www.cscse.edu.cn
+    办公地址：北京市海淀区北四环西路56号辉煌时代大厦六层
+    联系电话：010-62677800
+    办公时间：周一至周五，上午9:00-下午16:00
+
+                </pre>
+            </div>
+            <div id="Evaluation">
+                <h2 class="page-header">就业测评</h2>
+                <pre>
+                    <b>中国大学生测评网</b><p>
+    《中国大学生测评网》的研发是配合教育部《国家中长期教育改革和发展规划纲要(2010-2020年)》实施，面向我国高校大学生进行综合素质与学习发展能力综合测评。该测评体系包括：（1）综合素质测评维度（包括：大学生基本素质、身体素质、健康与心理素质和发展素质等测评子维度）；（2）思想品德测评维度（包括：大学生审美与修养、道德素养与思想品质等测评子维度）；（3）学习发展能力测评维度（包括：大学生学习方法与能力、行为能力与创新实践能力等测评子维度）。
+
+    通过对大学生在各个学习发展阶段的综合素质、道德思想品质、文化修养和学生发展能力等方面进行的综合测评与评价，并针对参测学生个人和集体提供科学量化数据，为学生管理部门提供系统化学生素质与发展能力分析报告，更加针对性地对学生进行综合素质、学习发展能力等方面的辅导与提高。
+    网址：<a href="http://www.chinadxscp.org/" target="_blank">www.chinadxscp.org</a>
+</p>
+                </pre>
+            </div>
+            <div id="Procedures">
+                <h2 class="page-header">就业手续</h2>
+                <pre>
+<img src="~/Images/Home/StudentNav/中南大学本科毕业生办理相关就业手续指南.jpg" style="width: 100%;" />
+                </pre>
+            </div>
+            <div id="Cert">
+                <h2 class="page-header">报到证办理</h2>
+                <pre><b>一、报到证简介</b>
+    《报到证》的全称是《全国普通高等学校本专科毕业生就业报到证》，《报到证》由原来的派遣证转化而来。它是由教育部统一印制、省级高校毕业生就业主管部门签发的，只有列入国家就业方案的毕业生才持有。《报到证》 只能一人一份，由其他部门印制或签发的《报到证》无效。《报到证》上面有湖南省教育厅毕业生调配专用章。
+    《报到证》一式两联，上联（蓝单）发给毕业生本人到单位报到，下联（白单）由学院放入毕业生个人档案转递到用人单位。托管到长沙市人才中心的，《报到证》上下联均需要交给人才中心装入个人档案。
+    <img src="~/Images/Home/StudentNav/报到证正反面.jpg" />
+    《报到证》中的姓名须与毕业生身份证中的姓名一致，单位的名称也必须准确。《报到证》的有效期一般为两个月。毕业生对报到证要妥善保管，不论什么原因，凡自行涂改、撕毁的报到证一律作废。 《报到证》改派有效期时间：《报到证》一般是从毕业开始算起，两年内可以改派。
+    <b>二、报到证的作用</b>
+    1、《报到证》是列入国家招生计划的普通高等学校本专科毕业生到就业单位报到的凭证；
+
+    2、《报到证》是毕业生到用人单位报到的凭证，凭报到证报到以后才可记录参加工作的初始时间，方可开始计算工龄；
+
+    3、《报到证》是学校为毕业生办理档案投递、组织关系转移和户口迁移等手续的依据；
+
+    4、《报到证》是用人单位给毕业生落户、接管档案的重要凭证和依据；
+
+    5、《报到证》是任何一个合法的人才中心、档案管理机构接收毕业生档案的证明；
+
+    6、《报到证》是毕业生的干部身份证明。
+    <b>三、报到证的办理</b>
+（一）、集中办理
+根据教育厅的安排，学校就业指导中心管理办公室于每年6月中旬根据毕业生上交的协议书和劳动合同，以及学生回生源地的申请，录入数据库，集中到省湖南省大中专毕业生就业指导中心办理报到证，发放给学院就业专干老师。
+所需材料： 
+    （1）凭学生与用人单位签订的《就业协议书》办理，如用人单位无人事权，不能接收档案，还须到其上级主管部门签章（签在"用人单位上级主管部门意见"一栏）；用人单位无上级主管部门的，则到当地的人才交流中心办理人事代理手续（在"用人单位上级主管部门意见"一栏处签章）； 
+    （2）凭与用人单位签订的劳动合同办理； 
+    （3）未落实就业单位的毕业生且本人上交了回生源地自主择业申请表。
+
+（二）、个人办理
+适用对象：择业期内湖南省内高校毕业、《报到证》自签发之日起一年内，因故不到该《报到证》开注单位报到、申请改办到新单位的毕业生。（改办只能办理一次。）
+办理步骤： 
+    （1）、到原用人单位开具同意解除劳动关系的《证明》； 
+    （2）、与现用人单位签订《就业协议》（或《劳动合同》、《接收函》）； 
+    （3）、到毕业所在学校的就业工作部门开具并审签《改派申请表》，《介绍信》； 
+    （4）、持《证明》、《就业协议》（或《劳动合同》、《接收函》）、《介绍信》、《改派申请表》和《毕业证书》、原《报到证》、身份证原件到省大中专学校学生信息咨询与就业指导中心业务大厅（长沙市雨花区新建西路37号，长城.非常生活商住楼3楼）办理。 
+重要说明： 
+    （1）所有需递交的证件若无特别说明均为原件，若无原件，须在复印件上加盖发证单位的公章。 
+    （2）如原《报到证》是开回生源地择业的，请生源地就业主管部门签署同意改派的意见以代替上述第1条要求的材料。
+    <b>四、报到证的遗失补办</b>
+（一）湖南省内高校毕业、《报到证》自签发之日起一年内遗失的毕业生。（自签发之日起满一年后遗失不予补办，由省级毕业生就业调配部门出具《遗失证明》代替执行《报到证》的功能。）
+
+（二）办理步骤：
+    1、登报：到公开发行的报社登报声明原《报到证》作废，获取刊登《遗失声明》（见样表4）的报纸；
+
+    2、审核：持本人填写的《补办报到证申请书》（见样表1）、刊登《遗失申明》的报纸到毕业所在学校的就业工作部门审核，并开具《介绍信》；
+
+    3、补办：持《介绍信》、登有《遗失声明》的报纸、《毕业证书》和身份证原件（如系复印件加盖学院公章），到湖南省就业指导者中心业务大厅补办新《报到证》（或《遗失证明》）。
+
+                </pre>
+            </div>
+        </div>      
+        
+        <div class="col-md-3 nav-left" id = "myScrollspy">
+            <ul class="nav nav-list nav-stacked hidden-xs hidden-sm" data-spy="affix">
+                <li class="active"><a href="#AccountFile"><i class="glyphicon glyphicon-chevron-left"></i>户口档案</a></li>
+                <li><a href="#Evaluation"><i class="glyphicon glyphicon-chevron-left"></i>就业测评</a></li>
+                <li><a href="#Procedures"><i class="glyphicon glyphicon-chevron-left"></i>就业手续</a></li>
+                <li><a href="#Cert"><i class="glyphicon glyphicon-chevron-left"></i>报到证办理</a></li>
+                <li><a href="#top">返回顶部</a></li>
+            </ul>            
+        </div>  
+          
+    </div>
+</div>
+

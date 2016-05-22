@@ -1,0 +1,94 @@
+﻿@model MvcApplication1.Models.AllModel
+
+@{
+    ViewBag.Title = "审核文章";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+
+}
+
+<style type="text/css">
+    .RedFontWarning {
+        color: red;
+    }
+</style>
+
+<div>
+    <h1>审核文章</h1>
+    @using (Html.BeginForm("EmployerArticleAudit", "Admin", new { id = ViewBag.ArticleID, typeName = ViewBag.TypeName }, FormMethod.Post, new { @id="form1", enctype = "multipart/form-data", @class = "col-md-8 col-md-offset-2" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <strong>文章标题</strong>
+        @Html.TextBoxFor(model => model.tempArticle.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.tempArticle.Title, null, new { @class = "RedFontWarning" })
+
+        <strong>单位人力资源部负责人电话</strong><br />
+        @Html.TextBoxFor(model => model.employer.MobilePhone, new { @class = "form-control",@readonly="readonly" })
+        @Html.ValidationMessageFor(model => model.employer.MobilePhone, null, new { @class = "RedFontWarning" })
+
+        <strong>描述信息</strong><br />
+        @Html.TextAreaFor(model => model.tempArticle.ArticleDescription, new { @class = "form-control", @readonly = "readonly" })
+        @Html.ValidationMessageFor(model => model.tempArticle.ArticleDescription, null, new { @class = "RedFontWarning" })
+
+        if (ViewBag.TypeName == "专场招聘")
+        {
+            <strong>添加招聘地点</strong><br />
+            @Html.DropDownListFor(model => model.placeListFirst.PlaceFirstID, ViewBag.PlaceListFirstDDL as IEnumerable<SelectListItem>, new { @class = "form-inline" })
+            @Html.ValidationMessageFor(model => model.placeListFirst.PlaceFirstID, null, new { @class = "RedFontWarning" })
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.placeListSecond.PlaceName, new { @class = "form-control" })
+                <span class="input-group-addon">格式:<font color="red">楼栋+空格+教室号</font>,如:科教南楼 101<br /></span>
+                @Html.ValidationMessageFor(model => model.placeListSecond.PlaceName, null, new { @class = "RedFontWarning" })
+            </div>
+
+            <strong>添加招聘时间</strong>
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.placeListSecond.PlaceTime, new { @class = "form-control" })
+                <span class="input-group-addon">格式:<font color="red">yyyy/mm/dd hh:mm</font>,如:2000/01/01 09:00</span>
+                @Html.ValidationMessageFor(model => model.placeListSecond.PlaceTime, null, new { @class = "RedFontWarning" })
+            </div>
+
+        }
+        if (ViewBag.TypeName == "双选会"||ViewBag.TypeName =="组团招聘")
+        {
+            <strong>申请加入大型招聘会</strong><br />
+            @Html.TextBox("BigTitle", (string)ViewBag.BigTitle, new { @class = "form-control", @readonly = "readonly" })
+        }
+        <div id="divBtn">
+            <p>
+                <input type="submit" onclick="MyFormSubmit(1)" class="btn btn-primary" value="审核通过" />
+                <input type="button" class="btn btn-primary" onclick="btnReturn()" value="返回" />
+            </p>
+        </div>
+
+        <strong style="font-size:20px;">审核不通过</strong><br />
+        <strong>审核信息</strong><br />
+        <div>
+            @Html.TextAreaFor(model => model.tempArticle.AuditInfo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.tempArticle.AuditInfo, null, new { @class = "RedFontWarning" })
+        </div>
+        <div>
+            <p>
+                <input type="submit" onclick="MyFormSubmit(-1)" class="btn btn-primary" value="审核不通过" />
+                <input type="button" class="btn btn-primary" onclick="btnReturn()" value="返回" />
+            </p>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        
+        @*alert(@ViewBag.IsAgree);*@
+        function MyFormSubmit(isAgree) {
+            var myForm=document.getElementById("form1");
+            myForm.action += ("&isAgree=" + isAgree);
+        }
+        function btnReturn() {
+            history.back(-1);
+        }
+</script>
+}

@@ -1,0 +1,48 @@
+﻿body {
+}
+/*扁平化按钮*/
+form input[type="submit"]
+{
+    background: #2DBD9B;
+	color: #fff;
+	font-size: 1em;
+	padding: 12px 24px;
+	border: none;
+	cursor: pointer;
+	text-transform: uppercase;
+	line-height: 1.5em;
+	outline: none;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+form input[type="submit"]:hover  
+{
+     background: #2FB696;   
+}
+
+form input[type="button"]
+{
+    background: #F97E76;
+	color: #fff;
+	font-size: 1em;
+	padding: 12px 24px;
+	border: none;
+	cursor: pointer;
+	text-transform: uppercase;
+	line-height: 1.5em;
+	outline: none;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+}

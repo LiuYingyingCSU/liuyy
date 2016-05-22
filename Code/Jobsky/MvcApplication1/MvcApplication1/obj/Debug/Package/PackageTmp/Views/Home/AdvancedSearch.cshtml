@@ -1,0 +1,185 @@
+﻿@model MvcApplication1.Models.AllModel
+
+@{
+    ViewBag.Title = "文章列表";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+@section Styles{
+    <style type="text/css">
+        body {
+        }
+
+        h3 {
+            font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+        }
+
+        td.spanDate {
+            text-align: right;
+            color: #ea5404;
+        }
+
+        .left-content {
+            background-color: #fff;
+            padding: 20px 10px 10px 20px;
+            margin-top: 30px;
+            box-shadow: 0px 0px 10px #ccc;
+            min-height: 680px;
+        }
+        .panel-default{
+            background-color: #fff;
+            padding: 20px 10px 10px 20px;
+            margin-top: 30px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        #searchResultPanel{
+            background-color: #fff;
+            padding: 20px 10px 10px 20px;
+            margin-top: 30px;
+            box-shadow: 0px 0px 10px #ccc;
+            min-height: 680px;
+        }
+        .panel-body .list-group li{
+            float:left;
+        }
+        .panel-body .list-group li{
+            height:50px;
+            width:530px;
+        }
+        .panel-body .list-group li input,select{
+            width:250px;
+        }
+        #btnSubmit{
+            margin-top:10px;
+        }
+    </style>
+}
+
+<div class="container">
+    <form id="advanced_search_form" action="~/Home/AdvancedSearch" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    招聘信息检索
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">单位名称：@Html.TextBoxFor(model => model.employer.CompanyName)</li>
+                    <li class="list-group-item">单位性质：@Html.DropDownListFor(model => model.employer.CompanyNature, ViewBag.CompanyNature as IEnumerable<SelectListItem>)</li>
+                    <li class="list-group-item">单位行业：@Html.DropDownListFor(model => model.employer.CompanyBusiness, ViewBag.CompanyBusiness as IEnumerable<SelectListItem>)</li>
+                    <li class="list-group-item">单位规模：@Html.DropDownListFor(model => model.employer.CompanySize, ViewBag.CompanySize as IEnumerable<SelectListItem>)</li>
+                    <li class="list-group-item">单位所在省份：<select name="employer.CompanyAreaProvince" class="selProvince" id="selProvince" onchange="provinceChange();"></select></li>
+                    <li class="list-group-item">单位所在城市：<select name="employer.CompanyAreaCity" class="selCity" id="selCity"></select></li>
+                    <li class="list-group-item">需求专业：<input id="Major" name="Major" type="text"/></li>
+                    <li></li>
+                </ul>
+                <button type="button" class="btn btn-primary" onclick="$('#advanced_search_form').submit();" data-toggle="button">
+                    <i class="glyphicon glyphicon-search jobsky-glyphicon-search"></i>查询
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="panel panel-default" id="searchResultPanel">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                查询结果
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>单位名称</th>
+                        <th>文章标题</th>
+                        <th>单位性质</th>
+                        <th>单位所在省份</th>
+                        <th>编辑时间</th>
+                    </tr>                   
+                </thead>
+                <tbody id="postback-content-table"></tbody>
+            </table>
+            <ul id="pagination-pages" class="pagination-sm"></ul>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">错误：</h4>
+            </div>
+            <div class="modal-body">
+                <p>数据加载失败，请重新尝试。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/Home/ProvinceCity.js"></script> 
+    <script src="~/Content/bootstrap/bootstrapPagination/jquery.twbsPagination.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {      
+        $(function () {
+            //设置省份数据 
+            setProvince();
+
+            //设置背景颜色 
+            setBgColor();
+            if("@ViewBag.employer_CompanyAreaProvince"!=""){
+                $(".selProvince").val("@ViewBag.employer_CompanyAreaProvince");
+                provinceChange();   //根据所在省份，生成对应的市（区）
+                if("@ViewBag.employer_CompanyAreaCity"!=""){
+                    $(".selCity").val("@ViewBag.employer_CompanyAreaCity");
+                }
+            }
+            if("@ViewBag.Major"!=""){
+                $("#Major").val("@ViewBag.Major");
+            }
+        });
+        $('#myModal').modal({
+            keyboard: false,
+            show: false
+        });
+
+        $('#pagination-pages').twbsPagination({
+            startPage: @ViewBag.pageindex,
+            totalPages: @ViewBag.Count,
+            visiblePages: 10,
+            first: "首页",
+            last: "尾页",
+            prev: "<<",
+            next: ">>",
+            version: '1.0',
+            onPageClick: function (event, page) {
+                $.ajax({
+                    type: "post",
+                    dataType: "html",
+                    url: "@Url.Action("PartialAdvancedSearchList", "Home")",
+                    data: {"employer.CompanyName":"@ViewBag.employer_CompanyName",
+                        "employer.CompanyNature":"@ViewBag.employer_CompanyNature",
+                        "employer.CompanyBusiness":"@ViewBag.employer_CompanyBusiness",
+                        "employer.CompanySize":"@ViewBag.employer_CompanySize",
+                        "employer.CompanyAreaProvince":"@ViewBag.employer_CompanyAreaProvince",
+                        "employer.CompanyAreaCity":"@ViewBag.employer_CompanyAreaCity",
+                        "Major":"@ViewBag.Major",
+                        "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize},
+                    success: function (result) {
+                        $("#postback-content-table").html(result);
+                    },
+                    error: function () {
+                        $('#myModal').modal('show');
+                    }
+                });
+            }
+        });
+    });
+</script>
+}

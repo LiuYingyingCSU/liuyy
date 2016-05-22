@@ -1,0 +1,57 @@
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE GetArticlePagedRecord
+	-- Add the parameters for the stored procedure here
+	@pagesize int
+	,@pageindex int
+	,@TypeID int=0
+	,@EditorAccount nvarchar(50)
+	,@IsAudit int=0
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+    --TypeID 为0，则选出所有类型的列表
+    if(@TypeID = 0)
+		begin
+			select [ArticleID],[Title],[EditTime] into #tb from [Article] where IsAudit = @IsAudit and EditorAccount = @EditorAccount
+			select [ArticleID],[Title],[EditTime] from 
+				(
+					select ROW_NUMBER() over (order by [EditTime]) as RowId,* from 
+					#tb
+				) as temptable
+			where RowId>=(@pageindex-1)*@pagesize+1 and RowId<=@pageindex*@pagesize
+		end
+    else
+		begin
+			select [ArticleID],[Title],[EditTime] into #tb from [Article] where [TypeID]=@TypeID and IsAudit = @IsAudit and EditorAccount = @EditorAccount
+			select [ArticleID],[Title],[EditTime] from 
+				(
+					select ROW_NUMBER() over (order by [EditTime]) as RowId,* from 
+					#tb
+				) as temptable
+			where RowId>=(@pageindex-1)*@pagesize+1 and RowId<=@pageindex*@pagesize
+		end
+END
+GO

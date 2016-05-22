@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "文章列表";
+}
+
+@section Styles{
+<style type="text/css">
+    body {
+        
+    }
+    h3 {
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    }
+    td.spanDate {
+        text-align: right;
+        color: #ea5404;
+    }
+    .left-content
+    {
+        background-color: #fff;
+        padding: 20px 10px 10px 20px;
+        margin-top: 30px;
+        box-shadow: 0px 0px 10px #ccc;
+        min-height:680px;
+    }
+    
+</style>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 left-content">
+            <h3>"<font color="red">@{@ViewBag.key}</font>"的查询结果</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>标题</th>
+                        <th class="text-center">时间</th>
+                    </tr>
+                </thead>
+                <tbody id="postback-content-table">
+                    
+                </tbody>
+            </table>
+
+            <ul id="pagination-pages" class="pagination-sm"></ul>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">错误：</h4>
+      </div>
+      <div class="modal-body">
+        <p>数据加载失败，请重新尝试。</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section Scripts{
+    <script src="~/Content/bootstrap/bootstrapPagination/jquery.twbsPagination.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myModal').modal({
+                keyboard: false,
+                show: false
+            });
+
+            $('#pagination-pages').twbsPagination({
+                startPage: @ViewBag.pageindex,
+                totalPages: @ViewBag.Count,
+                visiblePages: 10,
+                first: "首页",
+                last: "尾页",
+                prev: "<<",
+                next: ">>",
+                version: '1.0',
+                onPageClick: function (event, page) {
+                    $.ajax({ 
+                        type: "post", 
+                        dataType: "html",
+                        url: "@Url.Action("PartialArticleListByKey", "Home")",
+                        data: {"key":"@ViewBag.key", "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize}, 
+                        success: function (result) {
+                            $("#postback-content-table").html(result);                             
+                        },
+                        error: function () {
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

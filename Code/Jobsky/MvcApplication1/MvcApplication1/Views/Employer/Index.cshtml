@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "单位后台";
+    Layout = "~/Views/Shared/ArticleLayout.cshtml";
+}
+@section Styles{
+<style type="text/css">
+    #body{background-color:#e7f2f8;}
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }    
+    .alert-warning {
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+    }
+</style>
+}
+<div style="text-align:center;">
+<h2>欢迎进入中南大学就业网单位自主管理后台！</h2>
+    @Html.Raw(ViewBag.AuthorityInfo)
+</div>

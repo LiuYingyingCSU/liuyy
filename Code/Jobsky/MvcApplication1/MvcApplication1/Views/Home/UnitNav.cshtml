@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "单位导航";
+}
+
+@section Styles{
+<style type="text/css">
+    body
+    {     
+        background-color: #ebebeb;   
+    }
+    .content{
+        border: 1px solid #e6e6e6;
+        background: #fff;
+        margin: 30px 0 20px 0;
+        position: relative;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+    }
+    .content div{
+        min-height:300px;    
+    }
+    .content b{
+        margin-top:20px;
+        display: block;
+    }
+    .content p{
+        text-indent: 2em;
+    }
+    .page-header{
+        color: #1C84E9;
+    }
+    .content a
+    {
+        color:Red;
+        }
+    /* 左侧附加导航（Affix） Styles */
+    .nav-left{
+        margin: 30px 0 20px 0;
+    }
+    ul.nav-list{
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+        background-color:#fff;
+    }
+    ul.nav-list li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-list li:first-child{
+        border-top: none;
+    }
+    ul.nav-list li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-list li.active a, ul.nav-list li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-list li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-list li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    h2
+    { 
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;  
+    }
+</style>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 content">
+            <div id="StudentInfo">
+                <h2 class="page-header">生源信息</h2>
+                <pre>
+                    <b>2016届毕业生生源信息统计表（本科生）</b> <h4><a href="~/UploadFiles/2016届毕业生生源信息统计表（本科生）.xls" target="_blank">点击下载</a></h4>
+                    <b>2016届毕业生生源信息统计表（研究生）</b> <h4><a href="~/UploadFiles/2016届毕业生生源信息统计表（研究生）.xlsx" target="_blank">点击下载</a></h4>
+                </pre>
+            </div>
+            <div id="RecruitmentProcess">
+                <h2 class="page-header">招聘流程</h2>
+                
+                <pre><b>用人单位选聘中南大学毕业生联系工作流程</b>
+                <h4><a href="~/Home/OldArticleDetails/21260">点击查看</a></h4>
+                </pre>
+            </div>
+            <div id="CollegeIntroduction">
+                <h2 class="page-header">学校介绍</h2>
+                <pre>
+                <b>中南大学学校概况</b>
+                <h4><a href="http://www.csu.edu.cn/xxgk.htm">点击查看</a></h4>
+                </pre>
+            </div>
+            <div id="CollegeMap">
+                <h2 class="page-header">校园地图</h2>
+                <pre>
+                <b>中南大学3D虚拟校园</b>
+                <h4><a href="http://map.csu.edu.cn/">点击查看</a></h4>
+                </pre>
+            </div>
+        </div>      
+        
+        <div class="col-md-3 nav-left" id = "myScrollspy">
+            <ul class="nav nav-list nav-stacked hidden-xs hidden-sm" data-spy="affix">
+                <li class="active"><a href="#StudentInfo"><i class="glyphicon glyphicon-chevron-left"></i>生源信息</a></li>
+                <li><a href="#RecruitmentProcess"><i class="glyphicon glyphicon-chevron-left"></i>招聘流程</a></li>
+                <li><a href="#CollegeIntroduction"><i class="glyphicon glyphicon-chevron-left"></i>学校介绍</a></li>
+                <li><a href="#CollegeMap"><i class="glyphicon glyphicon-chevron-left"></i>校园地图</a></li>
+                <li><a href="#top">返回顶部</a></li>
+            </ul>            
+        </div>  
+          
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿@model MvcApplication1.Models.Employer
+@{
+    ViewBag.Title = "查询密码";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<style type="text/css">
+    #body {
+        background-color: #e7f2f8;
+    }
+
+    table {
+        width: 100%;
+        text-align: center;
+        border: 1px solid #A7C5E2;
+        border-collapse: collapse;
+        background-color: #ffffff;
+    }
+
+    th {
+        color: rgb(219,80,121);
+        text-align: center;
+        background-color: #F2F2F2;
+    }
+
+    tr {
+        border-bottom: 1px dashed #A7C5E2;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+        td a {
+            font-size: 1em;
+            padding: 5px 5px;
+            text-transform: uppercase;
+            color: #ffffff;
+            /*-webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;*/
+            border-radius: 2px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            -o-border-radius: 2px;
+            text-decoration: none;
+            color: White;
+            background-color: #A0D468;
+        }
+
+            td a:hover {
+                background-color: #87B753;
+            }
+
+    h2 {
+        text-align: center;
+        color: rgb(219,80,121);
+    }
+</style>
+
+<h2>查询密码</h2>
+@using (Html.BeginForm("QueryEmployerPwd", "Admin", FormMethod.Post, new { @class = "col-md-8 col-md-offset-2" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <span>请输入要查询的邮箱：</span>
+    @Html.EditorFor(model => model.Email)
+    <input type="submit" value="查询"/>
+}
+
+<table>
+    <tr>
+        <th>
+            单位名称
+        </th>
+        <th>
+            邮箱
+        </th>
+        <th>
+            密码
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model=>model.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.EmployerPwd)
+        </td>
+    </tr>
+</table>
+@section Scripts {
+
+}
+

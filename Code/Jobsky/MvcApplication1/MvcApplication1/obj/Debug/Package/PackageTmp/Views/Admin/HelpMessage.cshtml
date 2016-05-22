@@ -1,0 +1,52 @@
+﻿@{
+    if (ViewBag.id == 1)
+    {
+        ViewBag.Title = "提交成功";
+    }
+    else if (ViewBag.id == 2)
+    {
+        ViewBag.Title = "更改成功";
+    }
+    else
+    {
+        ViewBag.Title = "帮助";
+    }
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="row" style="margin-top:100px;">
+    <div class="col-md-8 col-md-offset-2">
+        @if (ViewBag.id == 1)
+        {
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h3 class="panel-title">提交成功</h3>
+               </div>
+               <div class="panel-body">
+                  文章提交成功，请前往前台查看！
+               </div>
+            </div>
+        }
+        else if (ViewBag.id == 2)
+        {
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h3 class="panel-title">更改成功</h3>
+               </div>
+               <div class="panel-body">
+                  文章更改成功，请前往前台查看！
+               </div>
+            </div>
+        }
+        else
+        {
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h3 class="panel-title">帮助</h3>
+               </div>
+               <div class="panel-body">
+                  如有问题，请及时联系管理人员！
+               </div>
+            </div>
+        }
+    </div>
+</div>

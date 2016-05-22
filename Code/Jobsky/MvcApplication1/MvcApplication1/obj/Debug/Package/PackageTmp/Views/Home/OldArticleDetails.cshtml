@@ -1,0 +1,86 @@
+﻿@{
+    //ViewBag.Title = ViewBag.tb_Article.Rows[0]["Title"];
+}
+
+@section Styles{
+    <link href="~/Content/Home/ViewNews.css" rel="stylesheet" type="text/css" />
+}
+
+@if(ViewBag.tb_Article.Rows.Count < 1){
+    ViewBag.Title = "找不到该文章";
+    <div class="container" style="min-height:500px">
+        <div class="row" style="margin-top:100px;">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">找不到该文章</h3>
+                    </div>
+                    <div class="panel-body title" style="color: #a94442;min-height:100px">
+                        您所查找的文章不存在或者已经被删除！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    ViewBag.Title = ViewBag.tb_Article.Rows[0]["Title"];
+
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+                <article>
+                    <div class="location">            
+                        <ol class="breadcrumb">
+                            <span style="color:#eb6841;">当前位置:</span>
+                            <li><a href="@Url.Action("Index","Home")">首页</a></li>
+                            <li><a href="@Url.Action("ArticleList", "Home", new { id = Convert.ToInt32(ViewBag.tb_Article.Rows[0]["TypeID"]) })">@ViewBag.TypeName</a></li>
+                            <li class="active">文章内容</li>
+
+                        </ol>
+                    </div>
+                    <header class="text-center">
+                        <h2 class="title">@ViewBag.tb_Article.Rows[0]["Title"]</h2>
+                        <section  class="title-info">
+                            <span>信息来源:中南大学毕业生就业指导服务中心 &nbsp; 浏览次数:@ViewBag.tb_Article.Rows[0]["ClickTimes"] &nbsp;时间：@Convert.ToDateTime(ViewBag.tb_Article.Rows[0]["NewsTime"]).ToShortDateString()</span>
+                        </section>
+                    </header>
+
+                    <section class="jobsky-content">
+                        @Html.Raw(ViewBag.tb_Article.Rows[0]["Content"])
+                    </section>
+                </article>
+            </main>
+            <aside class="col-md-4 jobsky-right">
+                <div class="panel panel-success jobsky-head">
+                   <div class="panel-heading">
+                      <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-help"></i>
+                         相关文章
+                      </h3>
+                   </div>
+                   <div class="panel-body">
+                      <table class="table table-hover">
+                        <thead>
+                            <tr><th>@ViewBag.TypeName</th></tr>
+                        </thead>
+                        <tbody>
+                        @foreach (System.Data.DataRow dt in ViewBag.tb_NewsList.Rows)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(dt["Title"].ToString(), (Convert.ToInt32(dt["DatabaseID"].ToString()) == 0 ? "OldArticleDetails" : (Convert.ToInt32(dt["DatabaseID"].ToString()) == 1 ? "ArticleDetails" : "NewsDetails")), new { id = Convert.ToInt32(dt["NewsID"]) })</td>
+                            </tr>
+                        }
+                        </tbody>
+                        </table>
+                        <div class="news-more"><i class="pull-right"><a href="@Url.Action("ArticleList", "Home", new { id = ViewBag.TypeID })">更多&gt;&gt;</a></i></div>
+                   </div>
+                </div>
+            </aside>   
+        </div>
+        
+    </div>
+
+
+}

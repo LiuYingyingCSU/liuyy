@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "院系风采";
+}
+
+
+@section Styles{
+    <style type="text/css">
+        body {
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
+        }
+        h1, .h1, h2, .h2, h3, .h3, h4, .h4, .lead {
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+        }
+        .projects-header {
+            width: 60%;
+            text-align: center;
+            margin: 60px 0 10px;
+            font-weight: 200;
+            margin-bottom: 40px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .projects .thumbnail {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            max-width: 300px;
+            margin-bottom: 30px;
+            border-radius: 0;
+        }
+        .projects .thumbnail .caption {
+            height: 100px;
+            overflow-y: hidden;
+            color: #555;
+        }
+        .projects .thumbnail img{height:150px;}
+    </style>
+    
+}
+
+<div class="container projects">
+
+    <div class="projects-header page-header">
+        <h2>院系风采</h2>
+    </div>
+
+    <div class="row">
+        @foreach (System.Data.DataRow dt in ViewBag.tb_CollegeList.Rows)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3 ">
+                <div class="thumbnail">
+                    <a href="~/Home/CollegeDetails/@dt["ArticleID"]" title="@dt["Title"]" target="_blank"><img class="lazy" src="../@dt["PicSource"]" width="300" height="150" data-src="" alt="" /></a>
+                    <div class="caption">
+                        <h3> 
+                            <a href="~/Home/CollegeDetails/@dt["ArticleID"]" title="@dt["Title"]" target="_blank">@dt["Title"]<br /><small></small></a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+        

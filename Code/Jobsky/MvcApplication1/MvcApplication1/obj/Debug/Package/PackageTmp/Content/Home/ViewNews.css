@@ -1,0 +1,49 @@
+﻿body 
+{
+    background-color:#ebebeb;
+}
+main
+{
+    padding-right:20px;    
+}
+article
+{
+    background-color:#fff;
+    padding:0px 10px 10px 20px;
+    margin-top:30px;
+}
+.title-info {
+    color: #8a939d;
+    border-top: 1px solid #eee;
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+.title {
+    color: #4d90db;
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+aside
+{
+    /*background-color:#fff;*/
+}
+.jobsky-right
+{
+    margin: 30px 0;
+}
+.jobsky-content
+{
+    margin: 30px 0;
+    min-height:400px;
+}
+
+.location{
+    margin: 0 -10px 0 -20px;
+}
+    
+.news-more
+{
+    color: #B93B25;  
+}
+.news-more:hover
+{
+    color: red;  
+} 

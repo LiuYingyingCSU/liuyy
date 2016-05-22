@@ -1,0 +1,357 @@
+﻿@model MvcApplication1.Models.EmployerRegister
+
+@{
+    ViewBag.Title = "修改信息";
+    Layout = "~/Views/Shared/ArticleLayout.cshtml";@*指定模板页*@
+}
+
+@section Styles{
+    <link href="~/Content/Employer/EditCss.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Employer/ShareCss.css" rel="stylesheet" type="text/css" />
+}
+
+<div id="RegisterContent">
+    <h1>修改注册信息</h1>
+    @using (Html.BeginForm("Edit", "Employer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        //账户信息
+        <div id="divAccount">
+            @*标题部分*@
+            <div class="divTitle" id="divAccountTitle">
+                <img src="~/Images/Employer/AccountInfo.jpg" />
+                <p>账户信息</p>
+            </div>
+            @*内容部分*@
+            <div id="divAccountContent" class="divContent">
+                <table>
+                    @*账号*@
+                    @*密码*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.EmployerPwd)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.EmployerPwd)
+                            @Html.ValidationMessageFor(model => model.EmployerPwd)
+                            <font>@Html.DisplayDescriptionFor(model => model.EmployerPwd)</font>
+                        </td>
+                    </tr>
+                    @*确认密码*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.ConfirmEmployerPwd)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ConfirmEmployerPwd)
+                            @Html.ValidationMessageFor(model => model.ConfirmEmployerPwd)
+                        </td>
+                    </tr>          
+                </table>
+            </div>
+        </div>
+
+        //联系人信息
+        <div id="divContact">
+            @*标题部分*@
+            <div class="divTitle" id="divContactTitle">
+                <img src="~/Images/Employer/ContactInfo.jpg" />
+                <p>联系人信息</p>
+            </div>
+            @*内容部分*@
+            <div id="divContactContent" class="divContent">
+                <table>
+                    @*联系人姓名*@
+                    <tr>
+                        <td class="TbRight" style="width:110px;">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.ContactPersonName)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ContactPersonName)
+                            @Html.ValidationMessageFor(model => model.ContactPersonName)
+                            <font>@Html.DisplayDescriptionFor(model => model.ContactPersonName)</font>
+                        </td>
+                    </tr>
+                    @*联系人性别*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.ContactPersonSex)：
+                        </td>
+                        <td>
+                            @*@Html.EditorFor(model => model.ContactPersonSex)*@
+                            <input name="ContactPersonSex" type="radio" value="0" />女
+                            <input name="ContactPersonSex" type="radio" value="1" />男
+                            @Html.ValidationMessageFor(model => model.ContactPersonSex)
+                        </td>
+                    </tr>
+                    @*固定电话*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.FixedTelephone)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.FixedTelephone)
+                            @Html.ValidationMessageFor(model => model.FixedTelephone)
+                            <font>@Html.DisplayDescriptionFor(model => model.FixedTelephone)</font>
+                        </td>
+                    </tr>
+                    @*移动电话*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.MobilePhone)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.MobilePhone)
+                            @Html.ValidationMessageFor(model => model.MobilePhone)
+                            <font>@Html.DisplayDescriptionFor(model => model.MobilePhone)</font>
+                        </td>
+                    </tr>
+                    @*邮箱*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.Email)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.Email)
+                            <font>@Html.DisplayDescriptionFor(model => model.Email)</font>
+                        </td>
+                    </tr>                                   
+                </table>
+            </div>
+        </div>
+
+        //单位基本信息
+        <div id="divCompany">
+            @*标题部分*@
+            <div class="divTitle" id="divCompanyTitle">
+                <img src="~/Images/Employer/CompanyInfo.jpg" />
+                <p>单位基本信息</p>
+            </div>
+            @*内容部分*@
+            <div id="divCompanyContent" class="divContent">
+                <table>
+                    @*单位名称*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CompanyName)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.CompanyName)
+                            @Html.ValidationMessageFor(model => model.CompanyName)
+                        </td>
+                    </tr>
+                    @*总公司名称*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.ParentCompanyName)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.ParentCompanyName)
+                            @Html.ValidationMessageFor(model => model.ParentCompanyName)
+                        </td>
+                    </tr>
+                    @*单位简介*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.CompanyIntroduction, new { @class = "txtAreaLabel" })：
+                            @*@Html.Label("：", new { @class = "txtAreaLabel" })*@
+                        </td>
+                        <td>
+                            @Html.TextAreaFor(model => model.CompanyIntroduction, new { @class = "txtArea" })
+                            @Html.ValidationMessageFor(model => model.CompanyIntroduction)
+                        </td>
+                    </tr>
+                    @*办公电话*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CompanyPhone)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.CompanyPhone)
+                            @Html.ValidationMessageFor(model => model.CompanyPhone)
+                        </td>
+                    </tr>
+                    @*组织机构代码*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.OrganizationCode)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.OrganizationCode)
+                            <font color="red">修改后需重新审核</font>
+                            @Html.ValidationMessageFor(model => model.OrganizationCode)
+                        </td>
+                    </tr>
+                    @*组织机构代码有效期*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.Label("组织机构代码有效期至")：
+                        </td>
+                        <td>
+                            <input type="text" readonly="readonly" name="ValidPeriod" class="date_picker" value="@Html.DisplayFor(model => model.ValidPeriod)" />
+                            <font color="red">修改后需重新审核</font>
+                            @*@Html.TextBoxFor(model => model.ValidPeriod, new { @class = "date_picker", @readonly = "readonly" })*@
+                            @Html.ValidationMessageFor(model => model.ValidPeriod)
+                        </td>
+                    </tr>
+                    @*单位性质*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CompanyNature)：
+                        </td>
+                        <td>
+                            @Html.DropDownList("CompanyNature")
+                            @Html.ValidationMessageFor(model => model.CompanyNature)
+                        </td>
+                    </tr>                    
+                    @*单位行业*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CompanyBusiness)：
+                        </td>
+                        <td>
+                            @Html.DropDownList("CompanyBusiness")
+                            @Html.ValidationMessageFor(model => model.CompanyBusiness)
+                        </td>
+                    </tr>
+                    @*单位规模*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CompanySize)：
+                        </td>
+                        <td>
+                            @Html.DropDownList("CompanySize")
+                            @Html.ValidationMessageFor(model => model.CompanySize)
+                        </td>
+                    </tr>
+                    @*注册资本*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.RegisteredCapital)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.RegisteredCapital)
+                            @Html.Label("（万元）")
+                            @Html.ValidationMessageFor(model => model.RegisteredCapital)
+                        </td>
+                    </tr>
+                    @*是否是五百强*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.IsTop500)：
+                        </td>
+                        <td>
+                            @Html.DropDownList("IsTop500")
+                            @Html.ValidationMessageFor(model => model.IsTop500)
+                        </td>
+                    </tr>
+                    @*单位所在地*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.Label("单位所在地")：
+                        </td>
+                        <td>
+                            <select name="CompanyAreaProvince" class="selProvince" id="selProvince" onchange="provinceChange();"></select>
+                            <select name="CompanyAreaCity" class="selCity" id="selCity"></select>
+                            @Html.ValidationMessageFor(model => model.CompanyAreaProvince)
+                            @Html.ValidationMessageFor(model => model.CompanyAreaCity)
+                        </td>
+                    </tr>
+                    @*单位地址*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CompanyAddress)：
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.CompanyAddress)
+                            @Html.ValidationMessageFor(model => model.CompanyAddress)
+                        </td>
+                    </tr>
+                    @*城市类型*@
+                    <tr>
+                        <td class="TbRight">
+                            <font style="font-size:18px;" color="red">*</font>@Html.LabelFor(model => model.CityClass)：
+                        </td>
+                        <td>
+                            @Html.DropDownList("CityClass")
+                            @Html.ValidationMessageFor(model => model.CityClass)
+                        </td>
+                    </tr>
+                    @*备注*@
+                    <tr>
+                        <td class="TbRight">
+                            @Html.LabelFor(model => model.Remark, new { @class = "txtAreaLabel" })：
+                            @*@Html.Label("：", new { @class = "txtAreaLabel" })*@
+                        </td>
+                        <td>
+                            @Html.TextAreaFor(model => model.Remark, new { @class = "txtArea" })
+                            @Html.ValidationMessageFor(model => model.Remark)
+                        </td>
+                    </tr>                  
+                </table>
+            </div>
+        </div>
+
+        //证件照片
+        <div id="divCredentialDir">
+            @*标题部分*@
+            <div class="divTitle" id="divCredentialDirTitle">
+                <img src="~/Images/Employer/CompanyInfo.jpg" />
+                <p>营业执照或组织机构代码证</p>
+            </div>
+            @*内容部分*@
+            <div id="divCredentialDirContent" class="divContent">
+                <div id="divCredentialDirContentImg">
+                    <img src="~/Uploads/@Html.DisplayFor(model => model.CredentialsDir)"/>
+                </div>
+                <div id="divCredentialDirContentUpload">
+                    <input id="file" type="file" name="file1" onchange="GetFileName(this)"/><br />
+                </div>
+                <div id="divCredentialDirContentText">
+                    <font color="red">重新上传后需重新审核</font>
+                    <br />
+                    <label id="fileName"></label><br />
+                    <label id="lblMessage" style="color:red;">@ViewBag.Message</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="divBtn">            
+            <p>
+                <input id="btnUpdate" type="submit" value="确认修改" /><br /><br />
+                @Html.ActionLink("回到首页", "Index")
+            </p>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Scripts/Employer/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Employer/jquery.date_input.pack.js"></script>@*日期控件*@
+    <script type="text/javascript" src="~/Scripts/Employer/ProvinceCity.js" language="javascript"></script> @*省市js*@
+    <script>
+    //--------设定默认选择性别------------
+    var contactPersonSex = document.getElementsByName("ContactPersonSex");
+    for (var i = 0; i < contactPersonSex.length; i++){
+        if (contactPersonSex[i].value == (@ViewBag.ContactPersonSex)){
+            contactPersonSex[i].checked="checked";
+        }
+    }
+    //----------------------
+    $(function () {
+        $('.date_picker').date_input();//显示日历控件
+        //-----------设置默认所在地区-----------
+        $(".selProvince").val("@ViewBag.CompanyAreaProvince");
+        provinceChange();   //根据所在省份，生成对应的市（区）
+        $(".selCity").val("@ViewBag.CompanyAreaCity");
+        //--------------------------------------
+    })
+    function GetFileName(obj) {
+        var filename = document.getElementById("fileName");
+        filename.innerHTML = obj.value.substr(obj.value.lastIndexOf('\\') + 1);
+    }
+    </script>
+}

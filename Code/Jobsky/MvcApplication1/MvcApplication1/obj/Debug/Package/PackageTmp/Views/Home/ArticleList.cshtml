@@ -1,0 +1,389 @@
+﻿@{
+    ViewBag.Title = "文章列表";
+}
+
+@section Styles{
+<style type="text/css">
+    body 
+    {
+        background-color: #ebebeb;
+    }
+    td.spanDate {
+        text-align: right;
+        color: #ea5404;
+    }
+    .left-content
+    {
+        background-color: #fff;
+        padding: 0px 10px 10px 20px;
+        margin-top: 30px;
+        box-shadow: 0px 0px 10px #ccc;
+        min-height:680px;
+    }
+    .location{
+        margin: 0 -10px 0 -20px;
+    }
+    h3
+    {
+        font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    }
+    
+    .right-content
+    {
+            margin-top: 30px;
+    }
+</style>
+}
+@if (ViewBag.typeid == 1 || ViewBag.typeid == 2 || ViewBag.typeid == 3 || ViewBag.typeid == 4 || ViewBag.typeid == 5 || ViewBag.typeid == 13)
+{
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 left-content">
+            <div class="location">            
+                <ol class="breadcrumb">
+                    <span style="color:#eb6841;">当前位置:</span>
+                    <li><a href="@Url.Action("Index", "Home")">首页</a></li>
+                    <li class="active">@ViewBag.TypeName</li>
+                </ol>
+            </div>
+            @*<div class="col-md-2"><h3>@ViewBag.TypeName</h3></div>*@
+            <ul id="DateListNav" class="nav nav-tabs">
+                <li><h3 style="margin-top: 7px;margin-right: 270px;">@ViewBag.TypeName</h3></li>
+                <li class="active"><a href="#listAll" data-toggle="tab">所有信息</a></li>
+                <li><a href="#listToday" data-toggle="tab">今天全部信息</a></li>
+                <li><a href="#listThree" data-toggle="tab">今起三天信息</a></li>
+                <li><a href="#listWeek" data-toggle="tab">今起一周信息</a></li>                
+            </ul>
+            <div class="tab-content">
+            <div id="listAll" class="tab-pane fade in active timeList">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th class="text-right">时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postback-content-table">
+                    
+                    </tbody>
+                </table>
+                <ul id="pagination-pages" class="pagination-sm"></ul>
+            </div>
+            <div id="listToday" class="tab-pane fade timeList">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th class="text-right">时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postback-content-table">
+                    
+                    </tbody>
+                </table>
+                <ul id="pagination-pages" class="pagination-sm"></ul>
+            </div>
+            <div id="listThree" class="tab-pane fade timeList">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th class="text-right">时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postback-content-table">
+                    
+                    </tbody>
+                </table>
+                <ul id="pagination-pages" class="pagination-sm"></ul>
+            </div>
+            <div id="listWeek" class="tab-pane fade timeList">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th class="text-right">时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postback-content-table">
+                    
+                    </tbody>
+                </table>
+                <ul id="pagination-pages" class="pagination-sm"></ul>
+            </div>            
+            </div>
+        </div>
+        <div class="col-md-3 right-content">
+            @if (ViewBag.typeid == 1 || ViewBag.typeid == 2 || ViewBag.typeid == 3 || ViewBag.typeid == 4 || ViewBag.typeid == 5 || ViewBag.typeid == 13)
+            {
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                            <i class="glyphicon glyphicon-list"></i>
+                                招聘专区
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="~/Home/ArticleList/1" class="list-group-item @(ViewBag.typeid == 1 ? "active" : " ") " target="_self">本部招聘</a>
+                            <a href="~/Home/ArticleList/3" class="list-group-item @(ViewBag.typeid == 3 ? "active" : " ")" target="_self">铁道招聘</a>
+                            <a href="~/Home/ArticleList/2" class="list-group-item @(ViewBag.typeid == 2 ? "active" : " ")" target="_self">湘雅招聘</a>
+                            <a href="~/Home/ArticleList/5" class="list-group-item @(ViewBag.typeid == 5 ? "active" : " ")" target="_self">事业招考</a>
+                            <a href="~/Home/ArticleList/4" class="list-group-item @(ViewBag.typeid == 4 ? "active" : " ")" target="_self">在线招聘</a>
+                            <a href="~/Home/ArticleList/13" class="list-group-item @(ViewBag.typeid == 13 ? "active" : " ")" target="_self">基层项目</a>
+                        </div>
+                    </div>
+            }
+            else if (ViewBag.typeid == 9 || ViewBag.typeid == 10 || ViewBag.typeid == 11 || ViewBag.typeid == 12)
+            {
+                <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                            <i class="glyphicon glyphicon-list"></i>
+                                招聘专区
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="~/Home/ArticleList/9" class="list-group-item @(ViewBag.typeid == 9 ? "active" : " ")" target="_self">职业规划</a>
+                            <a href="~/Home/ArticleList/10" class="list-group-item @(ViewBag.typeid == 10 ? "active" : " ")" target="_self">求职指南</a>
+                            <a href="~/Home/ArticleList/11" class="list-group-item @(ViewBag.typeid == 11 ? "active" : " ")" target="_self">课程教学</a>
+                            <a href="~/Home/ArticleList/12" class="list-group-item @(ViewBag.typeid == 12 ? "active" : " ")" target="_self">职业测评</a>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">错误：</h4>
+      </div>
+      <div class="modal-body">
+        <p>数据加载失败，请重新尝试。</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section Scripts{
+    <script src="~/Content/bootstrap/bootstrapPagination/jquery.twbsPagination.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myModal').modal({
+                keyboard: false,
+                show: false
+            });
+
+            $("#listAll").find('#pagination-pages').twbsPagination({
+                startPage: @ViewBag.pageindex,
+                totalPages: @ViewBag.Count==0?1:@ViewBag.Count,
+                visiblePages: 10,
+                first: "首页",
+                last: "尾页",
+                prev: "<<",
+                next: ">>",
+                version: '1.0',
+                onPageClick: function (event, page) {
+                    $.ajax({ 
+                        type: "post", 
+                        dataType: "html",
+                        url: "@Url.Action("PartialArticleList", "Home")",
+                        data: { "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize, "typeid": @ViewBag.typeid, "followingdates":-1}, 
+                        success: function (result) {
+                            $("#listAll").find("#postback-content-table").html(result);                             
+                        },
+                        error: function () {
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            });
+            $("#listToday").find('#pagination-pages').twbsPagination({
+                startPage: @ViewBag.pageindex,
+                totalPages: @ViewBag.Count_today==0?1:@ViewBag.Count_today,
+                visiblePages: 10,
+                first: "首页",
+                last: "尾页",
+                prev: "<<",
+                next: ">>",
+                version: '1.0',
+                onPageClick: function (event, page) {
+                    $.ajax({ 
+                        type: "post", 
+                        dataType: "html",
+                        url: "@Url.Action("PartialArticleList", "Home")",
+                        data: { "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize, "typeid": @ViewBag.typeid, "followingdates":0}, 
+                        success: function (result) {
+                            $("#listToday").find("#postback-content-table").html(result);                             
+                        },
+                        error: function () {
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            });
+
+            $("#listThree").find('#pagination-pages').twbsPagination({
+                startPage: @ViewBag.pageindex,
+                totalPages: @ViewBag.Count_three==0?1:@ViewBag.Count_three,
+                visiblePages: 10,
+                first: "首页",
+                last: "尾页",
+                prev: "<<",
+                next: ">>",
+                version: '1.0',
+                onPageClick: function (event, page) {
+                    $.ajax({ 
+                        type: "post", 
+                        dataType: "html",
+                        url: "@Url.Action("PartialArticleList", "Home")",
+                        data: { "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize, "typeid": @ViewBag.typeid, "followingdates":2}, 
+                        success: function (result) {
+                            $("#listThree").find("#postback-content-table").html(result);                             
+                        },
+                        error: function () {
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            });
+
+            $("#listWeek").find('#pagination-pages').twbsPagination({
+                startPage: @ViewBag.pageindex,
+                totalPages: @ViewBag.Count_week==0?1:@ViewBag.Count_week,
+                visiblePages: 10,
+                first: "首页",
+                last: "尾页",
+                prev: "<<",
+                next: ">>",
+                version: '1.0',
+                onPageClick: function (event, page) {
+                    $.ajax({ 
+                        type: "post", 
+                        dataType: "html",
+                        url: "@Url.Action("PartialArticleList", "Home")",
+                        data: { "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize, "typeid": @ViewBag.typeid, "followingdates":6}, 
+                        success: function (result) {
+                            $("#listWeek").find("#postback-content-table").html(result);                             
+                        },
+                        error: function () {
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>
+}
+    
+}
+else
+{ 
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 left-content">
+            <div class="location">            
+                <ol class="breadcrumb">
+                    <span style="color:#eb6841;">当前位置:</span>
+                    <li><a href="@Url.Action("Index", "Home")">首页</a></li>
+                    <li class="active">@ViewBag.TypeName</li>
+                </ol>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><h3>@ViewBag.TypeName</h3></th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody id="postback-content-table">
+                    
+                </tbody>
+            </table>
+            <ul id="pagination-pages" class="pagination-sm"></ul>
+        </div>
+        <div class="col-md-3 right-content">
+            @if (ViewBag.typeid == 9 || ViewBag.typeid == 10 || ViewBag.typeid == 11 || ViewBag.typeid == 12)
+            {
+                <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                            <i class="glyphicon glyphicon-list"></i>
+                                招聘专区
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="~/Home/ArticleList/9" class="list-group-item @(ViewBag.typeid == 9 ? "active" : " ")" target="_self">职业规划</a>
+                            <a href="~/Home/ArticleList/10" class="list-group-item @(ViewBag.typeid == 10 ? "active" : " ")" target="_self">求职指南</a>
+                            <a href="~/Home/ArticleList/11" class="list-group-item @(ViewBag.typeid == 11 ? "active" : " ")" target="_self">课程教学</a>
+                            <a href="~/Home/ArticleList/12" class="list-group-item @(ViewBag.typeid == 12 ? "active" : " ")" target="_self">职业测评</a>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">错误：</h4>
+      </div>
+      <div class="modal-body">
+        <p>数据加载失败，请重新尝试。</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section Scripts{
+    <script src="~/Content/bootstrap/bootstrapPagination/jquery.twbsPagination.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myModal').modal({
+                keyboard: false,
+                show: false
+            });
+
+            $('#pagination-pages').twbsPagination({
+                startPage: @ViewBag.pageindex,
+                totalPages: @ViewBag.Count==0?1:@ViewBag.Count,
+                visiblePages: 10,
+                first: "首页",
+                last: "尾页",
+                prev: "<<",
+                next: ">>",
+                version: '1.0',
+                onPageClick: function (event, page) {
+                    $.ajax({ 
+                        type: "post", 
+                        dataType: "html",
+                        url: "@Url.Action("PartialArticleList", "Home")",
+                        data: { "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize, "typeid": @ViewBag.typeid, "followingdates":-1}, 
+                        success: function (result) {
+                            $("#postback-content-table").html(result);
+                        },
+                        error: function () {
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
+
+}

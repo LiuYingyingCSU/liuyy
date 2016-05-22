@@ -1,0 +1,9 @@
+﻿@foreach (System.Data.DataRow dt in ViewBag.tb_ArticleList.Rows)
+{
+    <tr>
+        <td>                                    
+            @Html.ActionLink((dt["Title"].ToString()==null || dt["Title"].ToString()=="") ? "Error-标题为空":dt["Title"].ToString(), (Convert.ToInt32(dt["DatabaseID"].ToString()) == 0 ? "OldArticleDetails" : (Convert.ToInt32(dt["DatabaseID"].ToString()) == 1 ? "ArticleDetails" : "NewsDetails")), new { id = Convert.ToInt32(dt["NewsID"]) }, new { target = "_blank" })
+        </td>
+        <td class="spanDate">@string.Format("{0:yyyy.MM.dd}",Convert.ToDateTime(dt["NewsTime"]))</td>
+    </tr>
+}

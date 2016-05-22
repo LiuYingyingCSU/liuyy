@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "等待审核";
+    if (Request.QueryString["Time"] == null)
+    {
+        Layout = "~/Views/Shared/Master.cshtml";@*指定模板页*@
+    }
+    else{
+        Layout = "~/Views/Shared/ArticleLayout.cshtml";@*指定模板页*@
+    }
+}
+
+@section Styles{
+    <link href="~/Content/Employer/RegisterCss.css" rel="stylesheet" type="text/css" />
+}
+
+<div id="RegisterContent">
+    <h1>欢迎注册成为企业用户</h1>
+    @*显示注册流程*@
+    <div id="divRegisterProcess">
+        <ul>
+            <li>
+                <span class="liucheng01" >01</span>
+                <span class="liucheng02" >注册</span>
+            </li>
+            <li>
+                <span class="liucheng01" id="liucheng01now">02</span>
+                <span class="liucheng02" id="liucheng02now">等待审核</span>
+            </li>
+            <li>
+                <span class="liucheng01">03</span>
+                <span class="liucheng02">注册成功</span>
+            </li>
+        </ul>
+    </div>
+    @*账户信息*@
+    <div id="divAccount">
+        @*内容部分*@
+        <div id="divAccountContent" class="divContent">
+            @Html.Label("请耐心等待，我们会尽快审核!审核期间，您可以登录企业后台进行相关操作。")<br />
+            @Html.Label("联系电话：0731-88877434")<br />
+            <font color="red">@Html.Label("审核通过后，请重新登录再进行操作")</font><br />
+            @if (Request.QueryString["Time"] == null)
+            { 
+                <font id="jumpTime" color="red"><span id='time'>10</span>@Html.Label("秒钟后将自动跳转至登录页面！")</font>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function(){
+        function Jump(time) {
+            window.setTimeout(function () {
+                time--;
+                $("#time").text(time);
+                if (time > 0) Jump(time);
+                else location.href = "@Url.Action("Login","Employer")";
+            }, 1000);
+        }
+        var url = location.search;  //获取?和?后面的字符串
+        if (url == "") {
+            //如果没有参数，就10秒后跳转
+            Jump(10);
+        }  
+    }
+</script>

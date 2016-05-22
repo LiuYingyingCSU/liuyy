@@ -1,0 +1,46 @@
+﻿@foreach (System.Data.DataRow dr in ViewBag.Employers.Rows)
+{
+    string str = dr["CompanyName"].ToString();
+    string key = ViewBag.key;
+    string ans = "";
+    int len = str.Length;
+    for (int i = 0; i < len; i++)
+    {
+        if (key.Contains(str[i]))
+        {
+            ans += "<span style='color:red !important'>";
+            ans += str[i];
+            ans += "</span>";
+        }
+        else
+        {
+            ans += str[i];
+        }
+    }
+    dr["CompanyName"] = ans;
+    <tr>
+        <td>
+            @Html.Raw(dr["CompanyName"].ToString())
+        </td>
+        <td>
+            @dr["CompanyNature"]
+        </td>
+        <td>
+            @dr["CompanyBusiness"]
+        </td>
+        <td>
+            @if (ViewBag.isDelete == 0)
+            {
+                //已经通过审核的
+                @Html.ActionLink("查看详细信息", "EmployerDetails", new { id = Convert.ToInt32(dr["EmployerID"]) }, new { style = "color:#fff;" })
+                @Html.ActionLink("删除", "EmployerDelete", new { id = Convert.ToInt32(dr["EmployerID"]) }, new { style = "color:#fff;", onclick = "return confirm('确认删除吗？')" })
+            }
+            else
+            {
+                //待审核的
+                @Html.ActionLink("查看并审核", "EmployerAudit", new { id = Convert.ToInt32(dr["EmployerID"]) }, new { style = "color:#fff;" })
+                @Html.ActionLink("删除", "EmployerDelete", new { id = Convert.ToInt32(dr["EmployerID"]) }, new { style = "color:#fff;", onclick = "return confirm('确认删除吗？')" })
+            }
+        </td>
+    </tr>
+}
