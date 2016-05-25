@@ -514,10 +514,31 @@ namespace MvcApplication1.Models
             SqlConnection conn = DBLink.GetConnection();
             conn.Open();
             string sqlstr = "";
-            sqlstr = "SELECT Count(*) from Employer where CompanyName like '%'+@key+'%' and IsDelete=@type";
+            sqlstr = "SELECT Count(*) from Employer where CompanyName like '%'+@key+'%' and IsDelete=@type ";
             SqlCommand cmd = new SqlCommand(sqlstr, conn);
             cmd.Parameters.Add(new SqlParameter("@key", key));
             cmd.Parameters.Add(new SqlParameter("@type", type));
+            int totalpagecount = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.Dispose();
+            conn.Close();
+            return totalpagecount;
+        }
+        #endregion
+
+        #region 根据类型及关键字、单位性质、单位行业获取雇主数量
+        public static int GetEmployerRecordCountByTypeByKeyByCNatureByCBusiness(int type, string key, string CompanyNature, string CompanyBusiness)
+        {
+            //if (CompanyNature == "" || CompanyNature == null) { CompanyNature = ""; }
+            //if (CompanyBusiness == "" || CompanyBusiness == null) { CompanyBusiness = ""; }
+            SqlConnection conn = DBLink.GetConnection();
+            conn.Open();
+            string sqlstr = "";
+            sqlstr = "SELECT Count(*) from Employer where CompanyName like '%'+@key+'%' and IsDelete=@type and CompanyNature like '%'+@nature+'%' and CompanyBusiness like '%'+@business+'%' ";
+            SqlCommand cmd = new SqlCommand(sqlstr, conn);
+            cmd.Parameters.Add(new SqlParameter("@key", key));
+            cmd.Parameters.Add(new SqlParameter("@type", type));
+            cmd.Parameters.Add(new SqlParameter("@nature", CompanyNature));
+            cmd.Parameters.Add(new SqlParameter("@business", CompanyBusiness));
             int totalpagecount = Convert.ToInt32(cmd.ExecuteScalar());
             cmd.Dispose();
             conn.Close();
@@ -558,14 +579,42 @@ namespace MvcApplication1.Models
             //catch () { return false; }
             SqlConnection conn = DBLink.GetConnection();
             conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetEmployerPagedRecordByTypeByKey";
+            //SqlCommand cmd = new SqlCommand();
+            //cmd.Connection = conn;
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.CommandText = "GetEmployerPagedRecordByTypeByKey";
+        
+            string str = "select EmployerID,CompanyName,CompanyNature,CompanyBusiness into #tb1 from Employer where IsDelete=@type and CompanyName like '%'+@key+'%' and CompanyNature like '%'+@nature+'%' and CompanyBusiness like '%'+@business+'%';select EmployerID,CompanyName,CompanyNature,CompanyBusiness from (select ROW_NUMBER() over (order by EmployerID desc) as RowId,* from #tb1) as temptable where RowId>=(@pageindex-1)*@pagesize+1 and RowId<=@pageindex*@pagesize";
+            SqlCommand cmd = new SqlCommand(str,conn);
             cmd.Parameters.Add(new SqlParameter("@pagesize", pagesize));
             cmd.Parameters.Add(new SqlParameter("@pageindex", pageindex));
             cmd.Parameters.Add(new SqlParameter("@type", type));
             cmd.Parameters.Add(new SqlParameter("@key", key));
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            cmd.Dispose();
+            conn.Close();
+            return dt;
+        }
+        #endregion
+
+        #region 根据类型、关键字、单位性质、单位行业获取Employer列表
+        public static DataTable GetEmployerListByTypeBykeyByCNatureByCBusiness(int pageindex, int pagesize, int type, string key,string CompanyNature,string CompanyBusiness)
+        {
+            //数据查询
+            SqlConnection conn = DBLink.GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "GetEmployerListByTypeBykeyByCNatureByCBusiness";
+            cmd.Parameters.Add(new SqlParameter("@pagesize",pagesize));
+            cmd.Parameters.Add(new SqlParameter("@pageindex",pageindex));
+            cmd.Parameters.Add(new SqlParameter("@type",type));
+            cmd.Parameters.Add(new SqlParameter("@key", key));
+            cmd.Parameters.Add(new SqlParameter("@nature", CompanyNature));
+            cmd.Parameters.Add(new SqlParameter("@business", CompanyBusiness));
 
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -573,6 +622,7 @@ namespace MvcApplication1.Models
             cmd.Dispose();
             conn.Close();
             return dt;
+
         }
         #endregion
 
@@ -698,6 +748,7 @@ namespace MvcApplication1.Models
             };
         }
     }
+    
     /// <summary>
     /// 用户登陆模型
     /// </summary>
@@ -728,4 +779,5 @@ namespace MvcApplication1.Models
         public string VerificationCode { get; set; }
 
     }
+    
 }

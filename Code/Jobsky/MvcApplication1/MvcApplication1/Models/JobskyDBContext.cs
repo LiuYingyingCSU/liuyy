@@ -14,7 +14,5 @@ namespace MvcApplication1.Models
 
         }
         public DbSet<Employer> Employers { get; set; }
-
-        public DbSet<Student> Students { get; set; }
     }
 }

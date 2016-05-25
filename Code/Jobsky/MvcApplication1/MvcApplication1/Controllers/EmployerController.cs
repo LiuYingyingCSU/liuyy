@@ -241,7 +241,7 @@ namespace MvcApplication1.Controllers
                 _cookie.Values.Add("EmployerAccount", login.EmployerAccount);
                 //密码先用自己的加密方法，再url加密（防止自己加密后有特殊字符），再存到cookie里
                 //取用的时候，先url解密，再用自己方法解密
-                _cookie.Values.Add("EmployerPwd", Server.UrlEncode(Common.Text.EnCrypt(login.EmployerPwd)));    
+                _cookie.Values.Add("EmployerPwd", Server.UrlEncode(Common.Text.EnCrypt(login.EmployerPwd)));
                 _cookie.Values.Add("IsDelete", (employer.IsDelete).ToString());
                 Response.Cookies.Add(_cookie);
                 if (Request.QueryString["ReturnUrl"] != null) return Redirect(Request.QueryString["ReturnUrl"]);

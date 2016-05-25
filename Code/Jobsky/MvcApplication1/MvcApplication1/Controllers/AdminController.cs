@@ -851,6 +851,8 @@ namespace MvcApplication1.Controllers
         #region 文章列表
 
         static string key = "";
+        static string CompanyNature = "";
+        static string CompanyBusiness = "";
         [AdminAuthorize]
         public ActionResult NewsList(FormCollection collection)
         {
@@ -1261,15 +1263,83 @@ namespace MvcApplication1.Controllers
 
         #endregion
 
+        #region 各个DropDownList的初始化
+        public void CreateDropDownList()
+        {
+            #region 单位性质DropDownList
+            List<SelectListItem> itemsCompanyNature = new List<SelectListItem>();
+            itemsCompanyNature.Add(new SelectListItem { Text = "请选择单位性质(ALL)", Value = null });
+            itemsCompanyNature.Add(new SelectListItem { Text = "党政机关", Value = "党政机关" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "高等教育单位", Value = "高等教育单位" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "科研单位", Value = "科研单位" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "医疗卫生单位", Value = "医疗卫生单位" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "其他事业单位", Value = "其他事业单位" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "国有企业", Value = "国有企业" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "民营企业", Value = "民营企业" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "三资企业", Value = "三资企业" });
+            itemsCompanyNature.Add(new SelectListItem { Text = "部队", Value = "部队" });
+            ViewBag.CompanyNature = itemsCompanyNature;
+           
+            //ViewData["itemsCompanyNature"] = (List<SelectListItem>)itemsCompanyNature;
+            #endregion
+       
+
+            #region 所属行业DropDownList
+            List<SelectListItem> itemsCompanyBusiness = new List<SelectListItem>();
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "请选择单位行业(ALL)", Value = null });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "制造业", Value = "制造业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "信息传输、软件和信息技术服务业", Value = "信息传输、软件和信息技术服务业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "教育", Value = "教育" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "卫生和社会工作", Value = "卫生和社会工作" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "科学研究和技术服务业", Value = "科学研究和技术服务业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "建筑业", Value = "建筑业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "交通运输、仓储和邮政业", Value = "交通运输、仓储和邮政业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "金融业", Value = "金融业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "采矿业", Value = "采矿业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "公共管理、社会保障和社会组织", Value = "公共管理、社会保障和社会组织" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "电力、热力、燃气及水生产和供应业", Value = "电力、热力、燃气及水生产和供应业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "房地产业", Value = "房地产业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "租赁和商务服务业", Value = "租赁和商务服务业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "批发和零售业", Value = "批发和零售业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "文化、体育和娱乐业", Value = "文化、体育和娱乐业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "居民服务、修理和其他服务业", Value = "居民服务、修理和其他服务业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "军队", Value = "军队" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "水利、环境和公告设施管理业", Value = "水利、环境和公告设施管理业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "住宿和餐饮业", Value = "住宿和餐饮业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "农、林、牧、渔业", Value = "农、林、牧、渔业" });
+            itemsCompanyBusiness.Add(new SelectListItem { Text = "国际组织", Value = "国际组织" });
+            ViewBag.CompanyBusiness = itemsCompanyBusiness;
+          
+            //ViewData["CompanyBusiness"] = (List<SelectListItem>)itemsCompanyBusiness;
+            #endregion
+        }
+        #endregion
+
         #region 雇主——已审核雇主列表
         [AdminAuthorize]
         public ActionResult EmployerList(int id = 1)
         {
+            CreateDropDownList();
+            AllModel employerSearch = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
+
             string key = Request["key"];
+            string companynature = Request["employer.CompanyNature"];
+            string companybusiness = Request["employer.CompanyBusiness"];
+            
+            #region 设置初始值
             if (key == null)
             {
                 key = "";
             }
+            if (companynature == null || companynature == "请选择单位性质(ALL)") companynature = "";
+            else ViewBag.CompanyNature = new SelectList(ViewBag.CompanyNature, "Value", "Text", companynature);
+            if (companybusiness == null || companybusiness == "请选择单位行业(ALL)") companybusiness = "";
+            else ViewBag.CompanyBusiness = new SelectList(ViewBag.CompanyBusiness, "Value", "Text", companybusiness);
+            #endregion
+
+            employerSearch.employer.CompanyNature = CompanyNature;
+            employerSearch.employer.CompanyBusiness = CompanyBusiness;
+
             int isDelete = 0;//已审核
             //显示全部信息
             int pageindex = 1;
@@ -1277,16 +1347,18 @@ namespace MvcApplication1.Controllers
 
             ViewBag.isDelete = isDelete;//记录雇主是否审核
             //获取雇主列表
-            ViewBag.Employers = Employer.GetEmployerListByTypeByKey(pageindex, pagesize, isDelete, key);//列表数据
+            ViewBag.Employers = Employer.GetEmployerListByTypeBykeyByCNatureByCBusiness(pageindex, pagesize, isDelete, key, companynature, companybusiness);//列表数据
             //给插件的四个参数
-            int totalpage = Employer.GetEmployerRecordCountByTypeByKey(isDelete, key);//获取总共多少雇主记录
+            int totalpage = Employer.GetEmployerRecordCountByTypeByKeyByCNatureByCBusiness(isDelete, key,companynature,companybusiness);//获取总共多少雇主记录
             int count = totalpage % pagesize == 0 ? totalpage / pagesize : totalpage / pagesize + 1;
             if (count == 0) count = 1;
             ViewBag.Count = count;
             ViewBag.pageindex = pageindex;
             ViewBag.pagesize = pagesize;
             ViewBag.key = key;
-            return View();
+            ViewBag.nature = companynature;
+            ViewBag.business = companybusiness;
+            return View(employerSearch);
         }
         #endregion
 
@@ -1303,28 +1375,41 @@ namespace MvcApplication1.Controllers
         [AdminAuthorize]
         public ActionResult EmployerWaitList(int id = 1)
         {
+            CreateDropDownList();
+            AllModel employerSearch = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
             string key = Request["key"];
+            string CompanyNature = Request["employer.CompanyNature"];
+            string CompanyBusiness = Request["employer.CompanyBusiness"];
             if (key == null)
             {
                 key = "";
             }
+            if (CompanyNature == null || CompanyNature == "请选择单位性质(ALL)") CompanyNature = "";
+            else ViewBag.CompanyNature = new SelectList(ViewBag.CompanyNature, "Value", "Text", CompanyNature);
+            if (CompanyBusiness == null || CompanyBusiness == "请选择单位行业(ALL)") CompanyBusiness = "";
+            else ViewBag.CompanyBusiness = new SelectList(ViewBag.CompanyBusiness, "Value", "Text", CompanyBusiness);
             int isDelete = 2;//待审核
             //显示全部信息
             int pageindex = 1;
             int pagesize = 10;
 
+            employerSearch.employer.CompanyNature = CompanyNature;
+            employerSearch.employer.CompanyBusiness = CompanyBusiness;
+
             ViewBag.isDelete = isDelete;//记录雇主是否审核
             //获取雇主列表
-            ViewBag.Employers = Employer.GetEmployerListByTypeByKey(pageindex, pagesize, isDelete, key);//列表数据
+            ViewBag.Employers = Employer.GetEmployerListByTypeBykeyByCNatureByCBusiness(pageindex, pagesize, isDelete, key,CompanyNature,CompanyBusiness);//列表数据
             //给插件的四个参数
-            int totalpage = Employer.GetEmployerRecordCountByTypeByKey(isDelete, key);//获取总共多少雇主记录
+            int totalpage = Employer.GetEmployerRecordCountByTypeByKeyByCNatureByCBusiness(isDelete, key, CompanyNature, CompanyBusiness);//获取总共多少雇主记录
             int count = totalpage % pagesize == 0 ? totalpage / pagesize : totalpage / pagesize + 1;
             if (count == 0) count = 1;
             ViewBag.Count = count;
             ViewBag.pageindex = pageindex;
             ViewBag.pagesize = pagesize;
             ViewBag.key = key;
-            return View();
+            ViewBag.nature = CompanyNature;
+            ViewBag.business = CompanyBusiness;
+            return View(employerSearch);
         }
         #endregion
 
@@ -1382,16 +1467,28 @@ namespace MvcApplication1.Controllers
         }
         #endregion
 
-        #region 文章——待审核雇主文章列表
+        #region 把那几个页面合一起
         [AdminAuthorize]
-        public ActionResult EmployerArticleWaitList(int id = 1)
+        public ActionResult EmployerArticleWaitList(int id = 1,int isAudit=3)
         {
+            isAudit = Convert.ToInt32(Request["isAudit"]);
             string key = Request["key"];
+            if(isAudit==0){
+                ViewBag.Title = "待审核文章";
+            }
+            else if(isAudit==1){
+                 ViewBag.Title = "已审核文章";
+            }
+            else
+            {
+                ViewBag.Title = "已回绝文章";
+            }
+           
             if (key == null)
             {
                 key = "";
             }
-            int isAudit = 1;
+            //int isAudit = 1;
             //单位名称，文章标题，文章类型，操作
             //显示全部信息
             DateTime dtbegin, dtend;
@@ -1408,9 +1505,9 @@ namespace MvcApplication1.Controllers
             HttpCookie _cookie = Request.Cookies["Admin"];
             string _adminType = _cookie["AdminType"];   //0为本部，1为湘雅，2为铁道
 
-            ViewBag.EmployerArticles = Article.GetArticleByAuditByDttypeByPageByKey(pagesize, pageindex, isAudit, dtbegin, dtend, dttype, key,_adminType);//列表数据
+            ViewBag.EmployerArticles = Article.GetArticleByAuditByDttypeByPageByKey(pagesize, pageindex, isAudit, dtbegin, dtend, dttype, key, _adminType);//列表数据
             //给插件的四个参数
-            int totalpage = Article.GetArticleRecordCountByAuditByDttypeByKey(isAudit, dtbegin, dtend, dttype, key,_adminType);//数据数量
+            int totalpage = Article.GetArticleRecordCountByAuditByDttypeByKey(isAudit, dtbegin, dtend, dttype, key, _adminType);//数据数量
             int count = totalpage % pagesize == 0 ? totalpage / pagesize : totalpage / pagesize + 1;
             if (count == 0) count = 1;
             ViewBag.Count = count;
@@ -1421,12 +1518,51 @@ namespace MvcApplication1.Controllers
         }
         #endregion
 
+        #region 文章——待审核雇主文章列表
+        //[AdminAuthorize]
+        //public ActionResult EmployerArticleWaitList(int id = 1)
+        //{
+        //    string key = Request["key"];
+        //    if (key == null)
+        //    {
+        //        key = "";
+        //    }
+        //    int isAudit = 1;
+        //    //单位名称，文章标题，文章类型，操作
+        //    //显示全部信息
+        //    DateTime dtbegin, dtend;
+        //    dtbegin = DateTime.Now.AddDays(-10000);
+        //    dtend = DateTime.Now.AddDays(10000);
+
+        //    int pageindex = 0;
+        //    int pagesize = 10;
+
+        //    int dttype = -1;   //-1表示显示全部文章
+
+        //    ViewBag.isAudit = isAudit;//记录文章是否审核
+        //    //获取文章
+        //    HttpCookie _cookie = Request.Cookies["Admin"];
+        //    string _adminType = _cookie["AdminType"];   //0为本部，1为湘雅，2为铁道
+
+        //    ViewBag.EmployerArticles = Article.GetArticleByAuditByDttypeByPageByKey(pagesize, pageindex, isAudit, dtbegin, dtend, dttype, key,_adminType);//列表数据
+        //    //给插件的四个参数
+        //    int totalpage = Article.GetArticleRecordCountByAuditByDttypeByKey(isAudit, dtbegin, dtend, dttype, key,_adminType);//数据数量
+        //    int count = totalpage % pagesize == 0 ? totalpage / pagesize : totalpage / pagesize + 1;
+        //    if (count == 0) count = 1;
+        //    ViewBag.Count = count;
+        //    ViewBag.pageindex = pageindex + 1;
+        //    ViewBag.pagesize = pagesize;
+        //    ViewBag.key = key;
+        //    return View();
+        //}
+        #endregion
+
         #region 审核文章
         [AdminAuthorize]
         public ActionResult EmployerArticleAudit(int id, string typeName)
         {
             CreatePlaceListFirstDDL();
-            AllModel auditArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer(),new Student());
+            AllModel auditArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
             DataTable dt = TempArticle.GetAuditArticleByTempArticleID(id);
             auditArticle.tempArticle.Title = dt.Rows[0]["Title"].ToString();    //文章标题
             auditArticle.employer.MobilePhone = dt.Rows[0]["MobilePhone"].ToString();   //联系人电话
@@ -1480,7 +1616,7 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult EmployerArticleAudit(int id, string typeName, int isAgree, FormCollection collection)
         {
-            AllModel auditArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer(),new Student());
+            AllModel auditArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
             if (ModelState.IsValid)
             {
                 auditArticle.tempArticle.Title = Request["tempArticle.Title"];
@@ -1559,7 +1695,7 @@ namespace MvcApplication1.Controllers
         public ActionResult EmployerArticleUpdate(int id, string typeName)
         {
             CreatePlaceListFirstDDL();
-            AllModel updateArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer(),new Student());
+            AllModel updateArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
             DataTable dt = Article.GetArticleByIDForUpdate(id);
             updateArticle.article.Title = dt.Rows[0]["Title"].ToString();
             if (typeName.Trim() == "专场招聘")
@@ -1584,7 +1720,7 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult EmployerArticleUpdate(int id, string typeName, FormCollection collection)
         {
-            AllModel updateArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer(),new Student());
+            AllModel updateArticle = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
             if (ModelState.IsValid)
             {
                 updateArticle.article.Title = Request["article.Title"];
@@ -1687,15 +1823,22 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult PartialEmployerListByKey(FormCollection collection)
         {
+            CreateDropDownList();
             int pageindex = Convert.ToInt32(Request["pageindex"]);
             int pagesize = Convert.ToInt32(Request["pagesize"]);
             key = Request["key"].ToString();
+            CompanyNature = Request["CompanyNature"].ToString();
+            CompanyBusiness = Request["CompanyBusiness"].ToString();
             int isDelete = Int32.Parse(Request["isDelete"].ToString()); //0表示已经通过审核，2表示待审核
 
             ViewBag.key = key;
+            ViewBag.nature = CompanyNature;
+            ViewBag.business = CompanyBusiness;
             ViewBag.isDelete = isDelete;
+            //ViewBag.nature = nature;
+            //ViewBag.business = business;
             //获取雇主
-            ViewBag.Employers = Employer.GetEmployerListByTypeByKey(pageindex, pagesize, isDelete, key);//列表数据
+            ViewBag.Employers = Employer.GetEmployerListByTypeBykeyByCNatureByCBusiness(pageindex, pagesize, isDelete, key,CompanyNature,CompanyBusiness);//列表数据
             return PartialView();
         }
         #endregion

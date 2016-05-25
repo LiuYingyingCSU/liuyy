@@ -1,5 +1,6 @@
 ﻿@{
-    ViewBag.Title = "待审核雇主文章列表";
+    @*@*ViewBag.Title = "待审核雇主文章列表";*@
+    @ViewBag.Title
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 <style type="text/css">
@@ -127,7 +128,7 @@
         }
 </style>
 
-<h2>待审核雇主文章列表</h2>
+<h2>@ViewBag.Title</h2>
 <form action="~/Admin/EmployerArticleWaitList" id="global_search_form" method="get" class="pull-left col-xs-6 col-sm-3" style="margin-bottom:5px;">
     <div class="input-group no-margin">
         @{

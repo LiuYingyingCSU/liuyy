@@ -261,7 +261,7 @@ namespace MvcApplication1.Controllers
         public ActionResult AdvancedSearch()
         {
             CreateDropDownList();
-            AllModel advancedSearch = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer(),new Student());
+            AllModel advancedSearch = new AllModel(new Admin(), new News(), new ArticleType(), new Article(), new List<DemandInfo>(), new TempArticle(), new List<TempDemandInfo>(), new PlaceListFirst(), new PlaceListSecond(), new Employer());
 
             #region 设置初始值
             //设置初始值

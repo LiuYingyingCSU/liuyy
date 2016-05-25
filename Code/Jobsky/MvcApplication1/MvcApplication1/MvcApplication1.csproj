@@ -172,13 +172,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\PromptController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Extensions\AdminAuthorizeAttribute.cs" />
     <Compile Include="Extensions\AdminSuperAuthorizeAttribute.cs" />
     <Compile Include="Extensions\AgreeEmployerAuthorizeAttribute.cs" />
     <Compile Include="Extensions\DisplayDescriptionExtensions.cs" />
     <Compile Include="Extensions\EmployerAuthorizeAttribute.cs" />
-    <Compile Include="Extensions\StudentAuthorizeAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -197,7 +195,6 @@
     <Compile Include="Models\PlaceListFirst.cs" />
     <Compile Include="Models\PlaceListSecond.cs" />
     <Compile Include="Models\Prompt.cs" />
-    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\TempArticle.cs" />
     <Compile Include="Models\TempDemandInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -647,6 +644,7 @@
     <Content Include="Scripts\Article\ShareScript.js" />
     <Content Include="Scripts\Employer\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Employer\jquery.date_input.pack.js" />
+    <Content Include="Scripts\Employer\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\Employer\ProvinceCity.js" />
     <Content Include="Scripts\Home\ProvinceCity.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
@@ -678,7 +676,9 @@
     <Content Include="Uploads\2015829165007.jpg" />
     <Content Include="Uploads\2015829174257.jpg" />
     <Content Include="Uploads\2015829174413.jpg" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -855,12 +855,6 @@
     <Content Include="Views\Home\AdvancedSearch.cshtml" />
     <Content Include="Views\Home\PartialAdvancedSearchList.cshtml" />
     <Content Include="Views\Admin\QueryEmployerPwd.cshtml" />
-    <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Student\Details.cshtml" />
-    <Content Include="Views\Student\Create.cshtml" />
-    <Content Include="Views\Student\Edit.cshtml" />
-    <Content Include="Views\Student\Delete.cshtml" />
-    <Content Include="Views\Student\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -205,9 +205,24 @@
                             <li><a href="@Url.Action("QueryEmployerPwd", "Admin")"><i class="glyphicon glyphicon-edit"></i>查询雇主密码</a></li>
                             <li><a href="@Url.Action("EmployerWaitList", "Admin")"><i class="glyphicon glyphicon-edit"></i>待审核雇主列表</a></li>
                             <li><a href="@Url.Action("EmployerList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已审核雇主列表</a></li>
-                            <li><a href="@Url.Action("EmployerArticleWaitList", "Admin")"><i class="glyphicon glyphicon-edit"></i>待审核雇主文章列表</a></li>
+                            @*<li><a href="@Url.Action("EmployerArticleWaitList", "Admin")"><i class="glyphicon glyphicon-edit"></i>待审核雇主文章列表</a></li>
                             <li><a href="@Url.Action("EmployerArticleList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已审核雇主文章列表</a></li>
-                            <li><a href="@Url.Action("EmployerArticleDisagreeList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已回绝雇主文章列表</a></li>
+                            <li><a href="@Url.Action("EmployerArticleDisagreeList", "Admin")"><i class="glyphicon glyphicon-edit"></i>已回绝雇主文章列表</a></li>*@
+                            
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a href="#Article" class="nav-header collapsed" data-toggle="collapse">
+                            <i class="glyphicon glyphicon-edit"></i>
+                            雇主文章
+                            <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                        <ul id="Article" class="nav nav-list collapse secondmenu jobsky-dropdown-nav" style="height:0;">
+                            <li>@Html.ActionLink("待审核文章", "EmployerArticleWaitList", new { isAudit = 0 })</li>
+                            <li>@Html.ActionLink("已审核文章", "EmployerArticleWaitList", new { isAudit = 1 })</li>
+                            <li>@Html.ActionLink("已回绝文章", "EmployerArticleWaitList", new { isAudit = 2 })</li>
                         </ul>
                     </li>
                 </ul>

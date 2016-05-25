@@ -19,9 +19,8 @@ namespace MvcApplication1.Models
         public PlaceListFirst placeListFirst;
         public PlaceListSecond placeListSecond;
         public Employer employer;
-        public Student student;
 
-        public AllModel(Admin admin, News news, ArticleType articleType, Article article, List<DemandInfo> demandInfo, TempArticle tempArticle, List<TempDemandInfo> tempDemandInfo, PlaceListFirst placeListFirst, PlaceListSecond placeListSecond, Employer employer,Student student)
+        public AllModel(Admin admin, News news, ArticleType articleType, Article article, List<DemandInfo> demandInfo, TempArticle tempArticle, List<TempDemandInfo> tempDemandInfo, PlaceListFirst placeListFirst, PlaceListSecond placeListSecond, Employer employer)
         {
             this.admin = admin;
             this.news = news;
@@ -33,7 +32,6 @@ namespace MvcApplication1.Models
             this.placeListFirst = placeListFirst;
             this.placeListSecond = placeListSecond;
             this.employer = employer;
-            this.student = student;
         }
 
     }

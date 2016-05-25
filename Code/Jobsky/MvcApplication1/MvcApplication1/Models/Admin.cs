@@ -294,4 +294,15 @@ namespace MvcApplication1.Models
         [StringLength(6, MinimumLength = 6, ErrorMessage = "×")]
         public string VerificationCode { get; set; }
     }
+     ///<summary>
+     ///雇主搜索模型
+     ///</summary>
+    //[NotMapped]
+    //public class EmployerSearch
+    //{
+    //    public string CompanyName { get; set; }
+    //    public string CompanyNature{get;set;}
+    //    public string CompanyBusiness { get; set; }
+    //    public bool isSelected { get; set; }
+    //}
 }

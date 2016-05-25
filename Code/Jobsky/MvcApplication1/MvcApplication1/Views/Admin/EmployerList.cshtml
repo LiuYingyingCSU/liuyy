@@ -1,7 +1,9 @@
-﻿@{
+﻿@model MvcApplication1.Models.AllModel
+@{
     ViewBag.Title = "已审核雇主列表";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+<script src="~/Scripts/Employer/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
 <style type="text/css">
     #body {
         background-color: #e7f2f8;
@@ -128,40 +130,55 @@
 </style>
 
 <h2>已审核雇主列表</h2>
-<form action="~/Admin/EmployerList" id="global_search_form" method="get" class="pull-left col-xs-6 col-sm-3" style="margin-bottom:5px;">
-    <div class="input-group no-margin">
-        @{
-            if (@ViewBag.key != "")
-            {
-                <input type="text" name="key" value=@ViewBag.key class="form-control no-padding-hr" style="border-radius: 0;" />
-            }
-            else
-            {
-                <input type="text" name="key" placeholder="请输入待搜索单位名称..." class="form-control no-padding-hr" style="border-radius: 0;" />
-            }
-        }
-        @*<input type="text" name="key" placeholder="Search..." class="form-control no-padding-hr" style="border-radius: 0;" />*@
-        <span id="global_search_btns" onclick="$('#global_search_form').submit();" class="input-group-addon" style="background-color: #e8e8e8; cursor: pointer;border-radius: 0;"><i class="glyphicon glyphicon-search jobsky-glyphicon-search"></i></span>
-    </div>
+<form action="~/Admin/EmployerList" id="global_search_form" method="post" class="pull-left col-xs-12 col-sm-12" style="margin-bottom:5px;">
+    <div class="form-group">
+        
+            <div class="col-md-3">
+                @{
+                    if (@ViewBag.key != "")
+                    {
+                        <input type="text" name="key" value=@ViewBag.key class="form-control no-padding-hr" style="border-radius: 0;" />
+                    }
+                    else
+                    {
+                        <input type="text" name="key" placeholder="请输入待搜索单位名称..." class="form-control no-padding-hr" style="border-radius: 0;" />
+                    }
+                }
+            </div>
+
+            <div class="col-md-3">
+                @*@Html.DropDownList("CompanyNature", ViewBag.CompanyNature as IEnumerable<SelectListItem>)*@
+                @Html.DropDownListFor(model => model.employer.CompanyNature, ViewBag.CompanyNature as IEnumerable<SelectListItem>)
+            </div>
+
+            <div class="col-md-3">
+                @*@Html.DropDownList("CompanyBusiness", ViewBag.CompanyBusiness as IEnumerable<SelectListItem>)*@
+                @Html.DropDownListFor(model=>model.employer.CompanyBusiness, ViewBag.CompanyBusiness as IEnumerable<SelectListItem>)
+            </div>
+        <div class=" col-md-1" >
+        <span id="global_search_btns" onclick="$('#global_search_form').submit();" class="input-group-addon" style="background-color: #e8e8e8; cursor: pointer; border-radius: 5px; border: none; height: 34px;"><i class="glyphicon glyphicon-search jobsky-glyphicon-search"></i></span></div>
+</div>
+
 </form>
 
-<table>
-    <tr>
-        <th>
-            单位名称
-        </th>
-        <th>
-            单位性质
-        </th>
-        <th>
-            单位行业
-        </th>
-        <th>
-            操作
-        </th>
-    </tr>
-    <tbody id="postback-content-table"></tbody>
-</table>
+<div>
+    <table>
+        <tr>
+            <th>
+                单位名称
+            </th>
+            <th>
+                单位性质
+            </th>
+            <th>
+                单位行业
+            </th>
+            <th>操作</th>
+        </tr>
+        <tbody id="postback-content-table"></tbody>
+    </table>
+</div>
+
 <ul id="pagination-pages" class="pagination-sm"></ul>
 
 <div id="myModal" class="modal fade">
@@ -184,11 +201,36 @@
 @section Scripts {
     <script type="text/javascript" src="~/Scripts/Article/jqPaginator.js"></script>
     <script src="~/Content/bootstrap/bootstrapPagination/jquery.twbsPagination.js" type="text/javascript"></script>
+    
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('select').addClass("form-control");
+        });
         $(document).ready(function () {
             $('#myModal').modal({
                 keyboard: false,
                 show: false
+            });
+
+            $('#global_searct_btns').click(function(){
+                $('#global_search_form').submit();
+                var url="@Url.Action("PartialEmployerListByKey", "Admin")";
+                $.ajax({
+                    type:"post",
+                    dataType:"html",
+                    url:url,
+                    data:{"key":"@ViewBag.key",
+                        "isDelete":"@ViewBag.isDelete",
+                        "CompanyNature":"@ViewBag.nature",
+                        "CompanyBusiness":"@ViewBag.business"},
+                    success: function (result) {
+                       
+                        $("#postback-content-table").html(result);
+                    },
+                    error: function () {
+                        $('#myModal').modal('show');
+                    }
+                })
             });
 
             $('#pagination-pages').twbsPagination({
@@ -205,7 +247,12 @@
                         type: "post",
                         dataType: "html",
                         url: "@Url.Action("PartialEmployerListByKey", "Admin")",
-                        data: {"key":"@ViewBag.key","isDelete":"@ViewBag.isDelete", "pageindex": parseInt(page),"pagesize": @ViewBag.pagesize},
+                        data: {"key":"@ViewBag.key",
+                            "isDelete":"@ViewBag.isDelete",
+                            "pageindex": parseInt(page),
+                            "pagesize": @ViewBag.pagesize,
+                            "CompanyNature":"@ViewBag.nature",
+                            "CompanyBusiness":"@ViewBag.business"},
                         success: function (result) {
                             $("#postback-content-table").html(result);
                         },
@@ -216,6 +263,28 @@
                 }
             });
         });
+    </script>
+    <script type="text/javascript">
+        @*$(document).ready(function(){
+            var nature=@ViewBag.nature
+            $("#CompanyNature option[value='"+nature+"']").attr("selected",true);
+        })*@
+        //function setDropDown() {
+        //    //给省份下拉列表赋值 
+        //    var option, modelVal;
+        //    var $sel = $("#selProvince");
+
+        //    //获取对应省份城市 
+        //    for (var i = 0, len = province.length; i < len; i++) {
+
+        //        modelVal = province[i];
+        //        option = "<option value='" + modelVal + "' seleced=selected>" + modelVal + "</option>";
+
+        //        //添加到 select 元素中 
+        //        $sel.append(option);
+        //    }
+        //}
+
     </script>
 }
 
