@@ -8,6 +8,9 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Drawing;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+
 
 namespace MvcApplication1.Controllers
 {
@@ -91,7 +94,7 @@ namespace MvcApplication1.Controllers
         /// <returns></returns>
         public ActionResult VerificationCode()
         {
-            int _verificationLength = 6;
+            int _verificationLength = 4;
             int _width = 100, _height = 20;
             SizeF _verificationTextSize;
             Bitmap _bitmap = new Bitmap(Server.MapPath("~/Skins/Common/Texture.jpg"), true);
@@ -2011,5 +2014,126 @@ namespace MvcApplication1.Controllers
 
         #endregion
 
+         #region 雇主信息导出到excel
+        public void OutExcel()
+        {          
+            //TODO 导出文件后自动返回原来页面；2.性别显示；3.日期导出
+            HSSFWorkbook workbook = new HSSFWorkbook();//创建一个工作簿；using NPOI.HSSF.UserModel;
+            ISheet sheet1 = workbook.CreateSheet("雇主信息页");// 创建一个sheet页 using NPOI.SS.UserModel;
+            IRow rowHeader = sheet1.CreateRow(0);//创建第一行
+
+            //设置表头内容
+            rowHeader.CreateCell(0, CellType.STRING).SetCellValue("雇主账号");//创建第一行第一列的单元格，设定里面的值为雇主账号
+            rowHeader.CreateCell(1, CellType.STRING).SetCellValue("密码");
+            rowHeader.CreateCell(2, CellType.STRING).SetCellValue("联系人姓名");
+            rowHeader.CreateCell(3, CellType.STRING).SetCellValue("联系人性别");
+            rowHeader.CreateCell(4, CellType.STRING).SetCellValue("固定电话");
+            rowHeader.CreateCell(5, CellType.STRING).SetCellValue("移动电话");
+            rowHeader.CreateCell(6, CellType.STRING).SetCellValue("邮箱");
+            rowHeader.CreateCell(7, CellType.STRING).SetCellValue("单位名称");
+            rowHeader.CreateCell(8, CellType.STRING).SetCellValue("母公司名称");
+            rowHeader.CreateCell(9, CellType.STRING).SetCellValue("单位简介");
+            rowHeader.CreateCell(10, CellType.STRING).SetCellValue("办公电话");
+            rowHeader.CreateCell(11, CellType.STRING).SetCellValue("组织代码");
+            rowHeader.CreateCell(12, CellType.STRING).SetCellValue("有效期");
+            rowHeader.CreateCell(13, CellType.STRING).SetCellValue("单位性质");
+            rowHeader.CreateCell(14, CellType.STRING).SetCellValue("单位行业");
+            rowHeader.CreateCell(15, CellType.STRING).SetCellValue("单位规模");
+            rowHeader.CreateCell(16, CellType.STRING).SetCellValue("注册资本");
+            rowHeader.CreateCell(17, CellType.STRING).SetCellValue("是否五百强");
+            rowHeader.CreateCell(18, CellType.STRING).SetCellValue("所在地区省");
+            rowHeader.CreateCell(19, CellType.STRING).SetCellValue("所在地区市");
+            rowHeader.CreateCell(20, CellType.STRING).SetCellValue("单位地址（街道）");
+            rowHeader.CreateCell(21, CellType.STRING).SetCellValue("城市类型");
+            rowHeader.CreateCell(22, CellType.STRING).SetCellValue("备注");
+            //rowHeader.CreateCell(23, CellType.STRING).SetCellValue("注册时间");           
+
+            //设置数据内容
+            try
+            {
+                //SqlDataReader read = new SqlDataReader();
+                SqlConnection conn = DBLink.GetConnection();
+                //SqlCommand cmd = new SqlCommand();
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.CommandText = "EmployerToExcel";
+                //string strSql = cmd.CommandText.ToString();                           
+                string strSql = "SELECT EmployerAccount,EmployerPwd," +
+                                "ContactPersonName,ContactPersonSex,FixedTelephone,MobilePhone,Email," +
+                                " CompanyName,ParentCompanyName,CompanyIntroduction,CompanyPhone,OrganizationCode,ValidPeriod,CompanyNature,CompanyBusiness,CompanySize,RegisteredCapital,IsTop500," +
+                                "CompanyAreaProvince,CompanyAreaCity,CompanyAddress,CityClass,Remark," +
+                                "year(RegisterTime) from Employer";
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                conn.Open();
+                using (cmd)
+                {
+                    using (SqlDataReader read=cmd.ExecuteReader())
+                    {
+                        int i = 0;
+                        while (read.Read())
+                        {
+                            i++;//增加一行
+                            IRow rowData = sheet1.CreateRow(i);
+                            rowData.CreateCell(0, CellType.STRING).SetCellValue(read["EmployerAccount"].ToString());
+                            rowData.CreateCell(1, CellType.STRING).SetCellValue(Common.Text.DeCrypt(read["EmployerPwd"].ToString()));
+                            rowData.CreateCell(2, CellType.STRING).SetCellValue(read["ContactPersonName"].ToString());
+                            //rowData.CreateCell(3, CellType.STRING).SetCellValue(read["ContactPersonSex"].ToString());
+                            if (read["ContactPersonSex"].ToString()=="0")
+                                rowData.CreateCell(3, CellType.STRING).SetCellValue("女");
+                            else
+                                rowData.CreateCell(3, CellType.STRING).SetCellValue("男");
+                            rowData.CreateCell(4, CellType.STRING).SetCellValue(read["FixedTelephone"].ToString());
+                            rowData.CreateCell(5, CellType.STRING).SetCellValue(read["MobilePhone"].ToString());
+                            rowData.CreateCell(6, CellType.STRING).SetCellValue(read["Email"].ToString());
+                            rowData.CreateCell(7, CellType.STRING).SetCellValue(read["CompanyName"].ToString());
+                            rowData.CreateCell(8, CellType.STRING).SetCellValue(read["ParentCompanyName"].ToString());
+                            rowData.CreateCell(9, CellType.STRING).SetCellValue(read["CompanyIntroduction"].ToString());
+                            rowData.CreateCell(10, CellType.STRING).SetCellValue(read["CompanyPhone"].ToString());
+                            rowData.CreateCell(11, CellType.STRING).SetCellValue(read["OrganizationCode"].ToString());
+                            rowData.CreateCell(12, CellType.STRING).SetCellValue(read["ValidPeriod"].ToString());
+                            rowData.CreateCell(13, CellType.STRING).SetCellValue(read["CompanyNature"].ToString());
+                            rowData.CreateCell(14, CellType.STRING).SetCellValue(read["CompanyBusiness"].ToString());
+                            rowData.CreateCell(15, CellType.STRING).SetCellValue(read["CompanySize"].ToString());
+                            rowData.CreateCell(16, CellType.STRING).SetCellValue(read["RegisteredCapital"].ToString());
+                            rowData.CreateCell(17, CellType.STRING).SetCellValue(read["IsTop500"].ToString());
+                            rowData.CreateCell(18, CellType.STRING).SetCellValue(read["CompanyAreaProvince"].ToString());
+                            rowData.CreateCell(19, CellType.STRING).SetCellValue(read["CompanyAreaCity"].ToString());
+                            rowData.CreateCell(20, CellType.STRING).SetCellValue(read["CompanyAddress"].ToString());
+                            rowData.CreateCell(21, CellType.STRING).SetCellValue(read["CityClass"].ToString());
+                            rowData.CreateCell(22, CellType.STRING).SetCellValue(read["Remark"].ToString());
+                            //rowData.CreateCell(23, CellType.STRING).SetCellValue(System.DateTime.Parse(read["RegisterTime"].ToString(),System.Globalization.DateTimeStyles.None));
+                            //read["RegisterTime"].ToString()
+                            //设置格式
+                            //ICellStyle styledate = workbook.CreateCellStyle();
+                            //IDataFormat format = workbook.CreateDataFormat();
+                            //styledate.DataFormat = format.GetFormat("yyyy\"年\"m\"月\"d\"日\"");
+                            //ICell cellDate = rowData.CreateCell(23, CellType.STRING);
+                            //cellDate.CellStyle = styledate;
+                            //cellDate.SetCellValue(read["RegisterTime"].ToString());
+                            
+                        }
+                        if (System.IO.File.Exists("雇主信息表.xls"))
+                        {                            
+                            System.IO.File.Delete("雇主信息表.xls");                         
+                            //Response.Write("<script language='javascript'>alert('文件已存在，请前往删除再导出！')</script>");
+                        }
+                        else
+                        {
+                            using (Stream stream = System.IO.File.OpenWrite("d:/雇主信息表.xls"))
+                            {
+                                workbook.Write(stream);
+                                Response.Write("<script language='javascript'>alert('文件导出成功！')</script>");
+                                
+                            }
+                        }
+                    }
+                }
+                //Response.Redirect("QueryEmployerPwd");
+            }
+            catch (Exception ex)
+            {             
+                Response.Write(ex.Message);
+            }
+        }
     }
+    #endregion
 }

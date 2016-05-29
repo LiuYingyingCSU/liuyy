@@ -471,7 +471,7 @@ namespace MvcApplication1.Controllers
         /// <returns></returns>
         public ActionResult VerificationCode()
         {
-            int _verificationLength = 6;
+            int _verificationLength = 4;
             int _width = 100, _height = 20;
             SizeF _verificationTextSize;
             Bitmap _bitmap = new Bitmap(Server.MapPath("~/Skins/Common/Texture2.jpg"), true);

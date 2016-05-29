@@ -605,13 +605,12 @@ namespace MvcApplication1.Models
             //数据查询
             SqlConnection conn = DBLink.GetConnection();
             conn.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "GetEmployerListByTypeBykeyByCNatureByCBusiness";
-            cmd.Parameters.Add(new SqlParameter("@pagesize",pagesize));
-            cmd.Parameters.Add(new SqlParameter("@pageindex",pageindex));
-            cmd.Parameters.Add(new SqlParameter("@type",type));
+            string str = "select EmployerID,CompanyName,CompanyNature,CompanyBusiness into #tb1 from Employer where IsDelete=@type and CompanyName like '%'+@key+'%' and CompanyNature like '%'+@nature+'%' and CompanyBusiness like '%'+@business+'%';select EmployerID,CompanyName,CompanyNature,CompanyBusiness from (select ROW_NUMBER() over (order by EmployerID desc) as RowId,* from #tb1) as temptable where RowId>=(@pageindex-1)*@pagesize+1 and RowId<=@pageindex*@pagesize";
+
+            SqlCommand cmd = new SqlCommand(str, conn);
+            cmd.Parameters.Add(new SqlParameter("@pagesize", pagesize));
+            cmd.Parameters.Add(new SqlParameter("@pageindex", pageindex));
+            cmd.Parameters.Add(new SqlParameter("@type", type));
             cmd.Parameters.Add(new SqlParameter("@key", key));
             cmd.Parameters.Add(new SqlParameter("@nature", CompanyNature));
             cmd.Parameters.Add(new SqlParameter("@business", CompanyBusiness));
@@ -622,6 +621,7 @@ namespace MvcApplication1.Models
             cmd.Dispose();
             conn.Close();
             return dt;
+
 
         }
         #endregion

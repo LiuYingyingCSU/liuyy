@@ -67,6 +67,8 @@
     <span>请输入要查询的邮箱：</span>
     @Html.EditorFor(model => model.Email)
     <input type="submit" value="查询"/>
+    <a href="@Url.Action("OutExcel", "Admin", new { style = "color:#fff;" })">导出雇主信息表</a>
+    @*@Html.ActionLink("导出雇主信息表", "OutExcel")*@
 }
 
 <table>

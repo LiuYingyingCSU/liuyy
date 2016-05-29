@@ -291,7 +291,7 @@ namespace MvcApplication1.Models
         /// </summary>
         [Display(Name = "验证码", Description = "请输入图片中的验证码。")]
         [Required(ErrorMessage = "×")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "×")]
+        [StringLength(4, MinimumLength = 4, ErrorMessage = "×")]
         public string VerificationCode { get; set; }
     }
      ///<summary>
