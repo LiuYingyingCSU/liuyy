@@ -27,7 +27,7 @@
     <ClInclude Include="algorithm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Backtrack.h">
+    <ClInclude Include="Queen.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
