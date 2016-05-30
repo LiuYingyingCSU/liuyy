@@ -5,6 +5,7 @@
 #include<iostream>
 #include"algorithm.h"
 #include"Queen.h"
+#include"PrimeRing.h"
 
 using namespace std;
 #define NUM 5
@@ -16,9 +17,13 @@ void PrintPackage(int w[],int v[]);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+
 	//int a[NUM] = { 1, 3, 5, 7, 9 }, m = 0;
 	//int b[NUM] = { 6, 2, 7, 3, 8};
 	//int len = sizeof(a) / sizeof(a[0]);  //获得数组的长度
+
+	///二分查找
+
 	//First frt;                           //实例化类，调用类中函数
 	//while (m >= 0)
 	//{
@@ -28,6 +33,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	//	frt.BinarySearch(m, a,len-1);
 	//}
 
+	///快速排序
+
 	//frt.QuickSort(b, 0, len-1);            //快速排序
 	//for (int i = 0; i < len; i++){
 	//	cout << b[i] << " ";
@@ -35,14 +42,21 @@ int _tmain(int argc, _TCHAR* argv[])
 	//cout << "\n";
 
 	/////0-1背包问题
+
 	//PrintPackage(w,v);                   
 
 	///八皇后问题
-	Second snd;
+
+	/*Second snd;
 	int qnum;
 	cout << "请输入皇后个数：";
 	cin >> qnum;
-	snd.Queen(qnum);
+	snd.Queen(qnum);*/
+
+	///素数环问题
+
+	//Prime prm;
+	//prm.PrintRing();
 
 	return 0;
 }
