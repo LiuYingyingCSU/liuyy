@@ -18,45 +18,46 @@ void PrintPackage(int w[],int v[]);
 int _tmain(int argc, _TCHAR* argv[])
 {
 
-	//int a[NUM] = { 1, 3, 5, 7, 9 }, m = 0;
-	//int b[NUM] = { 6, 2, 7, 3, 8};
-	//int len = sizeof(a) / sizeof(a[0]);  //获得数组的长度
+	int a[NUM] = { 1, 3, 5, 7, 9 }, m = 0;
+	int b[NUM] = { 6, 2, 7, 3, 8};
+	int len = sizeof(a) / sizeof(a[0]);  //获得数组的长度
 
 	///二分查找
 
-	//First frt;                           //实例化类，调用类中函数
-	//while (m >= 0)
-	//{
-	//	cout << "请输入要查找的数：";
-	//	cin >> m;
-	//	cout << "使用二分查找：" << "\n";
-	//	frt.BinarySearch(m, a,len-1);
-	//}
+	First frt;                           //实例化类，调用类中函数
+	while (m >= 0)
+	{
+		cout << "请输入要查找的数：";
+		cin >> m;
+		cout << "使用二分查找：" << "\n";
+		frt.BinarySearch(m, a,len-1);
+	}
 
 	///快速排序
 
-	//frt.QuickSort(b, 0, len-1);            //快速排序
-	//for (int i = 0; i < len; i++){
-	//	cout << b[i] << " ";
-	//}
-	//cout << "\n";
+	frt.QuickSort(b, 0, len-1);            //快速排序
+	cout << "输出快速排序结果："
+	for (int i = 0; i < len; i++){
+		cout << b[i] << " ";
+	}
+	cout << "\n";
 
 	/////0-1背包问题
 
-	//PrintPackage(w,v);                   
+	PrintPackage(w,v);                   
 
 	///八皇后问题
 
-	/*Second snd;
+	Second snd;
 	int qnum;
 	cout << "请输入皇后个数：";
 	cin >> qnum;
-	snd.Queen(qnum);*/
+	snd.Queen(qnum);
 
 	///素数环问题
 
-	//Prime prm;
-	//prm.PrintRing();
+	Prime prm;
+	prm.PrintRing();
 
 	return 0;
 }
@@ -93,4 +94,3 @@ void PrintPackage(int w[], int v[]){
 		cout << w[j] << " " << v[j] << "  " << bestx[j] << '\n';
 	}
 }
-
