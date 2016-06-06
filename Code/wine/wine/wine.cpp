@@ -22,7 +22,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	bottle[1] = 5;
 	bottle[2] = 3;
 	memset(v, 0, sizeof(v));
-	dfs();                       //调用深度优先函数
+	dfs();                         //调用深度优先函数
 	int min = time[0];
 	for (int m = 0; time[m]; m++){
 		
@@ -30,8 +30,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		
 	}
 	cout << "完成分酒任务需要的最佳步骤为：" << endl;
-	for (int m = 0; m<min; m++)
-		printf("从第%d杯子倒入到 ---->第%d杯子: 倒入%d升酒\n", from[m], to[m], volume[m]);
+	for (int m = 0; m < min; m++)
+		cout << "杯" << from[m] << "倒入杯" << to[m] << "中" << volume[m] << "升酒" << endl;
 	cout << "共" << min << "步" << endl;
 	
 	return 0;
@@ -43,12 +43,12 @@ int pour(int i, int j)            //判断bottle[i]中的酒可向bottle[j]中倒入多少
 	int can;
 	if (i == j) return 0;
 	if (bottle[i] <= 0) return 0;
-	if (i == 0)                     //倒酒方式共六种
+	if (i == 0)                    //倒酒方式共六种
 	{
 		if (j == 1)
 		{
-			can = 5 - bottle[j];     //计算j中的剩余空间
-			if (bottle[i]<can)    //返回较小的值为可倒酒量
+			can = 5 - bottle[j];   //计算j中的剩余空间
+			if (bottle[i]<can)     //返回较小的值为可倒酒量
 				return bottle[i];
 			else
 				return can;
@@ -106,22 +106,22 @@ void move(int i, int j, int can)         //从i倒can升酒到j
 	bottle[i] -= can;
 	bottle[j] += can;
 }
-bool whetherStop()                     //判断是否已经分好了
+bool whetherStop()                      //判断是否已经分好了
 {
 	if (bottle[0] == 4 && bottle[1] == 4 && bottle[2] == 0)
 		return true;
 	else return false;
 }
-void dfs()                             //深度优先搜索
+void dfs()                              //深度优先搜索
 {
 	int i, j, can;
-	if (whetherStop())                     //如果分酒成功，则输出步骤
+	if (whetherStop())                  //如果分酒成功，则输出步骤
 	{
 		cout << endl;
 		//cout << "YES,We Success!!!" << endl << endl;
 		time[q++] = k;
 		for (int m = 0; m<k; m++)
-			printf("从第%d杯子倒入到 ---->第%d杯子: 倒入%d升酒\n", from[m], to[m], volume[m]);
+			cout << "杯" << from[m] << "倒入杯" << to[m] << "中" << volume[m] << "升酒" << endl;
 		cout << "共" << k << "步" << endl;
 		return;
 	}
