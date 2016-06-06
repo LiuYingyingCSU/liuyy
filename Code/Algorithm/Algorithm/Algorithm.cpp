@@ -35,18 +35,25 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	///快速排序
 
+	cout << "待排序序列：" << endl;
+	for (int i = 0; i < len; i++){
+		cout << b[i] << " ";
+	}
+	cout << "\n";
 	frt.QuickSort(b, 0, len-1);            //快速排序
-	cout << "输出快速排序结果："
+	cout << "输出快速排序结果：" << endl;
 	for (int i = 0; i < len; i++){
 		cout << b[i] << " ";
 	}
 	cout << "\n";
 
-	/////0-1背包问题
+	///0-1背包问题
+	//回溯法
 
 	PrintPackage(w,v);                   
 
 	///八皇后问题
+	//搜索
 
 	Second snd;
 	int qnum;

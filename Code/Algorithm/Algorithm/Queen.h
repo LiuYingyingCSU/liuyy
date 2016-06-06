@@ -41,7 +41,7 @@ public:
 					cout<< '\n';
 				}
 				cout << "#---------------------#" << '\n';
-				return;//若return则只求出其中一种解，若不return则可以继续回溯，求出全部的可能的解
+				//return;//若return则只求出其中一种解，若不return则可以继续回溯，求出全部的可能的解
 			}
 			else if (x[k] <= n&&k<n)
 				k = k + 1;//放置下一个皇后
@@ -53,7 +53,4 @@ public:
 		}
 	}
 };
-
-
-
 #endif
