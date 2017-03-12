@@ -1,0 +1,8 @@
+.showRes{
+	width:55%;
+	height:800px;
+	/*margin-left:10%;*/
+	float:left;
+	padding:10px 20px;
+	border: solid 2px pink;
+}

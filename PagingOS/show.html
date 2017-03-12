@@ -1,0 +1,459 @@
+
+<!DOCTYPE html5>
+<html>
+<head>
+	<title>页面调度算法模拟</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="CSS/setData.css"/>
+	<link rel="stylesheet" type="text/css" href="CSS/showPro.css"/>
+	<link rel="stylesheet" type="text/css" href="CSS/showRes.css"/>
+	<link rel="stylesheet" type="text/css" href="include/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="include/bootstrap-responsive.css"/>
+	<script type="text/javascript" src="include/echarts.min.js"></script>
+</head>
+<body>
+	<div class="setData">
+		<form class="form-horizonal" role="form">
+			<div class="form-group"  style="width:100%;margin-top: 10px;">
+				<label class="control-label col-sm-4">请选择内存大小</label>
+				<div class=" col-sm-8">
+					<select id="selMemNum" class="form-control">
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					</select>	
+				</div>
+				
+			</div>
+			<div class="form-group"  style="width:100%;margin-top: 10px;">
+				<label class="control-label col-md-4 col-lg-4">请选择指令序列长度</label>
+				<div class=" col-md-8 col-lg-8">	
+					<select id="selPageNum" class="form-control">
+					<option>10</option>
+					<option>11</option>
+					<option>12</option>
+					<option>13</option>
+					<option>14</option>
+					<option>15</option>
+				    </select>
+				</div>
+				
+			</div>
+			<div class="form-group"  style="width:100%;margin-top: 10px;">
+				<!-- <div class="col-md-4 col-lg-4 input-group-addon"> -->
+					<label class="control-label col-md-4 ">生成随机序列号</label>
+				<!-- </div> -->
+				<div class="col-md-8 col-lg-8">
+					<div class="input-group">
+					<input id="getSeries" type="text" class="form-control">
+					<span class="input-group-btn">
+						<button id="createNum" class="btn btn-default" type="button">Create!</button>
+					</span>
+					</input>
+				    </div>
+				</div>
+				
+			</div>
+		</form>
+	</div>
+	<div style="text-align: center;"><button id="GO">GO!</button></div>
+	<div style="width:90%;margin:20px auto;">
+		<div class="showPro">
+		<div class="readRes">
+			<h5><span style="font-weight:bold;">FIFO</span>内存中情况如下：</h5>
+			<div class="allItems">
+				<div class="items">
+					<div class="item" id="1one"></div>
+					<div class="item" id="1two"></div>
+					<div class="item" id="1three"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item">4</div>
+					<div class="item">3</div>
+					<div class="item">3</div>
+					<div class="item"></div>
+					<div class="item"></div>
+				</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+		    	<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+			</div>	
+		</div>
+		<div class="readRes">
+			<h5><span style="font-weight:bold;">LRU</span>内存中情况如下：</h5>
+			<div class="allItems">
+				<div class="items">
+					<div class="item" id="1one"></div>
+					<div class="item" id="1two"></div>
+					<div class="item" id="1three"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item">4</div>
+					<div class="item">3</div>
+					<div class="item">3</div>
+					<div class="item"></div>
+					<div class="item"></div>
+				</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+		    	<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+			</div>		
+		</div>
+		<div class="readRes">
+			<h5><span style="font-weight:bold;">OPT</span>内存中情况如下：</h5>
+			<div class="allItems">
+				<div class="items">
+					<div class="item" id="1one"></div>
+					<div class="item" id="1two"></div>
+					<div class="item" id="1three"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item">4</div>
+					<div class="item">3</div>
+					<div class="item">3</div>
+					<div class="item"></div>
+					<div class="item"></div>
+				</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+		    	<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+				<div class="items">
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+					<div class="item"></div>
+		    	</div>
+			</div>	
+		</div>
+		</div>
+		<div class="showRes">
+		<div id="resultRate" style="width:100%;height:50%;"></div>
+		<div id="resultTime" style="width:90%;height:50%;margin-top:30px;margin-left:20px;"></div>
+	</div>
+	</div>
+</body>
+	<script type="text/javascript" src="include/jquery.min.js"></script>
+	<script type="text/javascript" src="include/bootstrap.min.js"></script>
+	<script type="text/javascript" src="JS/create.js"></script>
+	<script>
+		var rate=[]; //缺页率
+		var time=[];
+		function setValue(){
+
+			time=returnTime();
+			rate=returnRate();
+
+		}
+		$("#GO").click(function(){
+			setValue();
+			Memory();
+			errorRate();
+			var it=document.getElementsByClassName('item');
+			for(var p=0;p<it.length;p++){
+				it[p].innerHTML="";
+			}
+			FIFOReading();
+		});
+		// $(function(){
+  //       	errorRate();
+		// });
+		function errorRate(){
+			var rateEcharts=echarts.init(document.getElementById('resultRate'));
+			var timeEcharts=echarts.init(document.getElementById('resultTime'));
+			optionRate={
+				title:{
+					text:'FIFO、LRU、OPT 缺页率饼状图对比',
+					x:'center'
+				},
+				tooltip:{
+					tigger:'item',
+					formatter:"{a} <br/>{b}：{c}({d}%)"
+				},
+				legend:{
+					orient:'vertical',
+					left:'left',
+					data:['FIFO先进先出','LRU最近最久未使用','OPT最佳置换算法']
+				},
+				series:[
+				{
+					name:'缺页率对比分析',
+					type:'pie',
+					radius:'55%',
+					center:['50%','60%'],
+					data:[
+						{value:rate[0],name:'FIFO先进先出'},
+						{value:rate[1],name:'LRU最近最久未使用'},
+						{value:rate[2],name:'OPT最佳置换算法'},
+					],
+					itemStyle:{
+						emphasis:{
+							shadowBlur:10,
+							shadowOffsetX:0,
+							shadowColor:'rgba(0,0,0,0.5)'
+						}
+					}
+				}]
+				
+			};
+			optionTime={
+				title:{
+					text:'FIFO、LRU、OPT 时间对比',
+					x:'center'
+				},
+				tooltip:{
+					tigger:'axis',
+					axisPointer:{
+						type:'shadow'
+					}
+				},
+				legend:{
+					// orient:'vertical',
+					// left:'left',
+					data:['算法执行时间']
+				},
+				calculable:true,
+				xAxis:[{
+					type:'value'
+				}],
+				yAxis:[{
+					type:'category',
+					data:['FIFO','LRU','OPT']
+				}],
+				series:[
+				{
+					name:'时间',
+					type:'bar',
+					itemStyle: {
+                    normal: {
+　　　　　　　　　　　　　　//好，这里就是重头戏了，定义一个list，然后根据所以取得不同的值，这样就实现了，
+                        color: function(params) {
+                            // build a color map as your need.
+                            var colorList = [
+                              '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                               '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ];
+                            return colorList[params.dataIndex]
+                        },
+　　　　　　　　　　　　　　//以下为是否显示，显示位置和显示格式的设置了
+                        label: {
+                            show: true,
+                            // position: 'top',
+//                             formatter: '{c}'
+                            formatter: '{b}\n{c}'
+                        }
+                    }
+                },
+					stack:'总量',
+					data:[time[0],time[1],time[2]],
+				}]
+				
+			};
+			rateEcharts.setOption(optionRate);
+			timeEcharts.setOption(optionTime);
+		}
+		
+	</script>
+</html>

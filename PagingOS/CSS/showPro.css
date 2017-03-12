@@ -1,0 +1,41 @@
+.showPro{
+	width:45%;
+	height:800px;
+	/*margin-left:0;*/
+	float:left;
+	padding:10px 20px;
+	text-align: center;
+	border: solid 2px pink;
+}
+.readRes{
+	width:100%;
+	height: 220px;
+	margin:10px auto;
+	/*text-align: center;*/
+	/*float:left;*/
+}
+.allItems{
+	width:100%;
+	height:100%;
+	margin:20px auto;
+}
+.items{
+	width:30px;
+	/*width:25px;*/
+	margin-right: 10px;
+	padding: 2px 2px;
+	float:left;
+	/*border:solid 2px gray;*/
+}
+.item{
+	width:30px;
+	height:30px;
+	/*width:25px;*/
+	/*height:25px;*/
+	text-align: center;
+	/*line-height: 30px;*/
+	line-height: 25px;
+	margin:auto;
+	margin-top: 5px;
+	border:solid 1px #cccccc;
+}
