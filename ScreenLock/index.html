@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+	<meta charset="utf-8">
+	<title>模拟手机图案解锁</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body style="text-align:center; background-color:rgba(0, 0, 0, 0.75);">
+	<div id="phoneBody">
+		<div id='phone' style="text-align:center; background-color:rgba(188, 189, 189, 0.22); height:100%">
+			
+			<div class="topBar">
+				<div class="barLeft">
+					<canvas id='signal' >
+						.....
+					</canvas>
+					<div style="float:left">中国移动</div>
+				</div>
+				<div id='time'></div>
+				<div class="btyDiv">
+					100%<canvas id="battery"></canvas>
+				</div>
+			</div>
+			<div class="name">My Phone</div>
+			<div id="message">
+			请输入密码
+			</div>
+			<canvas id='canvas' width="300" height="300">
+				alert("当前浏览器版本太低，请更新或更换浏览器");
+			</canvas>
+			<div id='switchs'>
+				<div class="swt">
+					<div id='switch1' onclick="openOrClose_1()">
+						<div class="circle"></div>
+					</div>
+					<div class="status">设置</div>
+				</div>
+				
+				<div class="swt">
+					<div id='switch2' onclick="openOrClose_2()">
+						<div class="circle"></div>
+					</div>
+					<div class="status">解锁
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript">
+
+
+</script>
+<script type="text/javascript" src="draw.js"></script>
+</html>
