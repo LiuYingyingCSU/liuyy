@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>caculator.qss</file>
+    </qresource>
+</RCC>
